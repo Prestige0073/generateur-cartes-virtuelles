@@ -4,6 +4,7 @@ import { useAuth } from '../context/AuthContext'
 import { supabase } from '../lib/supabase'
 import { TEMPLATES, TIERS } from '../data/templates'
 import Card3D from '../components/Card3D'
+import Loading from '../components/Loading'
 import {
   AlertTriangle,
   CheckCircle2,
@@ -14,7 +15,6 @@ import {
   EyeOff,
   KeyRound,
   Link2,
-  Loader2,
   Plus,
   RefreshCcw,
   ShieldCheck,
@@ -88,11 +88,7 @@ export default function Dashboard() {
   }
 
   if (loading) {
-    return (
-      <div className="flex items-center justify-center min-h-screen">
-        <Loader2 className="w-10 h-10 text-sky-400 animate-spin" />
-      </div>
-    )
+    return <Loading message="Chargement de votre tableau de bord..." />
   }
 
   const paidPayments = payments.filter(p => p.status === 'success')

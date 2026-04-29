@@ -4,7 +4,8 @@ import { useAuth } from '../context/AuthContext'
 import { supabase } from '../lib/supabase'
 import { TEMPLATES, TIERS } from '../data/templates'
 import Card3D from '../components/Card3D'
-import { RefreshCcw, Sparkles, Loader2, AlertTriangle } from 'lucide-react'
+import Loading from '../components/Loading'
+import { RefreshCcw, Sparkles, AlertTriangle } from 'lucide-react'
 
 function formatCardNumber(raw) {
   return raw.replace(/\D/g, '').slice(0, 16).replace(/(\d{4})(?=\d)/g, '$1 ')
@@ -135,11 +136,7 @@ export default function CreateCard() {
   }
 
   if (!template || checking) {
-    return (
-      <div className="flex items-center justify-center min-h-screen">
-        <Loader2 className="w-10 h-10 text-sky-400 animate-spin" />
-      </div>
-    )
+    return <Loading message="Vérification de votre paiement..." />
   }
 
   return (
@@ -271,7 +268,7 @@ export default function CreateCard() {
 
             <div className="pt-2">
               <button type="submit" className="btn-primary inline-flex items-center justify-center gap-2" disabled={loading}>
-                {loading ? <><Loader2 className="w-4 h-4 animate-spin" /> Génération en cours…</> : <><Sparkles className="w-4 h-4" /> Générer ma carte</>}
+                {loading ? <>Génération en cours…</> : <><Sparkles className="w-4 h-4" /> Générer ma carte</>}
               </button>
               <p className="text-slate-600 text-xs text-center mt-3">
                 <AlertTriangle className="inline h-4 w-4 align-text-bottom mr-1" />

@@ -3,7 +3,8 @@ import { useParams, useSearchParams, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import { supabase } from '../lib/supabase'
 import { TEMPLATES, TIERS } from '../data/templates'
-import { ShieldCheck, Loader2, CheckCircle2, AlertTriangle, CreditCard } from 'lucide-react'
+import Loading from '../components/Loading'
+import { ShieldCheck, CheckCircle2, AlertTriangle, CreditCard } from 'lucide-react'
 
 export default function Payment() {
   const { tier } = useParams()
@@ -57,17 +58,7 @@ export default function Payment() {
   if (!template || !tierInfo) return null
 
   if (step === 'processing') {
-    return (
-      <div className="min-h-screen flex items-center justify-center px-4">
-        <div className="text-center max-w-sm">
-          <div className="mx-auto mb-6 flex h-14 w-14 items-center justify-center rounded-full bg-slate-900">
-            <Loader2 className="w-8 h-8 text-sky-400 animate-spin" />
-          </div>
-          <h2 className="text-xl font-bold mb-2">Traitement en cours…</h2>
-          <p className="text-slate-400 text-sm">Vérification du paiement Mobile Money</p>
-        </div>
-      </div>
-    )
+    return <Loading message="Vérification du paiement Mobile Money..." />
   }
 
   if (step === 'success') {
