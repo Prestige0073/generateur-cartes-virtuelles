@@ -113,41 +113,41 @@ export default function CardView() {
         </span>
       </div>
 
-      <div className="grid lg:grid-cols-2 gap-8 lg:gap-10 items-start">
-        {/* Card 3D */}
-        <div className="flex flex-col items-center gap-4">
-          <Card3D card={card} size="md" />
-          <p className="text-slate-600 text-xs text-center">
-            Survoler ou cliquer pour voir le verso
-          </p>
+      {/* Layout : carte + partage empilés sur mobile, côte à côte sur desktop */}
+      <div className="flex flex-col lg:grid lg:grid-cols-2 gap-6 lg:gap-10 items-start">
+        {/* Card 3D + Détails */}
+        <div className="flex flex-col items-center gap-4 w-full">
+          <div className="w-full flex justify-center">
+            <Card3D card={card} size="md" />
+          </div>
+          <p className="text-slate-600 text-xs text-center">Cliquer pour voir le verso</p>
 
           {/* Card details */}
-          <div className="w-full bg-slate-800/50 border border-slate-700 rounded-2xl p-5 space-y-3 mt-2">
-            <h3 className="font-semibold text-sm text-slate-300 mb-3">Détails de la carte</h3>
+          <div className="w-full bg-slate-800/50 border border-slate-700 rounded-2xl p-4 md:p-5 space-y-2.5">
+            <h3 className="font-semibold text-sm text-slate-300 mb-2">Détails</h3>
             {[
               { label: 'Titulaire', value: card.cardholder_name },
               { label: 'Numéro', value: card.card_number.replace(/(\d{4})(?=\d)/g, '$1 ') },
               { label: 'Expiration', value: card.expiry_date },
               { label: 'Réseau', value: card.network_type === 'visa' ? 'Visa' : 'Mastercard' },
               { label: 'Langue', value: card.language === 'fr' ? 'Français' : 'Anglais' },
-              ...(card.display_amount ? [{ label: 'Solde esthétique', value: `${Number(card.display_amount).toLocaleString('fr-FR')} FCFA` }] : []),
+              ...(card.display_amount ? [{ label: 'Solde', value: `${Number(card.display_amount).toLocaleString('fr-FR')} FCFA` }] : []),
               { label: 'Créée le', value: new Date(card.created_at).toLocaleDateString('fr-FR') },
             ].map(row => (
-              <div key={row.label} className="flex justify-between text-sm">
-                <span className="text-slate-500">{row.label}</span>
-                <span className="font-medium font-mono">{row.value}</span>
+              <div key={row.label} className="flex justify-between items-center text-sm gap-3">
+                <span className="text-slate-500 shrink-0">{row.label}</span>
+                <span className="font-medium font-mono text-right truncate">{row.value}</span>
               </div>
             ))}
           </div>
         </div>
 
         {/* Share link panel */}
-        <div className="space-y-6">
-          <div className="bg-slate-800/50 border border-slate-700 rounded-2xl p-6">
-            <h2 className="font-bold text-lg mb-1">Partager ma carte</h2>
-            <p className="text-slate-400 text-sm mb-6">
+        <div className="w-full space-y-6">
+          <div className="bg-slate-800/50 border border-slate-700 rounded-2xl p-5 md:p-6">
+            <h2 className="font-bold text-base md:text-lg mb-1">Partager ma carte</h2>
+            <p className="text-slate-400 text-sm mb-5">
               Génère un lien protégé par mot de passe valable 30 jours.
-              Les visiteurs pourront uniquement visualiser ta carte.
             </p>
 
             {error && (
