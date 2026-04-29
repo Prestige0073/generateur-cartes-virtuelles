@@ -4,7 +4,7 @@ import { useAuth } from '../context/AuthContext'
 import { supabase } from '../lib/supabase'
 import { TEMPLATES } from '../data/templates'
 import Card3D from '../components/Card3D'
-import { Sparkles, AlertTriangle } from 'lucide-react'
+import { RefreshCcw, Sparkles, Loader2, AlertTriangle } from 'lucide-react'
 
 function formatCardNumber(raw) {
   return raw.replace(/\D/g, '').slice(0, 16).replace(/(\d{4})(?=\d)/g, '$1 ')
@@ -133,7 +133,7 @@ export default function CreateCard() {
   if (!template || checking) {
     return (
       <div className="flex items-center justify-center min-h-screen">
-        <div className="w-8 h-8 border-4 border-sky-400 border-t-transparent rounded-full animate-spin" />
+        <Loader2 className="w-10 h-10 text-sky-400 animate-spin" />
       </div>
     )
   }
@@ -175,7 +175,7 @@ export default function CreateCard() {
                   onClick={() => set('card_number', generateRandomCardNumber())}
                   className="text-xs text-sky-400 hover:text-sky-300 transition"
                 >
-                  ↺ Regénérer
+                  <RefreshCcw className="w-3.5 h-3.5 inline mr-1" /> Regénérer
                 </button>
               </div>
               <input
@@ -232,7 +232,7 @@ export default function CreateCard() {
             <div>
               <label className="block text-sm font-medium text-slate-300 mb-2">Langue de la carte</label>
               <div className="flex gap-3">
-                {[{ id: 'fr', label: '🇫🇷 Français' }, { id: 'en', label: '🇬🇧 English' }].map(l => (
+                {[{ id: 'fr', label: 'FR — Français' }, { id: 'en', label: 'EN — English' }].map(l => (
                   <button
                     key={l.id}
                     type="button"
@@ -250,8 +250,8 @@ export default function CreateCard() {
             </div>
 
             <div className="pt-2">
-              <button type="submit" className="btn-primary" disabled={loading}>
-                {loading ? 'Génération en cours...' : <><Sparkles className="w-4 h-4 inline mr-2" /> Générer ma carte</>}
+              <button type="submit" className="btn-primary inline-flex items-center justify-center gap-2" disabled={loading}>
+                {loading ? <><Loader2 className="w-4 h-4 animate-spin" /> Génération en cours…</> : <><Sparkles className="w-4 h-4" /> Générer ma carte</>}
               </button>
               <p className="text-slate-600 text-xs text-center mt-3">
                 <AlertTriangle className="inline h-4 w-4 align-text-bottom mr-1" />

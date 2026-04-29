@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { TEMPLATES, TIERS } from '../data/templates'
 import Card3D from '../components/Card3D'
+import { Check } from 'lucide-react'
 
 const PREVIEW_CARD = (template) => ({
   template_id: template.id,
@@ -71,7 +72,7 @@ export default function Templates() {
               <div className="relative w-full flex justify-center">
                 <Card3D card={PREVIEW_CARD(template)} size="sm" interactive={false} />
                 {selected === template.id && (
-                  <div className="absolute -top-2 -right-2 w-6 h-6 bg-sky-400 rounded-full flex items-center justify-center text-white text-xs font-bold">✓</div>
+                  <div className="absolute -top-2 -right-2 w-6 h-6 bg-sky-400 rounded-full flex items-center justify-center text-white"><Check className="w-3.5 h-3.5" /></div>
                 )}
               </div>
 

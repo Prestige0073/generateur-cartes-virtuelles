@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams, Link } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
 import { TEMPLATES } from '../data/templates'
 import Card3D from '../components/Card3D'
-import { AlertTriangle, CheckCircle2, Clock, Loader2, Lock, Search, ShieldCheck } from 'lucide-react'
+import { AlertTriangle, CheckCircle2, Clock, CreditCard, Loader2, Lock, Search, ShieldCheck } from 'lucide-react'
 
 async function sha256(str) {
   const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str))
@@ -179,6 +179,10 @@ export default function ShareView() {
         Carte virtuelle à but décoratif et démonstratif uniquement.<br />
         Aucune transaction bancaire réelle n'est associée.
       </p>
+
+      <Link to="/" className="mt-6 inline-flex items-center gap-2 text-sky-400 hover:text-sky-300 text-sm transition">
+        <CreditCard className="w-4 h-4" /> Créer ma propre carte sur CardGen
+      </Link>
     </div>
   )
 }
