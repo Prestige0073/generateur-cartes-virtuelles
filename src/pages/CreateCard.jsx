@@ -34,10 +34,33 @@ export default function CreateCard() {
   })
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
+  const [checking, setChecking] = useState(true)
 
   useEffect(() => {
-    if (!template) navigate('/templates')
-  }, [template, navigate])
+    if (!template) { navigate('/templates'); return }
+
+    async function verifyPayment() {
+      if (!paymentId) { navigate('/templates'); return }
+
+      const { data, error: err } = await supabase
+        .from('payments')
+        .select('id, status, card_id, tier, user_id')
+        .eq('id', paymentId)
+        .eq('user_id', user.id)
+        .single()
+
+      if (err || !data) { navigate('/templates'); return }
+      if (data.status !== 'success') { navigate('/templates'); return }
+      // Paiement déjà utilisé pour une autre carte
+      if (data.card_id) { navigate(`/card/${data.card_id}`); return }
+      // Le tier du paiement doit correspondre au template choisi
+      if (data.tier !== template.tier) { navigate('/templates'); return }
+
+      setChecking(false)
+    }
+
+    verifyPayment()
+  }, [template, paymentId, user.id, navigate])
 
   const preview = {
     ...form,
@@ -108,7 +131,13 @@ export default function CreateCard() {
     }
   }
 
-  if (!template) return null
+  if (!template || checking) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="w-8 h-8 border-4 border-violet-500 border-t-transparent rounded-full animate-spin" />
+      </div>
+    )
+  }
 
   return (
     <div className="max-w-5xl mx-auto px-4 py-12">
