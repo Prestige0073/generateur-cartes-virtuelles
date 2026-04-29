@@ -173,7 +173,7 @@ export default function Dashboard() {
               <CreditCard className="w-7 h-7" />
             </div>
             <h3 className="font-semibold text-lg mb-2">Aucune carte créée</h3>
-            <p className="text-slate-500 text-sm mb-6 max-w-xs mx-auto">Choisis un template et génère ta première carte virtuelle en quelques clics.</p>
+            <p className="text-slate-500 text-sm mb-6 max-w-xs mx-auto">Choisis un template et génère ta première carte bancaire en quelques clics.</p>
             <Link to="/templates" className="inline-flex items-center justify-center gap-2 bg-sky-600 hover:bg-sky-500 text-white text-sm font-semibold px-6 py-3 rounded-xl transition">
               <Plus className="w-4 h-4" /> Voir le catalogue
             </Link>

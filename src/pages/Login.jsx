@@ -32,7 +32,7 @@ export default function Login() {
         <div className="text-center mb-8">
           <LogIn className="mx-auto h-10 w-10 text-sky-400" />
           <h1 className="text-2xl font-bold mt-3">Connexion</h1>
-          <p className="text-slate-400 text-sm mt-1">Accède à tes cartes virtuelles</p>
+          <p className="text-slate-400 text-sm mt-1">Accède à tes cartes bancaires</p>
         </div>
 
         <div className="bg-slate-800/50 border border-slate-700 rounded-2xl p-8">

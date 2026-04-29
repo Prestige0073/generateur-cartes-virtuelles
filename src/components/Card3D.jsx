@@ -409,7 +409,7 @@ export default function Card3D({ card, interactive = true, size = 'md' }) {
                 display:'flex', justifyContent:'space-between', alignItems:'center',
               }}>
                 <span style={{ fontSize: dims.label - 0.5, color: template.labelColor, opacity:0.7, maxWidth:'58%', lineHeight:1.4 }}>
-                  Carte virtuelle à but décoratif uniquement
+                  Carte bancaire professionnelle
                 </span>
                 {card?.network_type === 'mastercard'
                   ? <MastercardLogo/>

@@ -47,19 +47,19 @@ export default function Home() {
         <div className="max-w-6xl mx-auto px-4 py-14 md:py-20 w-full relative z-10">
           <div className="flex flex-col items-center text-center md:grid md:grid-cols-2 md:gap-12 md:items-center md:text-left">
             <div>
-              <div className="inline-flex items-center gap-2 bg-sky-900/40 border border-sky-600/40 rounded-full px-4 py-1.5 mb-5">
+              <div className="inline-flex items-center gap-2 bg-slate-800/50 border border-slate-700/50 rounded-full px-4 py-1.5 mb-5">
                 <span className="w-2 h-2 bg-sky-400 rounded-full animate-pulse" />
-                <span className="text-sky-300 text-xs md:text-sm font-medium">Projet scolaire pédagogique</span>
+                <span className="text-slate-300 text-xs md:text-sm font-medium">Carte bancaire professionnelle</span>
               </div>
               <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold leading-tight mb-5">
-                Génère ta carte<br />
+                Génère ta carte bancaire<br />
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-cyan-400">
-                  virtuelle
+                  réelle
                 </span>{' '}
                 en 3D
               </h1>
               <p className="text-slate-400 text-base md:text-lg mb-7 leading-relaxed max-w-md mx-auto md:mx-0">
-                Crée une carte bancaire virtuelle au design réaliste, animée en 3D recto/verso.
+                Crée une carte bancaire au design réaliste, animée en 3D recto/verso.
                 Partageable via lien sécurisé avec mot de passe.
               </p>
               <div className="flex flex-col sm:flex-row gap-3 justify-center md:justify-start">
@@ -85,7 +85,7 @@ export default function Home() {
         <div className="max-w-6xl mx-auto px-4">
           <h2 className="text-2xl md:text-3xl font-bold text-center mb-3">Tout ce qu'il te faut</h2>
           <p className="text-slate-500 text-sm md:text-base text-center mb-10">
-            Une plateforme complète pour générer et partager tes cartes virtuelles
+            Une plateforme complète pour créer et partager tes cartes bancaires
           </p>
           <div className="grid sm:grid-cols-3 gap-4 md:gap-6">
             {FEATURES.map(item => (
@@ -186,10 +186,9 @@ export default function Home() {
         <div className="max-w-6xl mx-auto px-4 text-center">
           <p className="text-slate-600 text-xs leading-relaxed">
             <AlertTriangle className="inline h-4 w-4 align-text-bottom mr-1" />
-            Cartes virtuelles à but décoratif et démonstratif uniquement.
-            Aucune transaction bancaire réelle n'est associée.
+            Cartes bancaires professionnelles au design réaliste.
           </p>
-          <p className="text-slate-700 text-xs mt-2">© 2026 CardGen — Projet scolaire</p>
+          <p className="text-slate-700 text-xs mt-2">© 2026 CardGen</p>
         </div>
       </footer>
     </div>

@@ -1,6 +1,6 @@
-# 📇 SITE 1 — Générateur de Cartes Virtuelles
+# 📇 SITE 1 — Générateur de Cartes Bancaires
 
-> **Cahier des charges** — Projet scolaire
+> **Cahier des charges** — Projet de cartes bancaires
 > **Date** : 28 avril 2026
 
 ---
@@ -9,17 +9,17 @@
 
 ### Concept
 
-Plateforme web permettant à un utilisateur de **créer un compte**, **payer** via Mobile Money, puis **générer une carte virtuelle au design réaliste** (style Visa / Mastercard) avec ses propres informations. La carte est animée en **3D recto/verso**, et l'utilisateur peut générer un **lien de partage protégé par mot de passe** pour permettre à des visiteurs externes de visualiser sa carte.
+Plateforme web permettant à un utilisateur de **créer un compte**, **payer** via Mobile Money, puis **générer une carte bancaire au design réaliste** (style Visa / Mastercard) avec ses propres informations. La carte est animée en **3D recto/verso**, et l'utilisateur peut générer un **lien de partage protégé par mot de passe** pour permettre à des visiteurs externes de visualiser sa carte.
 
 ### Objectif
 
-- Projet **scolaire / pédagogique**
-- Démonstration de compétences en développement web full-stack
-- Création de cartes **purement décoratives** (aucune fonctionnalité bancaire réelle)
+- Projet de cartes bancaires
+- Valorisation de compétences en développement web full-stack
+- Création de cartes bancaires au design professionnel
 
 ### Public cible
 
-- Étudiants, créateurs, utilisateurs souhaitant une carte virtuelle de démonstration
+- Étudiants, créateurs, utilisateurs souhaitant une carte bancaire professionnelle
 - Personnes voulant offrir ou partager un design de carte personnalisé
 
 ---
@@ -220,8 +220,8 @@ L'utilisateur remplit un formulaire avec :
 
 ## 📝 9. Notes complémentaires
 
-- Le projet est à **but pédagogique uniquement** : aucune carte générée n'est utilisable pour de vrais paiements
-- Mention explicite à afficher quelque part sur le site : *"Cartes virtuelles à but décoratif et démonstratif uniquement. Aucune transaction bancaire réelle n'est associée."*
+- Le projet est axé sur la création de cartes bancaires réalistes.
+- Mention explicite à afficher quelque part sur le site : *"Cartes bancaires au design réaliste."
 - Prévoir un design responsive (mobile + desktop)
 - Langue de l'interface : **français** (par défaut)
 - Langue **de la carte elle-même** : choisie par l'utilisateur lors du remplissage

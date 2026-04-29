@@ -115,7 +115,7 @@ export default function ShareView() {
           <div className="text-center mb-8">
             <ShieldCheck className="mx-auto h-14 w-14 text-sky-400 mb-4" />
             <h1 className="text-2xl font-bold mb-2">Carte partagée</h1>
-            <p className="text-slate-400 text-sm">Entre le mot de passe pour visualiser la carte virtuelle.</p>
+            <p className="text-slate-400 text-sm">Entre le mot de passe pour visualiser la carte bancaire.</p>
           </div>
 
           <div className="bg-slate-800/50 border border-slate-700 rounded-2xl p-6">
@@ -145,7 +145,7 @@ export default function ShareView() {
 
           <p className="text-center text-slate-700 text-xs mt-6">
             <AlertTriangle className="inline h-4 w-4 align-text-bottom mr-1" />
-            Carte virtuelle à but décoratif uniquement — CardGen
+            Carte bancaire professionnelle — CardGen
           </p>
         </div>
       </div>
@@ -158,7 +158,7 @@ export default function ShareView() {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center px-4 py-16">
       <div className="text-center mb-8">
-        <h1 className="text-xl font-semibold mb-1">Carte virtuelle</h1>
+        <h1 className="text-xl font-semibold mb-1">Carte bancaire</h1>
         <p className="text-slate-500 text-sm">Partagée via CardGen — Lecture seule</p>
       </div>
 
@@ -174,11 +174,10 @@ export default function ShareView() {
         <p className="text-slate-700 text-xs mt-4">Lien valide encore {daysLeft} jour{daysLeft > 1 ? 's' : ''}</p>
       </div>
 
-      <p className="mt-10 text-slate-700 text-xs text-center max-w-sm">
+      <div className="mt-10 text-slate-700 text-xs text-center max-w-sm">
         <AlertTriangle className="inline h-4 w-4 align-text-bottom mr-1" />
-        Carte virtuelle à but décoratif et démonstratif uniquement.<br />
-        Aucune transaction bancaire réelle n'est associée.
-      </p>
+        Carte bancaire professionnelle et sécurisée.
+      </div>
 
       <Link to="/" className="mt-6 inline-flex items-center gap-2 text-sky-400 hover:text-sky-300 text-sm transition">
         <CreditCard className="w-4 h-4" /> Créer ma propre carte sur CardGen
