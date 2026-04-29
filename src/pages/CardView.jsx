@@ -93,26 +93,27 @@ export default function CardView() {
 
   const template = TEMPLATES.find(t => t.id === card.template_id) || TEMPLATES[0]
   const tier = TIERS[card.tier]
-  const shareUrl = shareLink ? `${window.location.origin}/share/${shareLink.slug}` : ''
+  const appUrl = import.meta.env.VITE_APP_URL || window.location.origin
+  const shareUrl = shareLink ? `${appUrl}/share/${shareLink.slug}` : ''
   const daysLeft = shareLink
     ? Math.max(0, Math.ceil((new Date(shareLink.expires_at) - Date.now()) / (1000 * 60 * 60 * 24)))
     : 0
 
   return (
-    <div className="max-w-4xl mx-auto px-4 py-12">
+    <div className="max-w-4xl mx-auto px-4 py-10 md:py-12">
       {/* Header */}
-      <div className="flex items-center gap-3 mb-10">
-        <button onClick={() => navigate('/dashboard')} className="text-slate-400 hover:text-white transition">
+      <div className="flex items-center gap-2 mb-8 flex-wrap">
+        <button onClick={() => navigate('/dashboard')} className="text-slate-400 hover:text-white transition text-sm">
           ← Dashboard
         </button>
         <span className="text-slate-700">/</span>
-        <h1 className="font-semibold text-lg">{template.name}</h1>
+        <h1 className="font-semibold">{template.name}</h1>
         <span className={`text-xs font-medium px-2.5 py-1 rounded-full ${tier.badge} ${tier.color}`}>
           {tier.label}
         </span>
       </div>
 
-      <div className="grid lg:grid-cols-2 gap-10 items-start">
+      <div className="grid lg:grid-cols-2 gap-8 lg:gap-10 items-start">
         {/* Card 3D */}
         <div className="flex flex-col items-center gap-4">
           <Card3D card={card} size="md" />

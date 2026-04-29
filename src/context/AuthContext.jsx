@@ -34,7 +34,7 @@ export function AuthProvider({ children }) {
 
   async function resetPassword(email) {
     return supabase.auth.resetPasswordForEmail(email, {
-      redirectTo: `${window.location.origin}/reset-password`,
+      redirectTo: `${import.meta.env.VITE_APP_URL || window.location.origin}/reset-password`,
     })
   }
 

@@ -140,21 +140,15 @@ export default function CreateCard() {
   }
 
   return (
-    <div className="max-w-5xl mx-auto px-4 py-12">
-      <div className="text-center mb-10">
-        <h1 className="text-2xl font-bold mb-2">Personnalise ta carte</h1>
+    <div className="max-w-5xl mx-auto px-4 py-10 md:py-12">
+      <div className="text-center mb-8 md:mb-10">
+        <h1 className="text-xl md:text-2xl font-bold mb-2">Personnalise ta carte</h1>
         <p className="text-slate-400 text-sm">Ces informations sont définitives — elles ne pourront plus être modifiées.</p>
       </div>
 
-      <div className="grid lg:grid-cols-2 gap-10 items-start">
-        {/* Live preview */}
-        <div className="flex flex-col items-center gap-4 lg:sticky lg:top-24">
-          <Card3D card={preview} size="md" />
-          <p className="text-slate-600 text-xs">Aperçu en temps réel — cliquer pour retourner</p>
-        </div>
-
-        {/* Form */}
-        <div className="bg-slate-800/50 border border-slate-700 rounded-2xl p-6">
+      <div className="flex flex-col lg:grid lg:grid-cols-2 gap-6 lg:gap-10 items-start">
+        {/* Form — en premier sur mobile */}
+        <div className="w-full bg-slate-800/50 border border-slate-700 rounded-2xl p-5 md:p-6 order-1 lg:order-2">
           <form onSubmit={handleSubmit} className="space-y-5">
             {error && (
               <div className="bg-red-900/30 border border-red-700/50 text-red-300 text-sm rounded-xl px-4 py-3">
@@ -266,6 +260,12 @@ export default function CreateCard() {
               </p>
             </div>
           </form>
+        </div>
+
+        {/* Live preview — en second sur mobile, en premier sur desktop */}
+        <div className="w-full flex flex-col items-center gap-3 order-2 lg:order-1 lg:sticky lg:top-24">
+          <Card3D card={preview} size="md" />
+          <p className="text-slate-600 text-xs">Aperçu en temps réel — cliquer pour retourner</p>
         </div>
       </div>
     </div>
