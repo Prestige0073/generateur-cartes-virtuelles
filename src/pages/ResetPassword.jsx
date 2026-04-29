@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
+import { Lock, Loader2 } from 'lucide-react'
 
 export default function ResetPassword() {
   const navigate = useNavigate()
@@ -11,12 +12,9 @@ export default function ResetPassword() {
   const [ready, setReady] = useState(false)
 
   useEffect(() => {
-    // Supabase envoie le token dans le hash de l'URL (#access_token=...)
-    // onAuthStateChange détecte l'événement PASSWORD_RECOVERY
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event) => {
       if (event === 'PASSWORD_RECOVERY') setReady(true)
     })
-    // Si déjà une session active (page rechargée), on vérifie
     supabase.auth.getSession().then(({ data: { session } }) => {
       if (session) setReady(true)
     })
@@ -43,7 +41,7 @@ export default function ResetPassword() {
     return (
       <div className="min-h-screen flex items-center justify-center px-4">
         <div className="text-center max-w-md">
-          <div className="w-8 h-8 border-4 border-violet-500 border-t-transparent rounded-full animate-spin mx-auto mb-4" />
+          <Loader2 className="mx-auto h-8 w-8 text-sky-400 animate-spin mb-4" />
           <p className="text-slate-400">Vérification du lien de réinitialisation...</p>
         </div>
       </div>
@@ -54,7 +52,7 @@ export default function ResetPassword() {
     <div className="min-h-screen flex items-center justify-center px-4 py-12">
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
-          <span className="text-4xl">🔐</span>
+          <Lock className="mx-auto h-10 w-10 text-sky-400" />
           <h1 className="text-2xl font-bold mt-3">Nouveau mot de passe</h1>
           <p className="text-slate-400 text-sm mt-1">Choisis un nouveau mot de passe sécurisé</p>
         </div>

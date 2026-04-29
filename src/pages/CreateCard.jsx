@@ -4,6 +4,7 @@ import { useAuth } from '../context/AuthContext'
 import { supabase } from '../lib/supabase'
 import { TEMPLATES } from '../data/templates'
 import Card3D from '../components/Card3D'
+import { Sparkles, AlertTriangle } from 'lucide-react'
 
 function formatCardNumber(raw) {
   return raw.replace(/\D/g, '').slice(0, 16).replace(/(\d{4})(?=\d)/g, '$1 ')
@@ -51,9 +52,7 @@ export default function CreateCard() {
 
       if (err || !data) { navigate('/templates'); return }
       if (data.status !== 'success') { navigate('/templates'); return }
-      // Paiement déjà utilisé pour une autre carte
-      if (data.card_id) { navigate(`/card/${data.card_id}`); return }
-      // Le tier du paiement doit correspondre au template choisi
+      if (data.card_id) { navigate(`/card/${data.id}`); return }
       if (data.tier !== template.tier) { navigate('/templates'); return }
 
       setChecking(false)
@@ -134,7 +133,7 @@ export default function CreateCard() {
   if (!template || checking) {
     return (
       <div className="flex items-center justify-center min-h-screen">
-        <div className="w-8 h-8 border-4 border-violet-500 border-t-transparent rounded-full animate-spin" />
+        <div className="w-8 h-8 border-4 border-sky-400 border-t-transparent rounded-full animate-spin" />
       </div>
     )
   }
@@ -147,7 +146,6 @@ export default function CreateCard() {
       </div>
 
       <div className="flex flex-col lg:grid lg:grid-cols-2 gap-6 lg:gap-10 items-start">
-        {/* Form — en premier sur mobile */}
         <div className="w-full bg-slate-800/50 border border-slate-700 rounded-2xl p-5 md:p-6 order-1 lg:order-2">
           <form onSubmit={handleSubmit} className="space-y-5">
             {error && (
@@ -175,7 +173,7 @@ export default function CreateCard() {
                 <button
                   type="button"
                   onClick={() => set('card_number', generateRandomCardNumber())}
-                  className="text-xs text-violet-400 hover:text-violet-300 transition"
+                  className="text-xs text-sky-400 hover:text-sky-300 transition"
                 >
                   ↺ Regénérer
                 </button>
@@ -241,7 +239,7 @@ export default function CreateCard() {
                     onClick={() => set('language', l.id)}
                     className={`flex-1 py-2.5 rounded-xl border text-sm font-medium transition ${
                       form.language === l.id
-                        ? 'border-violet-500 bg-violet-900/30 text-white'
+                        ? 'border-sky-400 bg-sky-900/30 text-white'
                         : 'border-slate-700 bg-slate-800 text-slate-400 hover:border-slate-600'
                     }`}
                   >
@@ -253,19 +251,14 @@ export default function CreateCard() {
 
             <div className="pt-2">
               <button type="submit" className="btn-primary" disabled={loading}>
-                {loading ? 'Génération en cours...' : '✨ Générer ma carte'}
+                {loading ? 'Génération en cours...' : <><Sparkles className="w-4 h-4 inline mr-2" /> Générer ma carte</>}
               </button>
               <p className="text-slate-600 text-xs text-center mt-3">
-                ⚠️ Une fois créée, la carte ne peut plus être modifiée.
+                <AlertTriangle className="inline h-4 w-4 align-text-bottom mr-1" />
+                Une fois créée, la carte ne peut plus être modifiée.
               </p>
             </div>
           </form>
-        </div>
-
-        {/* Live preview — en second sur mobile, en premier sur desktop */}
-        <div className="w-full flex flex-col items-center gap-3 order-2 lg:order-1 lg:sticky lg:top-24">
-          <Card3D card={preview} size="md" />
-          <p className="text-slate-600 text-xs">Aperçu en temps réel — cliquer pour retourner</p>
         </div>
       </div>
     </div>

@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
 import { TEMPLATES } from '../data/templates'
 import Card3D from '../components/Card3D'
+import { AlertTriangle, CheckCircle2, Clock, Loader2, Lock, Search, ShieldCheck } from 'lucide-react'
 
 async function sha256(str) {
   const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str))
@@ -13,7 +14,7 @@ export default function ShareView() {
   const { slug } = useParams()
   const [shareLink, setShareLink] = useState(null)
   const [card, setCard] = useState(null)
-  const [status, setStatus] = useState('loading') // loading | form | locked | invalid | expired | unlocked
+  const [status, setStatus] = useState('loading')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
   const [attempts, setAttempts] = useState(0)
@@ -66,7 +67,7 @@ export default function ShareView() {
   if (status === 'loading') {
     return (
       <div className="flex items-center justify-center min-h-screen">
-        <div className="w-8 h-8 border-4 border-violet-500 border-t-transparent rounded-full animate-spin" />
+        <Loader2 className="w-10 h-10 text-sky-400 animate-spin" />
       </div>
     )
   }
@@ -75,7 +76,7 @@ export default function ShareView() {
     return (
       <div className="min-h-screen flex items-center justify-center px-4">
         <div className="text-center max-w-md">
-          <div className="text-6xl mb-4">🔍</div>
+          <Search className="mx-auto h-14 w-14 text-slate-400 mb-4" />
           <h2 className="text-2xl font-bold mb-3">Lien introuvable</h2>
           <p className="text-slate-400">Ce lien de partage n'existe pas ou a été supprimé.</p>
         </div>
@@ -87,7 +88,7 @@ export default function ShareView() {
     return (
       <div className="min-h-screen flex items-center justify-center px-4">
         <div className="text-center max-w-md">
-          <div className="text-6xl mb-4">⏰</div>
+          <Clock className="mx-auto h-14 w-14 text-slate-400 mb-4" />
           <h2 className="text-2xl font-bold mb-3">Lien expiré</h2>
           <p className="text-slate-400">Ce lien de partage a expiré après 30 jours.</p>
         </div>
@@ -99,7 +100,7 @@ export default function ShareView() {
     return (
       <div className="min-h-screen flex items-center justify-center px-4">
         <div className="text-center max-w-md">
-          <div className="text-6xl mb-4">🔒</div>
+          <Lock className="mx-auto h-14 w-14 text-slate-400 mb-4" />
           <h2 className="text-2xl font-bold mb-3">Accès bloqué</h2>
           <p className="text-slate-400">Trop de tentatives incorrectes.</p>
         </div>
@@ -112,7 +113,7 @@ export default function ShareView() {
       <div className="min-h-screen flex items-center justify-center px-4 py-12">
         <div className="w-full max-w-sm">
           <div className="text-center mb-8">
-            <div className="text-5xl mb-4">🔐</div>
+            <ShieldCheck className="mx-auto h-14 w-14 text-sky-400 mb-4" />
             <h1 className="text-2xl font-bold mb-2">Carte partagée</h1>
             <p className="text-slate-400 text-sm">Entre le mot de passe pour visualiser la carte virtuelle.</p>
           </div>
@@ -136,13 +137,14 @@ export default function ShareView() {
                   autoFocus
                 />
               </div>
-              <button type="submit" className="btn-primary">
+              <button type="submit" className="btn-primary w-full">
                 Voir la carte
               </button>
             </form>
           </div>
 
           <p className="text-center text-slate-700 text-xs mt-6">
+            <AlertTriangle className="inline h-4 w-4 align-text-bottom mr-1" />
             Carte virtuelle à but décoratif uniquement — CardGen
           </p>
         </div>
@@ -150,7 +152,6 @@ export default function ShareView() {
     )
   }
 
-  // Unlocked
   const template = TEMPLATES.find(t => t.id === card.template_id) || TEMPLATES[0]
   const daysLeft = Math.max(0, Math.ceil((new Date(shareLink.expires_at) - Date.now()) / (1000 * 60 * 60 * 24)))
 
@@ -170,13 +171,12 @@ export default function ShareView() {
             Solde esthétique : <span className="font-semibold text-white">{Number(card.display_amount).toLocaleString('fr-FR')} FCFA</span>
           </p>
         )}
-        <p className="text-slate-700 text-xs mt-4">
-          Lien valide encore {daysLeft} jour{daysLeft > 1 ? 's' : ''}
-        </p>
+        <p className="text-slate-700 text-xs mt-4">Lien valide encore {daysLeft} jour{daysLeft > 1 ? 's' : ''}</p>
       </div>
 
       <p className="mt-10 text-slate-700 text-xs text-center max-w-sm">
-        ⚠️ Carte virtuelle à but décoratif et démonstratif uniquement.<br />
+        <AlertTriangle className="inline h-4 w-4 align-text-bottom mr-1" />
+        Carte virtuelle à but décoratif et démonstratif uniquement.<br />
         Aucune transaction bancaire réelle n'est associée.
       </p>
     </div>

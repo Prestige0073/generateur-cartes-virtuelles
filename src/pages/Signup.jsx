@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
+import { Mail, CheckCircle2 } from 'lucide-react'
 
 export default function Signup() {
   const { signUp } = useAuth()
@@ -46,7 +47,7 @@ export default function Signup() {
     return (
       <div className="min-h-screen flex items-center justify-center px-4">
         <div className="text-center max-w-md">
-          <div className="text-6xl mb-4">📧</div>
+          <CheckCircle2 className="mx-auto h-14 w-14 text-sky-400 mb-4" />
           <h2 className="text-2xl font-bold mb-3">Vérifie ton email !</h2>
           <p className="text-slate-400">
             Un lien de confirmation t'a été envoyé à <strong className="text-white">{email}</strong>.
@@ -62,7 +63,7 @@ export default function Signup() {
     <div className="min-h-screen flex items-center justify-center px-4 py-12">
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
-          <span className="text-4xl">💳</span>
+          <Mail className="mx-auto h-10 w-10 text-sky-400" />
           <h1 className="text-2xl font-bold mt-3">Créer un compte</h1>
           <p className="text-slate-400 text-sm mt-1">Rejoins CardGen gratuitement</p>
         </div>
@@ -119,7 +120,7 @@ export default function Signup() {
 
         <p className="text-center text-slate-400 text-sm mt-6">
           Déjà un compte ?{' '}
-          <Link to="/login" className="text-violet-400 hover:text-violet-300 font-medium transition">
+          <Link to="/login" className="text-sky-400 hover:text-sky-300 font-medium transition">
             Se connecter
           </Link>
         </p>

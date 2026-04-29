@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
+import { LogIn } from 'lucide-react'
 
 export default function Login() {
   const { signIn } = useAuth()
@@ -29,7 +30,7 @@ export default function Login() {
     <div className="min-h-screen flex items-center justify-center px-4 py-12">
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
-          <span className="text-4xl">💳</span>
+          <LogIn className="mx-auto h-10 w-10 text-sky-400" />
           <h1 className="text-2xl font-bold mt-3">Connexion</h1>
           <p className="text-slate-400 text-sm mt-1">Accède à tes cartes virtuelles</p>
         </div>
@@ -72,7 +73,7 @@ export default function Login() {
             </div>
 
             <div className="text-right">
-              <Link to="/forgot-password" className="text-sm text-violet-400 hover:text-violet-300 transition">
+              <Link to="/forgot-password" className="text-sm text-sky-400 hover:text-sky-300 transition">
                 Mot de passe oublié ?
               </Link>
             </div>
@@ -85,7 +86,7 @@ export default function Login() {
 
         <p className="text-center text-slate-400 text-sm mt-6">
           Pas encore de compte ?{' '}
-          <Link to="/signup" className="text-violet-400 hover:text-violet-300 font-medium transition">
+          <Link to="/signup" className="text-sky-400 hover:text-sky-300 font-medium transition">
             S'inscrire
           </Link>
         </p>

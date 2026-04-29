@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
+import { Mail, CheckCircle2, ArrowLeft } from 'lucide-react'
 
 export default function ForgotPassword() {
   const { resetPassword } = useAuth()
@@ -26,13 +27,13 @@ export default function ForgotPassword() {
     return (
       <div className="min-h-screen flex items-center justify-center px-4">
         <div className="text-center max-w-md">
-          <div className="text-6xl mb-4">📬</div>
+          <CheckCircle2 className="mx-auto h-14 w-14 text-sky-400 mb-4" />
           <h2 className="text-2xl font-bold mb-3">Email envoyé !</h2>
           <p className="text-slate-400 mb-6">
             Un lien de réinitialisation a été envoyé à <strong className="text-white">{email}</strong>.
           </p>
-          <Link to="/login" className="text-violet-400 hover:text-violet-300 transition font-medium">
-            ← Retour à la connexion
+          <Link to="/login" className="text-sky-400 hover:text-sky-300 transition font-medium inline-flex items-center gap-2">
+            <ArrowLeft className="w-4 h-4" /> Retour à la connexion
           </Link>
         </div>
       </div>
@@ -43,7 +44,7 @@ export default function ForgotPassword() {
     <div className="min-h-screen flex items-center justify-center px-4 py-12">
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
-          <span className="text-4xl">🔑</span>
+          <Mail className="mx-auto h-10 w-10 text-sky-400" />
           <h1 className="text-2xl font-bold mt-3">Mot de passe oublié</h1>
           <p className="text-slate-400 text-sm mt-1">Reçois un lien de réinitialisation par email</p>
         </div>
@@ -75,8 +76,8 @@ export default function ForgotPassword() {
         </div>
 
         <p className="text-center text-slate-400 text-sm mt-6">
-          <Link to="/login" className="text-violet-400 hover:text-violet-300 transition">
-            ← Retour à la connexion
+          <Link to="/login" className="text-sky-400 hover:text-sky-300 transition inline-flex items-center gap-2">
+            <ArrowLeft className="w-4 h-4" /> Retour à la connexion
           </Link>
         </p>
       </div>

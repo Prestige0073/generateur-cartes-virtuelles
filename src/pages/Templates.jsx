@@ -45,7 +45,7 @@ export default function Templates() {
             onClick={() => setFilter(f.key)}
             className={`px-4 py-2 rounded-lg text-sm font-medium transition whitespace-nowrap shrink-0 ${
               filter === f.key
-                ? 'bg-violet-600 text-white'
+                ? 'bg-sky-500 text-white'
                 : 'bg-slate-800 text-slate-400 hover:bg-slate-700 hover:text-white'
             }`}
           >
@@ -63,7 +63,7 @@ export default function Templates() {
               key={template.id}
               className={`bg-slate-800/50 border rounded-2xl p-5 flex flex-col items-center gap-4 transition-all duration-200 cursor-pointer ${
                 selected === template.id
-                  ? 'border-violet-500 shadow-lg shadow-violet-900/30'
+                  ? 'border-sky-400 shadow-lg shadow-sky-900/30'
                   : 'border-slate-700 hover:border-slate-600'
               }`}
               onClick={() => setSelected(template.id)}
@@ -71,7 +71,7 @@ export default function Templates() {
               <div className="relative w-full flex justify-center">
                 <Card3D card={PREVIEW_CARD(template)} size="sm" interactive={false} />
                 {selected === template.id && (
-                  <div className="absolute -top-2 -right-2 w-6 h-6 bg-violet-500 rounded-full flex items-center justify-center text-white text-xs font-bold">✓</div>
+                  <div className="absolute -top-2 -right-2 w-6 h-6 bg-sky-400 rounded-full flex items-center justify-center text-white text-xs font-bold">✓</div>
                 )}
               </div>
 
@@ -89,7 +89,7 @@ export default function Templates() {
 
               <button
                 onClick={(e) => { e.stopPropagation(); handleChoose(template) }}
-                className="w-full bg-violet-600 hover:bg-violet-500 active:bg-violet-700 text-white text-sm font-semibold py-3 rounded-xl transition"
+                className="w-full bg-sky-500 hover:bg-sky-400 active:bg-sky-600 text-white text-sm font-semibold py-3 rounded-xl transition"
               >
                 Choisir ce design →
               </button>

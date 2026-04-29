@@ -1,11 +1,10 @@
 export const TIERS = {
   basique: { label: 'Basique', price: 5200, color: 'text-slate-300', badge: 'bg-slate-700' },
-  premium: { label: 'Premium', price: 6200, color: 'text-yellow-400', badge: 'bg-yellow-900/40' },
-  vip:     { label: 'VIP',     price: 7200, color: 'text-purple-400', badge: 'bg-purple-900/40' },
+  premium: { label: 'Premium', price: 6200, color: 'text-sky-400', badge: 'bg-sky-900/40' },
+  vip:     { label: 'VIP',     price: 7200, color: 'text-sky-300', badge: 'bg-sky-900/40' },
 }
 
 export const TEMPLATES = [
-  // ── BASIQUE ──────────────────────────────────────────────────────────
   {
     id: 'noir-elite',
     name: 'Noir Elite',
@@ -45,7 +44,6 @@ export const TEMPLATES = [
     numberColor: '#a7f3d0',
     labelColor: 'rgba(209,250,229,0.50)',
   },
-  // ── PREMIUM ──────────────────────────────────────────────────────────
   {
     id: 'imperial-gold',
     name: 'Imperial Gold',
@@ -85,7 +83,6 @@ export const TEMPLATES = [
     numberColor: '#cbd5e1',
     labelColor: 'rgba(226,232,240,0.50)',
   },
-  // ── VIP ──────────────────────────────────────────────────────────────
   {
     id: 'obsidian-vip',
     name: 'Obsidian VIP',
