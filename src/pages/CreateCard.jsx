@@ -122,7 +122,7 @@ export default function CreateCard() {
     setLoading(false)
 
     if (err2) {
-      setError('Erreur lors de la création. Réessaie.')
+      setError(err2.message || 'Erreur lors de la création. Réessaie.')
     } else {
       if (paymentId) {
         await supabase.from('payments').update({ card_id: data.id }).eq('id', paymentId)
