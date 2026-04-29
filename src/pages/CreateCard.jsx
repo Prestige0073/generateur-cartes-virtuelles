@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { useSearchParams, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import { supabase } from '../lib/supabase'
-import { TEMPLATES } from '../data/templates'
+import { TEMPLATES, TIERS } from '../data/templates'
 import Card3D from '../components/Card3D'
 import { RefreshCcw, Sparkles, Loader2, AlertTriangle } from 'lucide-react'
 
@@ -61,12 +61,16 @@ export default function CreateCard() {
     verifyPayment()
   }, [template, paymentId, user.id, navigate])
 
+  const tierInfo = TIERS[template?.tier]
+  const canDisplayAmount = tierInfo?.displayAmount ?? false
+
   const preview = {
     ...form,
+    tier: template?.tier,
     card_number: form.card_number.replace(/\s/g, ''),
     template_id: templateId,
     network_type: template?.network || 'visa',
-    display_amount: form.display_amount || null,
+    display_amount: canDisplayAmount && form.display_amount ? form.display_amount : null,
   }
 
   function set(field, value) {
@@ -109,7 +113,7 @@ export default function CreateCard() {
       cvv: form.cvv,
       network_type: template.network,
       language: form.language,
-      display_amount: form.display_amount ? parseFloat(form.display_amount) : null,
+      display_amount: canDisplayAmount && form.display_amount ? parseFloat(form.display_amount) : null,
     }
 
     if (paymentId) {
@@ -146,6 +150,12 @@ export default function CreateCard() {
       </div>
 
       <div className="flex flex-col lg:grid lg:grid-cols-2 gap-6 lg:gap-10 items-start">
+        {/* Live preview */}
+        <div className="w-full flex flex-col items-center gap-3 order-2 lg:order-1 lg:sticky lg:top-24">
+          <Card3D card={preview} size="md" />
+          <p className="text-slate-600 text-xs">Aperçu en temps réel — cliquer pour retourner</p>
+        </div>
+
         <div className="w-full bg-slate-800/50 border border-slate-700 rounded-2xl p-5 md:p-6 order-1 lg:order-2">
           <form onSubmit={handleSubmit} className="space-y-5">
             {error && (
@@ -213,21 +223,31 @@ export default function CreateCard() {
               </div>
             </div>
 
-            <div>
-              <label className="block text-sm font-medium text-slate-300 mb-1.5">Solde esthétique (optionnel)</label>
-              <div className="relative">
-                <input
-                  type="number"
-                  value={form.display_amount}
-                  onChange={e => set('display_amount', e.target.value)}
-                  className="input-field pr-16"
-                  placeholder="250 000"
-                  min={0}
-                />
-                <span className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-500 text-sm">FCFA</span>
+            {canDisplayAmount ? (
+              <div>
+                <label className="block text-sm font-medium text-slate-300 mb-1.5">Solde esthétique (optionnel)</label>
+                <div className="relative">
+                  <input
+                    type="number"
+                    value={form.display_amount}
+                    onChange={e => set('display_amount', e.target.value)}
+                    className="input-field pr-16"
+                    placeholder="250 000"
+                    min={0}
+                  />
+                  <span className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-500 text-sm">FCFA</span>
+                </div>
+                <p className="text-slate-600 text-xs mt-1">Affiché au verso de la carte, purement décoratif.</p>
               </div>
-              <p className="text-slate-600 text-xs mt-1">Affiché au verso de la carte, purement décoratif.</p>
-            </div>
+            ) : (
+              <div className="bg-slate-900/60 border border-slate-700/50 rounded-xl px-4 py-3 flex items-center gap-3">
+                <div className="flex-1">
+                  <p className="text-slate-500 text-sm font-medium">Solde esthétique</p>
+                  <p className="text-slate-600 text-xs mt-0.5">Disponible à partir du niveau <span className="text-sky-400 font-medium">Premium</span></p>
+                </div>
+                <span className="text-xs font-bold px-2 py-1 rounded-full bg-slate-700/80 text-slate-400">Basique</span>
+              </div>
+            )}
 
             <div>
               <label className="block text-sm font-medium text-slate-300 mb-2">Langue de la carte</label>

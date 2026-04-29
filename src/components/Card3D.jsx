@@ -158,6 +158,17 @@ function Pattern({ uid, type, color, width, height }) {
     </svg>
   )
 
+  if (type === 'mesh') return (
+    <svg style={{ position:'absolute', inset:0, width:'100%', height:'100%', pointerEvents:'none' }}>
+      <defs>
+        <pattern id={pid} x="0" y="0" width="14" height="14" patternUnits="userSpaceOnUse">
+          <path d="M 14 0 L 0 0 0 14" fill="none" stroke={color} strokeWidth="0.4"/>
+        </pattern>
+      </defs>
+      <rect width={width} height={height} fill={`url(#${pid})`}/>
+    </svg>
+  )
+
   return null
 }
 
@@ -237,6 +248,13 @@ export default function Card3D({ card, interactive = true, size = 'md' }) {
                 position:'absolute', inset:0, borderRadius:16, pointerEvents:'none',
                 border:'1px solid rgba(255,255,255,0.08)',
               }}/>
+              {/* Bordure dorée VIP */}
+              {card?.tier === 'vip' && (
+                <div style={{
+                  position:'absolute', inset:0, borderRadius:16, pointerEvents:'none',
+                  border:'1px solid rgba(212,175,55,0.22)',
+                }}/>
+              )}
 
               {/* ── Contenu recto ── */}
               <div style={{ position:'relative', padding:`${pt}px ${p}px`, height:'100%', display:'flex', flexDirection:'column', justifyContent:'space-between' }}>
@@ -265,6 +283,21 @@ export default function Card3D({ card, interactive = true, size = 'md' }) {
                 }}>
                   {fmtNum}
                 </div>
+
+                {/* Badge VIP */}
+                {card?.tier === 'vip' && (
+                  <div style={{
+                    position:'absolute',
+                    top: dims.h * 0.055,
+                    right: p,
+                    fontSize: Math.max(5.5, dims.label - 1.5),
+                    letterSpacing: '2.5px',
+                    color: template.labelColor,
+                    fontWeight: 700,
+                    opacity: 0.65,
+                    fontFamily: 'monospace',
+                  }}>◈ VIP</div>
+                )}
 
                 {/* Ligne 3 : Titulaire + Expiration */}
                 <div style={{ display:'flex', justifyContent:'space-between', alignItems:'flex-end', paddingBottom: dims.h * 0.04 }}>
