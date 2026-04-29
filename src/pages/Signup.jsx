@@ -27,9 +27,15 @@ export default function Signup() {
     const { error: err } = await signUp(email, password)
     setLoading(false)
     if (err) {
-      setError(err.message === 'User already registered'
-        ? 'Cet email est déjà utilisé.'
-        : 'Une erreur est survenue. Réessaie.')
+      if (err.message === 'User already registered') {
+        setError('Cet email est déjà utilisé.')
+      } else if (err.message?.toLowerCase().includes('password')) {
+        setError('Mot de passe trop faible. Utilise au moins 6 caractères.')
+      } else if (err.message?.toLowerCase().includes('email')) {
+        setError('Adresse email invalide.')
+      } else {
+        setError(err.message || 'Une erreur est survenue. Réessaie.')
+      }
     } else {
       setSuccess(true)
       setTimeout(() => navigate('/login'), 4000)
