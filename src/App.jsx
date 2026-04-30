@@ -1,4 +1,4 @@
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route, useLocation } from 'react-router-dom'
 import Navbar from './components/Navbar'
 import ProtectedRoute from './components/ProtectedRoute'
 import Home from './pages/Home'
@@ -14,9 +14,12 @@ import CardView from './pages/CardView'
 import ShareView from './pages/ShareView'
 
 export default function App() {
+  const location = useLocation()
+  const isSharePage = location.pathname.startsWith('/share/')
+
   return (
     <div className="min-h-screen bg-slate-900 text-white">
-      <Navbar />
+      {!isSharePage && <Navbar />}
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
