@@ -209,6 +209,15 @@ export default function Card3D({ card, interactive = true, size = 'md' }) {
     ? rawNum.replace(/(\d{4})(?=\d)/g, '$1 ')
     : '•••• •••• •••• ••••'
 
+  const styleVariant = card?.style_variant || 'standard'
+  const fontVariant = card?.font_variant || 'classic'
+  const nameFont = fontVariant === 'modern'
+    ? 'Inter, "Segoe UI", sans-serif'
+    : fontVariant === 'rounded'
+    ? 'Segoe UI, "Helvetica Neue", Arial, sans-serif'
+    : 'Times New Roman, serif'
+  const isMetal = styleVariant === 'metal'
+  const isLuxe = styleVariant === 'luxe'
   const p = dims.w * 0.062  // padding latéral
   const pt = dims.h * 0.12  // padding top
 
@@ -240,13 +249,27 @@ export default function Card3D({ card, interactive = true, size = 'md' }) {
               {/* Reflet haut-gauche */}
               <div style={{
                 position:'absolute', inset:0, borderRadius:16, pointerEvents:'none',
-                background:'linear-gradient(135deg, rgba(255,255,255,0.13) 0%, rgba(255,255,255,0.03) 40%, transparent 65%)',
+                background:isMetal
+                  ? 'radial-gradient(circle at 20% 20%, rgba(255,255,255,0.18), transparent 20%), linear-gradient(135deg, rgba(255,255,255,0.08), rgba(255,255,255,0) 55%)'
+                  : isLuxe
+                  ? 'radial-gradient(circle at 30% 20%, rgba(255,255,255,0.14), transparent 20%), radial-gradient(circle at 70% 35%, rgba(255,255,255,0.08), transparent 22%)'
+                  : 'linear-gradient(135deg, rgba(255,255,255,0.13) 0%, rgba(255,255,255,0.03) 40%, transparent 65%)',
               }}/>
+
+              {isLuxe && (
+                <div style={{
+                  position:'absolute', top: dims.h * 0.18, left: dims.w * 0.08,
+                  width: dims.w * 0.34, height: dims.h * 0.014,
+                  background:'rgba(255,255,255,0.18)',
+                  transform:'rotate(-12deg)',
+                  borderRadius:999,
+                }}/>
+              )}
 
               {/* Ligne de bord subtile */}
               <div style={{
                 position:'absolute', inset:0, borderRadius:16, pointerEvents:'none',
-                border:'1px solid rgba(255,255,255,0.08)',
+                border:isMetal ? '1px solid rgba(255,255,255,0.12)' : '1px solid rgba(255,255,255,0.08)',
               }}/>
               {/* Bordure dorée VIP */}
               {card?.tier === 'vip' && (
@@ -270,6 +293,22 @@ export default function Card3D({ card, interactive = true, size = 'md' }) {
                     : <VisaLogo color={template.textColor}/>
                   }
                 </div>
+
+                {/* Nom de banque (VIP seulement) */}
+                {card?.bank_name && card?.tier === 'vip' && (
+                  <div style={{
+                    fontSize: dims.label - 1,
+                    color: template.labelColor,
+                    letterSpacing: '1px',
+                    textTransform: 'uppercase',
+                    fontWeight: 500,
+                    opacity: 0.8,
+                    marginTop: dims.h * 0.02,
+                    fontFamily: nameFont,
+                  }}>
+                    {card.bank_name}
+                  </div>
+                )}
 
                 {/* Ligne 2 : Numéro */}
                 <div style={{
@@ -305,7 +344,7 @@ export default function Card3D({ card, interactive = true, size = 'md' }) {
                     <div style={{ fontSize: dims.label, color: template.labelColor, letterSpacing:'1.5px', marginBottom: 4, textTransform:'uppercase', fontWeight:500 }}>
                       {labels.holder}
                     </div>
-                    <div style={{ fontSize: dims.name, color: template.textColor, letterSpacing:'2px', textTransform:'uppercase', fontWeight:600, textShadow:'0 1px 3px rgba(0,0,0,0.5)' }}>
+                    <div style={{ fontSize: dims.name, color: template.textColor, letterSpacing:'2px', textTransform:'uppercase', fontWeight:600, textShadow:'0 1px 3px rgba(0,0,0,0.5)', fontFamily: nameFont }}>
                       {card?.cardholder_name || 'VOTRE NOM'}
                     </div>
                   </div>

@@ -85,6 +85,13 @@ export default function Templates() {
       <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
         {filtered.map(template => {
           const tier = TIERS[template.tier]
+          const perks = [
+            tier.displayAmount && 'Solde décoratif',
+            tier.customStyle && 'Style personnalisable',
+            tier.customFont && 'Police personnalisable',
+            tier.customBankName && 'Nom de banque VIP',
+          ].filter(Boolean)
+
           return (
             <div
               key={template.id}
@@ -116,6 +123,16 @@ export default function Templates() {
                   {template.network}
                 </div>
               </div>
+
+              {perks.length > 0 && (
+                <div className="w-full grid grid-cols-2 gap-2 text-[11px]">
+                  {perks.map(perk => (
+                    <span key={perk} className="rounded-full bg-slate-900/80 px-2.5 py-1 text-slate-300 text-center">
+                      {perk}
+                    </span>
+                  ))}
+                </div>
+              )}
 
               <button
                 onClick={(e) => { e.stopPropagation(); handleChoose(template) }}

@@ -19,6 +19,9 @@ CREATE TABLE IF NOT EXISTS public.cards (
   network_type    TEXT NOT NULL CHECK (network_type IN ('visa', 'mastercard')),
   language        TEXT NOT NULL DEFAULT 'fr',
   display_amount  DECIMAL(15, 2),
+  bank_name       TEXT,
+  style_variant   TEXT CHECK (style_variant IN ('standard', 'metal', 'luxe')),
+  font_variant    TEXT CHECK (font_variant IN ('classic', 'modern', 'rounded')),
   payment_id      UUID,
   created_at      TIMESTAMPTZ NOT NULL DEFAULT now()
 );

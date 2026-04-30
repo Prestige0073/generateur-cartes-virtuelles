@@ -7,6 +7,18 @@ import Card3D from '../components/Card3D'
 import Loading from '../components/Loading'
 import { RefreshCcw, Sparkles, AlertTriangle } from 'lucide-react'
 
+const STYLE_OPTIONS = [
+  { id: 'standard', label: 'Standard' },
+  { id: 'metal', label: 'Métal' },
+  { id: 'luxe', label: 'Luxe' },
+]
+
+const FONT_OPTIONS = [
+  { id: 'classic', label: 'Classique' },
+  { id: 'modern', label: 'Moderne' },
+  { id: 'rounded', label: 'Arrondi' },
+]
+
 function formatCardNumber(raw) {
   return raw.replace(/\D/g, '').slice(0, 16).replace(/(\d{4})(?=\d)/g, '$1 ')
 }
@@ -33,6 +45,9 @@ export default function CreateCard() {
     cvv: '',
     language: 'fr',
     display_amount: '',
+    bank_name: '',
+    style_variant: 'standard',
+    font_variant: 'classic',
   })
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
@@ -64,6 +79,9 @@ export default function CreateCard() {
 
   const tierInfo = TIERS[template?.tier]
   const canDisplayAmount = tierInfo?.displayAmount ?? false
+  const canCustomBankName = tierInfo?.customBankName ?? false
+  const canPickStyle = tierInfo?.customStyle ?? false
+  const canPickFont = tierInfo?.customFont ?? false
 
   const preview = {
     ...form,
@@ -72,6 +90,9 @@ export default function CreateCard() {
     template_id: templateId,
     network_type: template?.network || 'visa',
     display_amount: canDisplayAmount && form.display_amount ? form.display_amount : null,
+    bank_name: canCustomBankName && form.bank_name ? form.bank_name : null,
+    style_variant: canPickStyle ? form.style_variant : 'standard',
+    font_variant: canPickFont ? form.font_variant : 'classic',
   }
 
   function set(field, value) {
@@ -115,6 +136,9 @@ export default function CreateCard() {
       network_type: template.network,
       language: form.language,
       display_amount: canDisplayAmount && form.display_amount ? parseFloat(form.display_amount) : null,
+      bank_name: canCustomBankName && form.bank_name ? form.bank_name.toUpperCase() : null,
+      style_variant: canPickStyle ? form.style_variant : null,
+      font_variant: canPickFont ? form.font_variant : null,
     }
 
     if (paymentId) {
@@ -246,6 +270,29 @@ export default function CreateCard() {
               </div>
             )}
 
+            {canCustomBankName ? (
+              <div>
+                <label className="block text-sm font-medium text-slate-300 mb-1.5">Nom de la banque (optionnel)</label>
+                <input
+                  type="text"
+                  value={form.bank_name}
+                  onChange={e => set('bank_name', e.target.value.toUpperCase())}
+                  className="input-field uppercase"
+                  placeholder="BANQUE NATIONALE"
+                  maxLength={30}
+                />
+                <p className="text-slate-600 text-xs mt-1">Affiché en haut de la carte pour un look plus officiel.</p>
+              </div>
+            ) : (
+              <div className="bg-slate-900/60 border border-slate-700/50 rounded-xl px-4 py-3 flex items-center gap-3">
+                <div className="flex-1">
+                  <p className="text-slate-500 text-sm font-medium">Nom de banque personnalisé</p>
+                  <p className="text-slate-600 text-xs mt-0.5">Disponible uniquement avec le niveau <span className="text-amber-400 font-medium">VIP</span></p>
+                </div>
+                <span className="text-xs font-bold px-2 py-1 rounded-full bg-amber-900/60 text-amber-400">VIP</span>
+              </div>
+            )}
+
             <div>
               <label className="block text-sm font-medium text-slate-300 mb-2">Langue de la carte</label>
               <div className="flex gap-3">
@@ -265,6 +312,52 @@ export default function CreateCard() {
                 ))}
               </div>
             </div>
+
+            {canPickStyle && (
+              <div>
+                <label className="block text-sm font-medium text-slate-300 mb-2">Style de carte</label>
+                <div className="grid grid-cols-3 gap-3">
+                  {STYLE_OPTIONS.map(option => (
+                    <button
+                      key={option.id}
+                      type="button"
+                      onClick={() => set('style_variant', option.id)}
+                      className={`py-2.5 rounded-xl border text-sm font-medium transition ${
+                        form.style_variant === option.id
+                          ? 'border-sky-400 bg-sky-900/30 text-white'
+                          : 'border-slate-700 bg-slate-800 text-slate-400 hover:border-slate-600'
+                      }`}
+                    >
+                      {option.label}
+                    </button>
+                  ))}
+                </div>
+                <p className="text-slate-600 text-xs mt-1">Choisis une apparence élégante pour ta carte Premium/VIP.</p>
+              </div>
+            )}
+
+            {canPickFont && (
+              <div>
+                <label className="block text-sm font-medium text-slate-300 mb-2">Police du nom</label>
+                <div className="grid grid-cols-3 gap-3">
+                  {FONT_OPTIONS.map(option => (
+                    <button
+                      key={option.id}
+                      type="button"
+                      onClick={() => set('font_variant', option.id)}
+                      className={`py-2.5 rounded-xl border text-sm font-medium transition ${
+                        form.font_variant === option.id
+                          ? 'border-sky-400 bg-sky-900/30 text-white'
+                          : 'border-slate-700 bg-slate-800 text-slate-400 hover:border-slate-600'
+                      }`}
+                    >
+                      {option.label}
+                    </button>
+                  ))}
+                </div>
+                <p className="text-slate-600 text-xs mt-1">Donne un style unique au nom du titulaire.</p>
+              </div>
+            )}
 
             <div className="pt-2">
               <button type="submit" className="btn-primary inline-flex items-center justify-center gap-2" disabled={loading}>

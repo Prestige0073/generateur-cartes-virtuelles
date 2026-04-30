@@ -153,6 +153,9 @@ export default function CardView() {
               { label: 'Expiration', value: card.expiry_date },
               { label: 'Réseau',     value: card.network_type === 'visa' ? 'Visa' : 'Mastercard' },
               { label: 'Langue',     value: card.language === 'fr' ? 'Français' : 'Anglais' },
+              ...(card.bank_name ? [{ label: 'Banque', value: card.bank_name }] : []),
+              ...(card.style_variant ? [{ label: 'Style', value: card.style_variant === 'metal' ? 'Métal' : card.style_variant === 'luxe' ? 'Luxe' : 'Standard' }] : []),
+              ...(card.font_variant ? [{ label: 'Police', value: card.font_variant === 'modern' ? 'Moderne' : card.font_variant === 'rounded' ? 'Arrondi' : 'Classique' }] : []),
               ...(card.display_amount ? [{ label: 'Solde', value: `${Number(card.display_amount).toLocaleString('fr-FR')} FCFA` }] : []),
               { label: 'Créée le',   value: new Date(card.created_at).toLocaleDateString('fr-FR') },
             ].map(row => (
