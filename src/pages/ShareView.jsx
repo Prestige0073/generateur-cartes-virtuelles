@@ -156,26 +156,49 @@ export default function ShareView() {
   const daysLeft = Math.max(0, Math.ceil((new Date(shareLink.expires_at) - Date.now()) / (1000 * 60 * 60 * 24)))
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center px-4 py-16">
-      <div className="text-center mb-8">
-        <h1 className="text-xl font-semibold mb-1">Carte bancaire</h1>
+    <div className="min-h-screen bg-slate-900 flex flex-col items-center justify-center px-4 py-8 md:py-16 md:px-6">
+      {/* Header */}
+      <div className="text-center mb-6 md:mb-8">
+        <h1 className="text-xl md:text-2xl font-semibold mb-1">Carte bancaire</h1>
+        <p className="text-slate-500 text-xs md:text-sm">Partagée et sécurisée</p>
       </div>
 
-      <Card3D card={card} size="md" />
-
-      <div className="mt-6 text-center">
-        <p className="text-slate-500 text-sm">{template.name}</p>
-        {card.display_amount && (
-          <p className="text-slate-400 text-sm mt-1">
-            Solde : <span className="font-semibold text-white">{Number(card.display_amount).toLocaleString('fr-FR')} FCFA</span>
-          </p>
-        )}
-        <p className="text-slate-700 text-xs mt-4">Lien valide encore {daysLeft} jour{daysLeft > 1 ? 's' : ''}</p>
+      {/* Card Container - Responsive */}
+      <div className="w-full max-w-md md:max-w-xl flex justify-center mb-8 md:mb-10">
+        <Card3D card={card} size="md" />
       </div>
 
-      <div className="mt-10 text-slate-700 text-xs text-center max-w-sm">
-        <AlertTriangle className="inline h-4 w-4 align-text-bottom mr-1" />
-        Carte bancaire sécurisée.
+      {/* Info Cards Section */}
+      <div className="w-full max-w-md md:max-w-2xl space-y-4">
+        {/* Template Name */}
+        <div className="bg-slate-800/40 border border-slate-700/60 rounded-xl p-4 text-center">
+          <span className="text-slate-500 text-xs uppercase tracking-wider">Design</span>
+          <p className="text-slate-200 font-semibold text-sm md:text-base mt-1">{template.name}</p>
+        </div>
+
+        {/* Solde and Durée - Side by side on desktop, stacked on mobile */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
+          {card.display_amount && (
+            <div className="bg-slate-800/40 border border-slate-700/60 rounded-xl p-4 text-center">
+              <span className="text-slate-500 text-xs uppercase tracking-wider">Solde</span>
+              <p className="text-emerald-400 font-bold text-lg md:text-xl mt-1">
+                {Number(card.display_amount).toLocaleString('fr-FR')}
+              </p>
+              <span className="text-slate-500 text-xs inline-block mt-1">FCFA</span>
+            </div>
+          )}
+          <div className={`bg-slate-800/40 border border-slate-700/60 rounded-xl p-4 text-center ${!card.display_amount ? 'md:col-span-2' : ''}`}>
+            <span className="text-slate-500 text-xs uppercase tracking-wider">Validité du lien</span>
+            <p className="text-sky-400 font-bold text-lg md:text-xl mt-1">{daysLeft}</p>
+            <span className="text-slate-500 text-xs inline-block mt-1">jour{daysLeft > 1 ? 's' : ''}</span>
+          </div>
+        </div>
+      </div>
+
+      {/* Security footer */}
+      <div className="mt-10 md:mt-12 text-center text-slate-600 text-xs">
+        <AlertTriangle className="inline h-4 w-4 align-text-bottom mr-1.5" />
+        Carte bancaire sécurisée — Lecture seule
       </div>
     </div>
   )
