@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react'
-import { useParams, Link } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
 import { TEMPLATES } from '../data/templates'
 import Card3D from '../components/Card3D'
-import { AlertTriangle, CheckCircle2, Clock, CreditCard, Loader2, Lock, Search, ShieldCheck } from 'lucide-react'
+import { AlertTriangle, Clock, Loader2, Lock, Search, ShieldCheck } from 'lucide-react'
 
 async function sha256(str) {
   const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str))
@@ -145,7 +145,7 @@ export default function ShareView() {
 
           <p className="text-center text-slate-700 text-xs mt-6">
             <AlertTriangle className="inline h-4 w-4 align-text-bottom mr-1" />
-            Carte bancaire professionnelle — CardGen
+            Carte bancaire sécurisée — Lecture seule
           </p>
         </div>
       </div>
@@ -159,7 +159,6 @@ export default function ShareView() {
     <div className="min-h-screen flex flex-col items-center justify-center px-4 py-16">
       <div className="text-center mb-8">
         <h1 className="text-xl font-semibold mb-1">Carte bancaire</h1>
-        <p className="text-slate-500 text-sm">Partagée via CardGen — Lecture seule</p>
       </div>
 
       <Card3D card={card} size="md" />
@@ -176,12 +175,8 @@ export default function ShareView() {
 
       <div className="mt-10 text-slate-700 text-xs text-center max-w-sm">
         <AlertTriangle className="inline h-4 w-4 align-text-bottom mr-1" />
-        Carte bancaire professionnelle et sécurisée.
+        Carte bancaire sécurisée.
       </div>
-
-      <Link to="/" className="mt-6 inline-flex items-center gap-2 text-sky-400 hover:text-sky-300 text-sm transition">
-        <CreditCard className="w-4 h-4" /> Créer ma propre carte sur CardGen
-      </Link>
     </div>
   )
 }
