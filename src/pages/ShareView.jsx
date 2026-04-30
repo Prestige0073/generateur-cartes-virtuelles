@@ -168,7 +168,7 @@ export default function ShareView() {
         <p className="text-slate-500 text-sm">{template.name}</p>
         {card.display_amount && (
           <p className="text-slate-400 text-sm mt-1">
-            Solde esthétique : <span className="font-semibold text-white">{Number(card.display_amount).toLocaleString('fr-FR')} FCFA</span>
+            Solde : <span className="font-semibold text-white">{Number(card.display_amount).toLocaleString('fr-FR')} FCFA</span>
           </p>
         )}
         <p className="text-slate-700 text-xs mt-4">Lien valide encore {daysLeft} jour{daysLeft > 1 ? 's' : ''}</p>
