@@ -21,7 +21,11 @@ export function AuthProvider({ children }) {
   }, [])
 
   async function signUp(email, password) {
-    return supabase.auth.signUp({ email, password })
+    const appUrl = import.meta.env.VITE_APP_URL || window.location.origin
+    return supabase.auth.signUp(
+      { email, password },
+      { redirectTo: `${appUrl}/login` }
+    )
   }
 
   async function signIn(email, password) {
