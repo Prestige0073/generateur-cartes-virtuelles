@@ -6,6 +6,9 @@ import { TEMPLATES, TIERS } from '../data/templates'
 import Loading from '../components/Loading'
 import { ShieldCheck, CheckCircle2, AlertTriangle, CreditCard } from 'lucide-react'
 
+const LEEKPAY_SCRIPT = 'https://leekpay.fr/js/leekpay.js'
+const LEEKPAY_PUBLIC_KEY = import.meta.env.VITE_LEEKPAY_PUBLIC_KEY
+
 export default function Payment() {
   const { tier } = useParams()
   const [searchParams] = useSearchParams()
@@ -17,6 +20,8 @@ export default function Payment() {
   const [provider, setProvider] = useState('mtn')
   const [loading, setLoading] = useState(false)
   const [step, setStep] = useState('form')
+  const [error, setError] = useState('')
+  const [leekPayLoaded, setLeekPayLoaded] = useState(false)
 
   const template = TEMPLATES.find(t => t.id === templateId)
   const tierInfo = TIERS[tier]
@@ -25,34 +30,50 @@ export default function Payment() {
     if (!template || !tierInfo) navigate('/templates')
   }, [template, tierInfo, navigate])
 
-  async function handleSimulatedPayment() {
-    if (!phone.trim()) return
-
-    setLoading(true)
-    setStep('processing')
-
-    await new Promise(res => setTimeout(res, 2500))
-
-    const { data, error } = await supabase.from('payments').insert({
-      user_id: user.id,
-      amount: tierInfo.price,
-      tier,
-      payment_provider: provider,
-      transaction_id: `SIM-${Date.now()}`,
-      status: 'success',
-    }).select().single()
-
-    setLoading(false)
-
-    if (error || !data) {
-      setStep('form')
+  useEffect(() => {
+    if (window.LeekPay) {
+      setLeekPayLoaded(true)
       return
     }
 
-    setStep('success')
-    setTimeout(() => {
-      navigate(`/create-card?templateId=${templateId}&paymentId=${data.id}`)
-    }, 1500)
+    const script = document.createElement('script')
+    script.src = LEEKPAY_SCRIPT
+    script.async = true
+    script.onload = () => setLeekPayLoaded(true)
+    script.onerror = () => setError('Impossible de charger LeekPay. Vérifie ta connexion.')
+    document.body.appendChild(script)
+
+    return () => {
+      document.body.removeChild(script)
+    }
+  }, [])
+
+  async function handleLeekPayPayment() {
+    setError('')
+    if (!phone.trim()) {
+      setError('Merci de renseigner ton numéro de téléphone.')
+      return
+    }
+    if (!LEEKPAY_PUBLIC_KEY) {
+      setError('Clé publique LeekPay manquante. Configure VITE_LEEKPAY_PUBLIC_KEY.')
+      return
+    }
+    if (!leekPayLoaded || !window.LeekPay) {
+      setError('Le widget de paiement LeekPay n’est pas disponible pour le moment.')
+      return
+    }
+
+    setLoading(true)
+    try {
+      window.LeekPay.checkout({
+        amount: tierInfo.price,
+        currency: 'XOF',
+        apiKey: LEEKPAY_PUBLIC_KEY,
+      })
+    } catch (err) {
+      setError('Erreur lors de l’ouverture du paiement LeekPay.')
+      setLoading(false)
+    }
   }
 
   if (!template || !tierInfo) return null
@@ -80,11 +101,11 @@ export default function Payment() {
         <p className="text-slate-400 text-sm">Finalise ton achat par Mobile Money</p>
       </div>
 
-      <div className="bg-yellow-900/20 border border-yellow-700/40 rounded-xl px-4 py-3 mb-6 flex items-start gap-3">
-        <ShieldCheck className="w-5 h-5 text-yellow-300 mt-0.5" />
+      <div className="bg-sky-900/20 border border-sky-700/40 rounded-xl px-4 py-3 mb-6 flex items-start gap-3">
+        <ShieldCheck className="w-5 h-5 text-sky-300 mt-0.5" />
         <div>
-          <p className="text-yellow-300 text-sm font-medium">Mode simulation activé</p>
-          <p className="text-yellow-600 text-xs mt-0.5">L'intégration FedaPay sera branchée ultérieurement. Tout paiement est automatiquement validé.</p>
+          <p className="text-sky-300 text-sm font-medium">Paiement LeekPay</p>
+          <p className="text-slate-400 text-xs mt-0.5">Le widget LeekPay s’ouvre pour finaliser le paiement sécurisé.</p>
         </div>
       </div>
 
@@ -143,17 +164,23 @@ export default function Payment() {
           <p className="text-slate-600 text-xs mt-1.5">Format international recommandé</p>
         </div>
 
+        {error && (
+          <div className="bg-red-900/30 border border-red-700/50 text-red-300 text-sm rounded-xl px-4 py-3 mb-4">
+            {error}
+          </div>
+        )}
+
         <button
-          onClick={handleSimulatedPayment}
+          onClick={handleLeekPayPayment}
           disabled={loading || !phone.trim()}
           className="btn-primary"
         >
-          Simuler le paiement de {tierInfo.price.toLocaleString('fr-FR')} FCFA
+          {loading ? 'Ouverture de LeekPay...' : `Payer ${tierInfo.price.toLocaleString('fr-FR')} FCFA`}
         </button>
 
         <p className="text-center text-slate-600 text-xs mt-4">
           <ShieldCheck className="inline h-4 w-4 align-text-bottom mr-1" />
-          Paiement sécurisé — FedaPay (bientôt actif)
+          Paiement sécurisé — LeekPay
         </p>
       </div>
 
