@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
 import { TEMPLATES } from '../data/templates'
 import Card3D from '../components/Card3D'
+import NotFound from './NotFound'
 import { AlertTriangle, Clock, Loader2, Lock, Search, ShieldCheck, Wallet, Calendar, Globe, User, CreditCard, Zap } from 'lucide-react'
 
 async function sha256(str) {
@@ -72,28 +73,8 @@ export default function ShareView() {
     )
   }
 
-  if (status === 'invalid') {
-    return (
-      <div className="min-h-screen flex items-center justify-center px-4">
-        <div className="text-center max-w-md">
-          <Search className="mx-auto h-14 w-14 text-slate-400 mb-4" />
-          <h2 className="text-2xl font-bold mb-3">Lien introuvable</h2>
-          <p className="text-slate-300">Ce lien de partage n'existe pas ou a été supprimé.</p>
-        </div>
-      </div>
-    )
-  }
-
-  if (status === 'expired') {
-    return (
-      <div className="min-h-screen flex items-center justify-center px-4">
-        <div className="text-center max-w-md">
-          <Clock className="mx-auto h-14 w-14 text-slate-400 mb-4" />
-          <h2 className="text-2xl font-bold mb-3">Lien expiré</h2>
-          <p className="text-slate-300">Ce lien de partage a expiré après 30 jours.</p>
-        </div>
-      </div>
-    )
+  if (status === 'invalid' || status === 'expired') {
+    return <NotFound />
   }
 
   if (status === 'locked') {
