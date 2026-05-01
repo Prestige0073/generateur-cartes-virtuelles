@@ -59,19 +59,65 @@ export default function Payment() {
       return
     }
     if (!leekPayLoaded || !window.LeekPay) {
-      setError('Le widget de paiement LeekPay n’est pas disponible pour le moment.')
+      setError('Le widget de paiement LeekPay n\'est pas disponible pour le moment.')
       return
     }
 
     setLoading(true)
+    setError('')
+
     try {
       window.LeekPay.checkout({
         amount: tierInfo.price,
         currency: 'XOF',
         apiKey: LEEKPAY_PUBLIC_KEY,
+        phone: phone.trim(),
+        provider: provider,
+        callback: async (response) => {
+          const success = response && (
+            response.status === 'approved' ||
+            response.status === 'success' ||
+            response.approved === true
+          )
+
+          if (!success) {
+            setError('Le paiement a échoué ou a été annulé. Vérifie ton solde et réessaie.')
+            setLoading(false)
+            return
+          }
+
+          setStep('processing')
+
+          const { data: paymentData, error: payErr } = await supabase
+            .from('payments')
+            .insert({
+              user_id: user.id,
+              tier,
+              amount: tierInfo.price,
+              payment_provider: provider,
+              status: 'success',
+            })
+            .select()
+            .single()
+
+          if (payErr || !paymentData) {
+            setError('Paiement reçu mais erreur d\'enregistrement. Contacte le support.')
+            setStep('form')
+            setLoading(false)
+            return
+          }
+
+          setStep('success')
+          setTimeout(() => {
+            navigate(`/create-card?templateId=${templateId}&paymentId=${paymentData.id}`)
+          }, 1500)
+        },
+        onClose: () => {
+          setLoading(false)
+        },
       })
     } catch (err) {
-      setError('Erreur lors de l’ouverture du paiement LeekPay.')
+      setError('Erreur lors de l\'ouverture du paiement LeekPay.')
       setLoading(false)
     }
   }
@@ -105,7 +151,7 @@ export default function Payment() {
         <ShieldCheck className="w-5 h-5 text-sky-300 mt-0.5" />
         <div>
           <p className="text-sky-300 text-sm font-medium">Paiement LeekPay</p>
-          <p className="text-slate-400 text-xs mt-0.5">Le widget LeekPay s’ouvre pour finaliser le paiement sécurisé.</p>
+          <p className="text-slate-400 text-xs mt-0.5">Le widget LeekPay s'ouvre pour finaliser le paiement sécurisé.</p>
         </div>
       </div>
 

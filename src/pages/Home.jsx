@@ -19,7 +19,7 @@ const FEATURES = [
   {
     Icon: ShieldCheck,
     title: 'Paiement sécurisé',
-    desc: 'Paiement Mobile Money (MTN MoMo, Orange Money, Moov) via FedaPay.',
+    desc: 'Paiement Mobile Money (MTN MoMo, Orange Money, Moov) via LeekPay.',
   },
   {
     Icon: CreditCard,

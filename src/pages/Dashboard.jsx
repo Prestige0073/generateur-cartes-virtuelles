@@ -21,7 +21,9 @@ import {
   Wallet,
 } from 'lucide-react'
 
-const APP_URL = import.meta.env.VITE_APP_URL || window.location.origin
+const SHARE_BASE = import.meta.env.VITE_SHARE_DOMAIN
+  ? `https://${import.meta.env.VITE_SHARE_DOMAIN}`
+  : (import.meta.env.VITE_APP_URL || window.location.origin)
 
 function getSavedPw(linkId) {
   try {
@@ -77,7 +79,7 @@ export default function Dashboard() {
   }
 
   function copyLinkAndPassword(slug, linkId, cardId) {
-    const url = `${APP_URL}/share/${slug}`
+    const url = `${SHARE_BASE}/share/${slug}`
     const pw = getSavedPw(linkId)
     const text = pw ? `Lien : ${url}\nMot de passe : ${pw}` : url
     copyText(text, cardId)
@@ -244,11 +246,11 @@ export default function Dashboard() {
                           <div className="flex gap-2">
                             <input
                               readOnly
-                              value={`${APP_URL}/share/${activeLink.slug}`}
+                              value={`${SHARE_BASE}/share/${activeLink.slug}`}
                               className="flex-1 bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-300 truncate min-w-0"
                             />
                             <button
-                              onClick={() => copyText(`${APP_URL}/share/${activeLink.slug}`, `link-${card.id}`)}
+                              onClick={() => copyText(`${SHARE_BASE}/share/${activeLink.slug}`, `link-${card.id}`)}
                               className="inline-flex items-center gap-1.5 bg-slate-700 hover:bg-slate-600 px-3 py-2 rounded-xl text-xs text-white transition"
                             >
                               <ClipboardCopy className="w-3.5 h-3.5" />

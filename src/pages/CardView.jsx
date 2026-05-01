@@ -27,7 +27,9 @@ function generatePassword(len = 12) {
     .map(b => chars[b % chars.length]).join('')
 }
 
-const APP_URL = import.meta.env.VITE_APP_URL || window.location.origin
+const SHARE_BASE = import.meta.env.VITE_SHARE_DOMAIN
+  ? `https://${import.meta.env.VITE_SHARE_DOMAIN}`
+  : (import.meta.env.VITE_APP_URL || window.location.origin)
 
 export default function CardView() {
   const { id } = useParams()
@@ -115,7 +117,7 @@ export default function CardView() {
 
   const template   = TEMPLATES.find(t => t.id === card.template_id) || TEMPLATES[0]
   const tier       = TIERS[card.tier]
-  const shareUrl   = shareLink ? `${APP_URL}/share/${shareLink.slug}` : ''
+  const shareUrl   = shareLink ? `${SHARE_BASE}/share/${shareLink.slug}` : ''
   const daysLeft   = shareLink
     ? Math.max(0, Math.ceil((new Date(shareLink.expires_at) - Date.now()) / 86_400_000))
     : 0

@@ -68,7 +68,7 @@ export default function CreateCard() {
 
       if (err || !data) { navigate('/templates'); return }
       if (data.status !== 'success') { navigate('/templates'); return }
-      if (data.card_id) { navigate(`/card/${data.id}`); return }
+      if (data.card_id) { navigate(`/card/${data.card_id}`); return }
       if (data.tier !== template.tier) { navigate('/templates'); return }
 
       setChecking(false)
