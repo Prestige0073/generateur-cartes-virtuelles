@@ -67,8 +67,8 @@ export default function Templates() {
       {/* Tier advantages banner */}
       {activeTier && (
         <div className={`mb-8 rounded-2xl p-4 border flex flex-wrap gap-3 items-center ${
-          filter === 'vip'    ? 'bg-amber-900/15 border-amber-700/30' :
-          filter === 'premium' ? 'bg-sky-900/20 border-sky-700/30' :
+          filter === 'vip'    ? 'bg-amber-50 border-amber-200' :
+          filter === 'premium' ? 'bg-sky-50 border-sky-200' :
                                  'bg-slate-50 border-slate-200'
         }`}>
           <span className={`text-xs font-bold uppercase tracking-[0.18em] px-2.5 py-1 rounded-full ${activeTier.badge} ${activeTier.color}`}>
@@ -157,8 +157,8 @@ export default function Templates() {
         <div className="grid sm:grid-cols-3 gap-4 max-w-4xl mx-auto">
           {Object.entries(TIERS).map(([key, tier]) => (
             <div key={key} className={`rounded-2xl p-5 border ${
-              key === 'vip'     ? 'border-amber-700/40 bg-amber-900/10' :
-              key === 'premium' ? 'border-sky-700/40 bg-sky-900/10' :
+              key === 'vip'     ? 'border-amber-200 bg-amber-50' :
+              key === 'premium' ? 'border-sky-200 bg-sky-50' :
                                   'border-slate-200 bg-white'
             }`}>
               <div className="flex items-center justify-between mb-3">

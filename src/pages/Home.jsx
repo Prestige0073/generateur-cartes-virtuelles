@@ -99,7 +99,7 @@ export default function Home() {
           <div className="grid sm:grid-cols-3 gap-4 md:gap-6">
             {FEATURES.map(item => (
               <div key={item.title} className="bg-white border border-slate-200 rounded-2xl p-5 md:p-6 hover:border-sky-600/40 shadow-sm transition">
-                <div className="mb-3 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-sky-900/35 text-sky-300">
+                <div className="mb-3 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-sky-50 text-sky-600">
                   <item.Icon className="w-6 h-6" />
                 </div>
                 <h3 className="font-semibold text-base md:text-lg mb-2">{item.title}</h3>
@@ -164,8 +164,8 @@ export default function Home() {
                   <Link
                     to="/templates"
                     className={`block text-center text-sm font-semibold py-2.5 rounded-xl transition ${
-                      isVip    ? 'bg-amber-500/20 hover:bg-amber-500/30 border border-amber-500/40 text-amber-300' :
-                      highlight ? 'bg-sky-500/20 hover:bg-sky-500/30 border border-sky-500/40 text-sky-300' :
+                      isVip    ? 'bg-amber-50 hover:bg-amber-100 border border-amber-300 text-amber-700' :
+                      highlight ? 'bg-sky-50 hover:bg-sky-100 border border-sky-300 text-sky-700' :
                                  'bg-slate-100 hover:bg-slate-200 border border-slate-300 text-slate-600'
                     }`}
                   >

@@ -212,7 +212,7 @@ export default function CreateCard() {
         <div className="w-full bg-white border border-slate-200 rounded-2xl p-5 md:p-6 shadow-sm order-1 lg:order-2">
           <form onSubmit={handleSubmit} className="space-y-5">
             {error && (
-              <div className="bg-red-900/30 border border-red-700/50 text-red-300 text-sm rounded-xl px-4 py-3">
+              <div className="bg-red-50 border border-red-200 text-red-600 text-sm rounded-xl px-4 py-3">
                 {error}
               </div>
             )}
@@ -236,7 +236,7 @@ export default function CreateCard() {
                 <button
                   type="button"
                   onClick={() => set('card_number', generateRandomCardNumber())}
-                  className="text-xs text-sky-400 hover:text-sky-300 transition"
+                  className="text-xs text-sky-600 hover:text-sky-700 transition"
                 >
                   <RefreshCcw className="w-3.5 h-3.5 inline mr-1" /> Regénérer
                 </button>

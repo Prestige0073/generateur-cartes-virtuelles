@@ -106,9 +106,9 @@ export default function Dashboard() {
   const totalSpent   = paidPayments.reduce((s, p) => s + p.amount, 0)
 
   const statusInfo = {
-    success: { label: 'Succès',     Icon: CheckCircle2,  badge: 'bg-green-900/50 text-green-400'  },
-    pending: { label: 'En attente', Icon: Clock,         badge: 'bg-yellow-900/50 text-yellow-400' },
-    failed:  { label: 'Échoué',     Icon: AlertTriangle, badge: 'bg-red-900/50 text-red-400'       },
+    success: { label: 'Succès',     Icon: CheckCircle2,  badge: 'bg-green-100 text-green-700'   },
+    pending: { label: 'En attente', Icon: Clock,         badge: 'bg-yellow-100 text-yellow-700'  },
+    failed:  { label: 'Échoué',     Icon: AlertTriangle, badge: 'bg-red-100 text-red-600'         },
   }
 
   const stats = [
@@ -123,13 +123,13 @@ export default function Dashboard() {
       {/* ── Toast de bienvenue ── */}
       {showWelcome && (
         <div className="fixed top-5 left-1/2 -translate-x-1/2 z-[200] animate-fadeInUp">
-          <div className="flex items-center gap-3 bg-emerald-950 border border-emerald-700/60 text-emerald-300 px-5 py-3.5 rounded-2xl shadow-2xl shadow-black/40 backdrop-blur-sm">
-            <span className="w-7 h-7 rounded-full bg-emerald-700/40 flex items-center justify-center shrink-0">
-              <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+          <div className="flex items-center gap-3 bg-white border border-emerald-200 text-emerald-800 px-5 py-3.5 rounded-2xl shadow-lg shadow-slate-200/60">
+            <span className="w-7 h-7 rounded-full bg-emerald-100 flex items-center justify-center shrink-0">
+              <CheckCircle2 className="w-4 h-4 text-emerald-600" />
             </span>
             <div>
-              <p className="font-semibold text-sm text-emerald-200">Connexion réussie !</p>
-              <p className="text-xs text-emerald-400/80 leading-tight">Bienvenue, {user.email?.split('@')[0]}</p>
+              <p className="font-semibold text-sm text-emerald-800">Connexion réussie !</p>
+              <p className="text-xs text-emerald-600 leading-tight">Bienvenue, {user.email?.split('@')[0]}</p>
             </div>
           </div>
         </div>
@@ -188,7 +188,7 @@ export default function Dashboard() {
               <span className="text-slate-400 text-xs uppercase tracking-wider font-medium leading-tight">{stat.label}</span>
               <stat.Icon className="w-5 h-5 text-sky-400 shrink-0" />
             </div>
-            <p className="text-2xl font-bold text-sky-400 truncate">{stat.value}</p>
+            <p className="text-2xl font-bold text-sky-600 truncate">{stat.value}</p>
           </div>
         ))}
       </div>
@@ -285,7 +285,7 @@ export default function Dashboard() {
                       {activeLink ? (
                         <>
                           <div className="flex items-center justify-between">
-                            <div className="flex items-center gap-1.5 text-xs text-sky-300 font-medium">
+                            <div className="flex items-center gap-1.5 text-xs text-sky-600 font-medium">
                               <Link2 className="w-3.5 h-3.5" />
                               Lien actif — {daysLeft}j restants
                             </div>
@@ -339,7 +339,7 @@ export default function Dashboard() {
                               </div>
                               <button
                                 onClick={() => copyLinkAndPassword(activeLink.slug, activeLink.id, `both-${card.id}`)}
-                                className="w-full text-xs text-sky-300 hover:text-sky-200 transition py-1.5 flex items-center justify-center gap-1.5"
+                                className="w-full text-xs text-sky-600 hover:text-sky-200 transition py-1.5 flex items-center justify-center gap-1.5"
                               >
                                 <ClipboardCopy className="w-3 h-3" />
                                 {copiedId === `both-${card.id}` ? 'Lien + mot de passe copiés !' : 'Copier lien + mot de passe'}
@@ -349,7 +349,7 @@ export default function Dashboard() {
                             <p className="text-xs text-slate-500 flex items-center gap-1.5 flex-wrap">
                               <KeyRound className="w-3.5 h-3.5 shrink-0 text-slate-500" />
                               Mot de passe non sauvegardé sur cet appareil.
-                              <button onClick={() => navigate(`/card/${card.id}`)} className="text-sky-400 hover:text-sky-300 transition">Voir la carte →</button>
+                              <button onClick={() => navigate(`/card/${card.id}`)} className="text-sky-600 hover:text-sky-700 font-medium transition">Voir la carte →</button>
                             </p>
                           )}
                         </>

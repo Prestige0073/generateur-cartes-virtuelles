@@ -199,7 +199,7 @@ export default function Payment() {
 
         {/* Error */}
         {error && (
-          <div className="bg-red-900/30 border border-red-700/50 text-red-300 text-sm rounded-xl px-4 py-3 mb-4">
+          <div className="bg-red-50 border border-red-200 text-red-600 text-sm rounded-xl px-4 py-3 mb-4">
             {error}
           </div>
         )}

@@ -198,7 +198,7 @@ export default function CardView() {
             </p>
 
             {error && (
-              <div className="bg-red-900/30 border border-red-700/50 text-red-300 text-sm rounded-xl px-4 py-3 mb-4 flex items-center gap-2">
+              <div className="bg-red-50 border border-red-200 text-red-600 text-sm rounded-xl px-4 py-3 mb-4 flex items-center gap-2">
                 <AlertTriangle className="w-4 h-4 shrink-0" /> {error}
               </div>
             )}
@@ -206,8 +206,8 @@ export default function CardView() {
             {/* Active link (not just generated) */}
             {shareLink && !generatedPassword && (
               <div className="space-y-4">
-                <div className="bg-green-900/20 border border-green-700/30 rounded-xl p-4">
-                  <div className="flex items-center gap-2 text-green-400 text-sm font-medium mb-3">
+                <div className="bg-green-50 border border-green-200 rounded-xl p-4">
+                  <div className="flex items-center gap-2 text-green-700 text-sm font-medium mb-3">
                     <Link2 className="w-4 h-4" /> Lien actif — {daysLeft} jour{daysLeft > 1 ? 's' : ''} restants
                   </div>
                   <div className="flex gap-2">

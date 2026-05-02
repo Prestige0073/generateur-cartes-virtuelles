@@ -97,7 +97,7 @@ export default function Signup() {
         <div className="bg-white border border-slate-200 rounded-2xl p-8 shadow-sm">
           <form onSubmit={handleSubmit} className="space-y-5">
             {error && (
-              <div className="bg-red-900/30 border border-red-700/50 text-red-300 text-sm rounded-xl px-4 py-3">
+              <div className="bg-red-50 border border-red-200 text-red-600 text-sm rounded-xl px-4 py-3">
                 {error}
               </div>
             )}
@@ -137,7 +137,7 @@ export default function Signup() {
                 </button>
               </div>
               {password.length > 0 && password.length < 8 && (
-                <p className="text-amber-400 text-xs mt-1">
+                <p className="text-amber-600 text-xs mt-1">
                   {8 - password.length} caractère{8 - password.length > 1 ? 's' : ''} manquant{8 - password.length > 1 ? 's' : ''}
                 </p>
               )}
@@ -165,7 +165,7 @@ export default function Signup() {
                 </button>
               </div>
               {confirm.length > 0 && confirm !== password && (
-                <p className="text-red-400 text-xs mt-1">Les mots de passe ne correspondent pas</p>
+                <p className="text-red-600 text-xs mt-1">Les mots de passe ne correspondent pas</p>
               )}
             </div>
 
@@ -177,7 +177,7 @@ export default function Signup() {
 
         <p className="text-center text-slate-500 text-sm mt-6">
           Déjà un compte ?{' '}
-          <Link to="/login" className="text-sky-400 hover:text-sky-300 font-medium transition">
+          <Link to="/login" className="text-sky-600 hover:text-sky-700 font-medium transition">
             Se connecter
           </Link>
         </p>

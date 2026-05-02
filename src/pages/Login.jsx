@@ -64,12 +64,12 @@ export default function Login() {
         <div className="bg-white border border-slate-200 rounded-2xl p-8 shadow-sm">
           <form onSubmit={handleSubmit} className="space-y-5">
             {successMessage && (
-              <div className="bg-green-900/30 border border-green-700/50 text-green-300 text-sm rounded-xl px-4 py-3">
+              <div className="bg-green-50 border border-green-200 text-green-700 text-sm rounded-xl px-4 py-3">
                 {successMessage}
               </div>
             )}
             {error && (
-              <div className="bg-red-900/30 border border-red-700/50 text-red-300 text-sm rounded-xl px-4 py-3">
+              <div className="bg-red-50 border border-red-200 text-red-600 text-sm rounded-xl px-4 py-3">
                 {error}
               </div>
             )}
@@ -111,7 +111,7 @@ export default function Login() {
             </div>
 
             <div className="text-right">
-              <Link to="/forgot-password" className="text-sm text-sky-400 hover:text-sky-300 transition">
+              <Link to="/forgot-password" className="text-sm text-sky-600 hover:text-sky-700 transition">
                 Mot de passe oublié ?
               </Link>
             </div>
@@ -124,7 +124,7 @@ export default function Login() {
 
         <p className="text-center text-slate-500 text-sm mt-6">
           Pas encore de compte ?{' '}
-          <Link to="/signup" className="text-sky-400 hover:text-sky-300 font-medium transition">
+          <Link to="/signup" className="text-sky-600 hover:text-sky-700 font-medium transition">
             S'inscrire
           </Link>
         </p>
