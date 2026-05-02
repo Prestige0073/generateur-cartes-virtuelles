@@ -1,14 +1,43 @@
 import { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
-import { Mail, CheckCircle2 } from 'lucide-react'
+import { Mail, CheckCircle2, Eye, EyeOff } from 'lucide-react'
+
+function parseSignupError(err) {
+  if (!err) return null
+  const msg = err.message?.toLowerCase() || ''
+  const status = err.status
+
+  if (status === 429 || msg.includes('too many') || msg.includes('rate limit')) {
+    return 'Trop de tentatives. Attends quelques minutes avant de réessayer.'
+  }
+  if (
+    msg.includes('user already registered') ||
+    msg.includes('already registered') ||
+    msg.includes('already been registered') ||
+    status === 422
+  ) {
+    return 'Cet email est déjà associé à un compte. Connecte-toi ou réinitialise ton mot de passe.'
+  }
+  if (msg.includes('password') && (msg.includes('weak') || msg.includes('short') || msg.includes('length'))) {
+    return 'Mot de passe trop faible. Utilise au moins 8 caractères.'
+  }
+  if (msg.includes('invalid email') || msg.includes('email') && msg.includes('invalid')) {
+    return 'Adresse email invalide.'
+  }
+  if (msg.includes('network') || msg.includes('fetch') || !navigator.onLine) {
+    return 'Erreur de connexion. Vérifie ton réseau et réessaie.'
+  }
+  return err.message || 'Une erreur est survenue. Réessaie.'
+}
 
 export default function Signup() {
   const { signUp } = useAuth()
-  const navigate = useNavigate()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [confirm, setConfirm] = useState('')
+  const [showPassword, setShowPassword] = useState(false)
+  const [showConfirm, setShowConfirm] = useState(false)
   const [error, setError] = useState('')
   const [success, setSuccess] = useState(false)
   const [loading, setLoading] = useState(false)
@@ -16,30 +45,19 @@ export default function Signup() {
   async function handleSubmit(e) {
     e.preventDefault()
     setError('')
-    if (password !== confirm) {
-      setError('Les mots de passe ne correspondent pas.')
-      return
-    }
-    if (password.length < 6) {
-      setError('Le mot de passe doit contenir au moins 6 caractères.')
-      return
-    }
+
+    if (!email.trim()) { setError('Saisis ton adresse email.'); return }
+    if (password.length < 8) { setError('Le mot de passe doit contenir au moins 8 caractères.'); return }
+    if (password !== confirm) { setError('Les mots de passe ne correspondent pas.'); return }
+
     setLoading(true)
-    const { error: err } = await signUp(email, password)
+    const { error: err } = await signUp(email.trim(), password)
     setLoading(false)
+
     if (err) {
-      if (err.message === 'User already registered') {
-        setError('Cet email est déjà utilisé.')
-      } else if (err.message?.toLowerCase().includes('password')) {
-        setError('Mot de passe trop faible. Utilise au moins 6 caractères.')
-      } else if (err.message?.toLowerCase().includes('email')) {
-        setError('Adresse email invalide.')
-      } else {
-        setError(err.message || 'Une erreur est survenue. Réessaie.')
-      }
+      setError(parseSignupError(err))
     } else {
       setSuccess(true)
-      setTimeout(() => navigate('/login'), 4000)
     }
   }
 
@@ -49,11 +67,19 @@ export default function Signup() {
         <div className="text-center max-w-md">
           <CheckCircle2 className="mx-auto h-14 w-14 text-sky-400 mb-4" />
           <h2 className="text-2xl font-bold mb-3">Vérifie ton email !</h2>
-          <p className="text-slate-400">
-            Un lien de confirmation t'a été envoyé à <strong className="text-white">{email}</strong>.
-            Confirme ton compte puis connecte-toi.
+          <p className="text-slate-400 mb-2">
+            Un lien de confirmation a été envoyé à{' '}
+            <strong className="text-white">{email}</strong>.
           </p>
-          <p className="text-slate-600 text-sm mt-4">Redirection vers la connexion...</p>
+          <p className="text-slate-400 text-sm mb-8">
+            Clique sur le lien dans l'email pour activer ton compte, puis connecte-toi.
+          </p>
+          <Link
+            to="/login"
+            className="inline-flex items-center justify-center gap-2 bg-sky-500 hover:bg-sky-400 text-white font-semibold px-6 py-3 rounded-xl transition text-sm"
+          >
+            Aller à la connexion
+          </Link>
         </div>
       </div>
     )
@@ -85,35 +111,66 @@ export default function Signup() {
                 onChange={e => setEmail(e.target.value)}
                 className="input-field"
                 placeholder="toi@exemple.com"
+                autoComplete="email"
               />
             </div>
 
             <div>
               <label className="block text-sm font-medium text-slate-300 mb-1.5">Mot de passe</label>
-              <input
-                type="password"
-                required
-                value={password}
-                onChange={e => setPassword(e.target.value)}
-                className="input-field"
-                placeholder="Au moins 6 caractères"
-              />
+              <div className="relative">
+                <input
+                  type={showPassword ? 'text' : 'password'}
+                  required
+                  value={password}
+                  onChange={e => setPassword(e.target.value)}
+                  className="input-field pr-10"
+                  placeholder="Au moins 8 caractères"
+                  autoComplete="new-password"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(v => !v)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-200 transition"
+                  tabIndex={-1}
+                >
+                  {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                </button>
+              </div>
+              {password.length > 0 && password.length < 8 && (
+                <p className="text-amber-400 text-xs mt-1">
+                  {8 - password.length} caractère{8 - password.length > 1 ? 's' : ''} manquant{8 - password.length > 1 ? 's' : ''}
+                </p>
+              )}
             </div>
 
             <div>
               <label className="block text-sm font-medium text-slate-300 mb-1.5">Confirmer le mot de passe</label>
-              <input
-                type="password"
-                required
-                value={confirm}
-                onChange={e => setConfirm(e.target.value)}
-                className="input-field"
-                placeholder="••••••••"
-              />
+              <div className="relative">
+                <input
+                  type={showConfirm ? 'text' : 'password'}
+                  required
+                  value={confirm}
+                  onChange={e => setConfirm(e.target.value)}
+                  className="input-field pr-10"
+                  placeholder="••••••••"
+                  autoComplete="new-password"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowConfirm(v => !v)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-200 transition"
+                  tabIndex={-1}
+                >
+                  {showConfirm ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                </button>
+              </div>
+              {confirm.length > 0 && confirm !== password && (
+                <p className="text-red-400 text-xs mt-1">Les mots de passe ne correspondent pas</p>
+              )}
             </div>
 
             <button type="submit" className="btn-primary" disabled={loading}>
-              {loading ? 'Création du compte...' : 'S\'inscrire'}
+              {loading ? 'Création du compte...' : "S'inscrire"}
             </button>
           </form>
         </div>

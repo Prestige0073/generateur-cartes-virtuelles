@@ -1,7 +1,27 @@
 import { useState } from 'react'
 import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
-import { LogIn } from 'lucide-react'
+import { LogIn, Eye, EyeOff } from 'lucide-react'
+
+function parseLoginError(err) {
+  if (!err) return null
+  const msg = err.message?.toLowerCase() || ''
+  const status = err.status
+
+  if (status === 429 || msg.includes('too many') || msg.includes('rate limit')) {
+    return 'Trop de tentatives. Attends quelques minutes avant de réessayer.'
+  }
+  if (msg.includes('email not confirmed') || msg.includes('email_not_confirmed')) {
+    return 'Ton compte n\'est pas encore confirmé. Vérifie ta boîte mail et clique sur le lien de confirmation.'
+  }
+  if (msg.includes('invalid login credentials') || msg.includes('invalid credentials') || status === 400) {
+    return 'Email ou mot de passe incorrect.'
+  }
+  if (msg.includes('network') || msg.includes('fetch') || !navigator.onLine) {
+    return 'Erreur de connexion. Vérifie ton réseau et réessaie.'
+  }
+  return 'Une erreur est survenue. Réessaie.'
+}
 
 export default function Login() {
   const { signIn } = useAuth()
@@ -10,17 +30,23 @@ export default function Login() {
   const successMessage = location.state?.message
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [showPassword, setShowPassword] = useState(false)
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
 
   async function handleSubmit(e) {
     e.preventDefault()
     setError('')
+
+    if (!email.trim()) { setError('Saisis ton adresse email.'); return }
+    if (!password) { setError('Saisis ton mot de passe.'); return }
+
     setLoading(true)
-    const { error: err } = await signIn(email, password)
+    const { error: err } = await signIn(email.trim(), password)
     setLoading(false)
+
     if (err) {
-      setError('Email ou mot de passe incorrect.')
+      setError(parseLoginError(err))
     } else {
       navigate('/dashboard')
     }
@@ -57,19 +83,31 @@ export default function Login() {
                 onChange={e => setEmail(e.target.value)}
                 className="input-field"
                 placeholder="toi@exemple.com"
+                autoComplete="email"
               />
             </div>
 
             <div>
               <label className="block text-sm font-medium text-slate-300 mb-1.5">Mot de passe</label>
-              <input
-                type="password"
-                required
-                value={password}
-                onChange={e => setPassword(e.target.value)}
-                className="input-field"
-                placeholder="••••••••"
-              />
+              <div className="relative">
+                <input
+                  type={showPassword ? 'text' : 'password'}
+                  required
+                  value={password}
+                  onChange={e => setPassword(e.target.value)}
+                  className="input-field pr-10"
+                  placeholder="••••••••"
+                  autoComplete="current-password"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(v => !v)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-200 transition"
+                  tabIndex={-1}
+                >
+                  {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                </button>
+              </div>
             </div>
 
             <div className="text-right">

@@ -3,6 +3,20 @@ import { Link } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import { Mail, CheckCircle2, ArrowLeft } from 'lucide-react'
 
+function parseForgotError(err) {
+  if (!err) return null
+  const msg = err.message?.toLowerCase() || ''
+  const status = err.status
+
+  if (status === 429 || msg.includes('too many') || msg.includes('rate limit')) {
+    return 'Trop de demandes. Attends quelques minutes avant de réessayer.'
+  }
+  if (msg.includes('network') || msg.includes('fetch') || !navigator.onLine) {
+    return 'Erreur de connexion. Vérifie ton réseau et réessaie.'
+  }
+  return 'Une erreur est survenue. Vérifie l\'adresse email et réessaie.'
+}
+
 export default function ForgotPassword() {
   const { resetPassword } = useAuth()
   const [email, setEmail] = useState('')
@@ -13,11 +27,15 @@ export default function ForgotPassword() {
   async function handleSubmit(e) {
     e.preventDefault()
     setError('')
+
+    if (!email.trim()) { setError('Saisis ton adresse email.'); return }
+
     setLoading(true)
-    const { error: err } = await resetPassword(email)
+    const { error: err } = await resetPassword(email.trim())
     setLoading(false)
+
     if (err) {
-      setError('Une erreur est survenue. Vérifie l\'adresse email.')
+      setError(parseForgotError(err))
     } else {
       setSent(true)
     }
@@ -29,8 +47,12 @@ export default function ForgotPassword() {
         <div className="text-center max-w-md">
           <CheckCircle2 className="mx-auto h-14 w-14 text-sky-400 mb-4" />
           <h2 className="text-2xl font-bold mb-3">Email envoyé !</h2>
-          <p className="text-slate-400 mb-6">
-            Un lien de réinitialisation a été envoyé à <strong className="text-white">{email}</strong>.
+          <p className="text-slate-400 mb-2">
+            Si un compte existe pour <strong className="text-white">{email}</strong>,
+            tu recevras un lien de réinitialisation dans les prochaines minutes.
+          </p>
+          <p className="text-slate-500 text-xs mb-8">
+            Vérifie aussi ton dossier spam si tu ne vois rien.
           </p>
           <Link to="/login" className="text-sky-400 hover:text-sky-300 transition font-medium inline-flex items-center gap-2">
             <ArrowLeft className="w-4 h-4" /> Retour à la connexion
@@ -66,6 +88,7 @@ export default function ForgotPassword() {
                 onChange={e => setEmail(e.target.value)}
                 className="input-field"
                 placeholder="toi@exemple.com"
+                autoComplete="email"
               />
             </div>
 

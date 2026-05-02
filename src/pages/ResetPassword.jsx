@@ -1,12 +1,30 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
-import { Lock, Loader2 } from 'lucide-react'
+import { Lock, Loader2, Eye, EyeOff } from 'lucide-react'
+
+function parseResetError(err) {
+  if (!err) return null
+  const msg = err.message?.toLowerCase() || ''
+
+  if (msg.includes('same password') || msg.includes('different from')) {
+    return 'Le nouveau mot de passe doit être différent de l\'ancien.'
+  }
+  if (msg.includes('expired') || msg.includes('invalid') || msg.includes('token')) {
+    return 'Le lien de réinitialisation est expiré ou invalide. Refais une demande.'
+  }
+  if (msg.includes('network') || msg.includes('fetch') || !navigator.onLine) {
+    return 'Erreur de connexion. Vérifie ton réseau et réessaie.'
+  }
+  return 'Erreur lors de la mise à jour. Le lien est peut-être expiré, refais une demande.'
+}
 
 export default function ResetPassword() {
   const navigate = useNavigate()
   const [password, setPassword] = useState('')
   const [confirm, setConfirm] = useState('')
+  const [showPassword, setShowPassword] = useState(false)
+  const [showConfirm, setShowConfirm] = useState(false)
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
   const [ready, setReady] = useState(false)
@@ -24,16 +42,19 @@ export default function ResetPassword() {
   async function handleSubmit(e) {
     e.preventDefault()
     setError('')
+
+    if (password.length < 8) { setError('Le mot de passe doit contenir au moins 8 caractères.'); return }
     if (password !== confirm) { setError('Les mots de passe ne correspondent pas.'); return }
-    if (password.length < 6) { setError('Minimum 6 caractères.'); return }
+
     setLoading(true)
     const { error: err } = await supabase.auth.updateUser({ password })
     setLoading(false)
+
     if (err) {
-      setError('Erreur lors de la mise à jour. Le lien est peut-être expiré.')
+      setError(parseResetError(err))
     } else {
       await supabase.auth.signOut()
-      navigate('/login', { state: { message: 'Mot de passe mis à jour. Connecte-toi.' } })
+      navigate('/login', { state: { message: 'Mot de passe mis à jour avec succès. Connecte-toi.' } })
     }
   }
 
@@ -66,26 +87,56 @@ export default function ResetPassword() {
             )}
             <div>
               <label className="block text-sm font-medium text-slate-300 mb-1.5">Nouveau mot de passe</label>
-              <input
-                type="password"
-                required
-                value={password}
-                onChange={e => setPassword(e.target.value)}
-                className="input-field"
-                placeholder="Au moins 6 caractères"
-                autoFocus
-              />
+              <div className="relative">
+                <input
+                  type={showPassword ? 'text' : 'password'}
+                  required
+                  value={password}
+                  onChange={e => setPassword(e.target.value)}
+                  className="input-field pr-10"
+                  placeholder="Au moins 8 caractères"
+                  autoFocus
+                  autoComplete="new-password"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(v => !v)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-200 transition"
+                  tabIndex={-1}
+                >
+                  {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                </button>
+              </div>
+              {password.length > 0 && password.length < 8 && (
+                <p className="text-amber-400 text-xs mt-1">
+                  {8 - password.length} caractère{8 - password.length > 1 ? 's' : ''} manquant{8 - password.length > 1 ? 's' : ''}
+                </p>
+              )}
             </div>
             <div>
               <label className="block text-sm font-medium text-slate-300 mb-1.5">Confirmer</label>
-              <input
-                type="password"
-                required
-                value={confirm}
-                onChange={e => setConfirm(e.target.value)}
-                className="input-field"
-                placeholder="••••••••"
-              />
+              <div className="relative">
+                <input
+                  type={showConfirm ? 'text' : 'password'}
+                  required
+                  value={confirm}
+                  onChange={e => setConfirm(e.target.value)}
+                  className="input-field pr-10"
+                  placeholder="••••••••"
+                  autoComplete="new-password"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowConfirm(v => !v)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-200 transition"
+                  tabIndex={-1}
+                >
+                  {showConfirm ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                </button>
+              </div>
+              {confirm.length > 0 && confirm !== password && (
+                <p className="text-red-400 text-xs mt-1">Les mots de passe ne correspondent pas</p>
+              )}
             </div>
             <button type="submit" className="btn-primary" disabled={loading}>
               {loading ? 'Mise à jour...' : 'Changer le mot de passe'}
