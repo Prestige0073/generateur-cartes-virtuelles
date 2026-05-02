@@ -40,8 +40,15 @@ const SHARE_BASE = _rawBase.replace(/\/+$/, '')
 function getSavedPw(linkId) {
   try {
     const raw = localStorage.getItem(`cardgen_pw_${linkId}`)
-    return raw ? JSON.parse(raw).password : null
-  } catch { return null }
+    if (!raw) return null
+    const parsed = JSON.parse(raw)
+    if (parsed && typeof parsed === 'object' && typeof parsed.password === 'string') {
+      return parsed.password
+    }
+    return raw
+  } catch {
+    return raw
+  }
 }
 
 export default function CardView() {
