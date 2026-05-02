@@ -145,7 +145,7 @@ export default function CardView() {
 
       {/* Header */}
       <div className="flex items-center gap-3 mb-8 flex-wrap">
-        <button onClick={() => navigate('/dashboard')} className="inline-flex items-center gap-1.5 text-slate-400 hover:text-white transition text-sm">
+        <button onClick={() => navigate('/dashboard')} className="inline-flex items-center gap-1.5 text-slate-400 hover:text-slate-900 transition text-sm">
           <ArrowLeft className="w-4 h-4" /> Dashboard
         </button>
         <span className="text-slate-700">/</span>
@@ -164,8 +164,8 @@ export default function CardView() {
           </div>
           <p className="text-slate-600 text-xs text-center">Cliquer pour voir le verso</p>
 
-          <div className="w-full bg-slate-800/50 border border-slate-700 rounded-2xl p-4 md:p-5 space-y-2.5">
-            <h3 className="font-semibold text-sm text-slate-300 mb-3">Détails de la carte</h3>
+          <div className="w-full bg-white border border-slate-200 rounded-2xl p-4 md:p-5 space-y-2.5 shadow-sm">
+            <h3 className="font-semibold text-sm text-slate-600 mb-3">Détails de la carte</h3>
             {[
               { label: 'Titulaire',  value: card.cardholder_name },
               { label: 'Numéro',     value: card.card_number.replace(/(\d{4})(?=\d)/g, '$1 ') },
@@ -188,10 +188,10 @@ export default function CardView() {
 
         {/* Share panel */}
         <div className="w-full">
-          <div className="bg-slate-800/50 border border-slate-700 rounded-2xl p-5 md:p-6">
+          <div className="bg-white border border-slate-200 rounded-2xl p-5 md:p-6 shadow-sm">
             <h2 className="font-bold text-base md:text-lg mb-1">Partager ma carte</h2>
-            <p className="text-slate-400 text-sm mb-1">Génère un lien protégé par mot de passe.</p>
-            <p className="text-slate-600 text-xs mb-5 flex items-center gap-1.5">
+            <p className="text-slate-500 text-sm mb-1">Génère un lien protégé par mot de passe.</p>
+            <p className="text-slate-500 text-xs mb-5 flex items-center gap-1.5">
               <Link2 className="w-3.5 h-3.5" />
               Durée : <span className={`font-medium ml-1 ${tier.color}`}>{expiryDays} jours</span>
               <span className="text-slate-700">(niveau {tier.label})</span>
@@ -212,10 +212,10 @@ export default function CardView() {
                   </div>
                   <div className="flex gap-2">
                     <input readOnly value={shareUrl}
-                      className="flex-1 bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-slate-300 truncate"
+                      className="flex-1 bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-sm text-slate-600 truncate"
                     />
                     <button onClick={() => copyText(shareUrl, 'link')}
-                      className="inline-flex items-center gap-1.5 bg-slate-700 hover:bg-slate-600 px-3 py-2 rounded-lg text-sm transition whitespace-nowrap"
+                      className="inline-flex items-center gap-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 px-3 py-2 rounded-lg text-sm transition whitespace-nowrap"
                     >
                       <ClipboardCopy className="w-4 h-4" />
                       {copiedId === 'link' ? 'Copié' : 'Copier'}
@@ -230,19 +230,19 @@ export default function CardView() {
 
             {/* Just generated */}
             {shareLink && generatedPassword && (
-              <div className="bg-sky-900/20 border border-sky-600/40 rounded-xl p-5 space-y-4">
-                <div className="text-sky-300 text-sm font-semibold flex items-center gap-2">
+              <div className="bg-sky-50 border border-sky-200 rounded-xl p-5 space-y-4">
+                <div className="text-sky-600 text-sm font-semibold flex items-center gap-2">
                   <Link2 className="w-4 h-4" /> Lien généré avec succès !
                 </div>
 
                 <div>
-                  <p className="text-slate-400 text-xs mb-1.5">Lien de partage</p>
+                  <p className="text-slate-500 text-xs mb-1.5">Lien de partage</p>
                   <div className="flex gap-2">
                     <input readOnly value={shareUrl}
-                      className="flex-1 bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-slate-300 truncate"
+                      className="flex-1 bg-white border border-slate-200 rounded-lg px-3 py-2 text-sm text-slate-600 truncate"
                     />
                     <button onClick={() => copyText(shareUrl, 'link')}
-                      className="bg-slate-700 hover:bg-slate-600 px-3 py-2 rounded-lg text-sm transition whitespace-nowrap"
+                      className="bg-slate-100 hover:bg-slate-200 text-slate-700 px-3 py-2 rounded-lg text-sm transition whitespace-nowrap"
                     >
                       {copiedId === 'link' ? '✓' : <ClipboardCopy className="w-4 h-4" />}
                     </button>
@@ -250,7 +250,7 @@ export default function CardView() {
                 </div>
 
                 <div>
-                  <p className="text-slate-400 text-xs mb-1.5 flex items-center gap-1.5">
+                  <p className="text-slate-500 text-xs mb-1.5 flex items-center gap-1.5">
                     <KeyRound className="w-3.5 h-3.5" />
                     Mot de passe — sauvegardé automatiquement dans ton dashboard
                   </p>
@@ -258,15 +258,15 @@ export default function CardView() {
                     <input
                       readOnly
                       value={pwVisible ? generatedPassword : '•'.repeat(generatedPassword.length)}
-                      className="flex-1 bg-slate-900 border border-yellow-700/50 rounded-lg px-3 py-2 text-sm text-yellow-300 font-mono tracking-widest"
+                      className="flex-1 bg-white border border-amber-200 rounded-lg px-3 py-2 text-sm text-amber-600 font-mono tracking-widest"
                     />
                     <button onClick={() => setPwVisible(v => !v)}
-                      className="bg-slate-700 hover:bg-slate-600 px-3 py-2 rounded-lg text-sm transition"
+                      className="bg-slate-100 hover:bg-slate-200 text-slate-600 px-3 py-2 rounded-lg text-sm transition"
                     >
                       {pwVisible ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                     </button>
                     <button onClick={() => copyText(generatedPassword, 'pw')}
-                      className="bg-slate-700 hover:bg-slate-600 px-3 py-2 rounded-lg text-sm transition"
+                      className="bg-slate-100 hover:bg-slate-200 text-slate-600 px-3 py-2 rounded-lg text-sm transition"
                     >
                       {copiedId === 'pw' ? '✓' : <ClipboardCopy className="w-4 h-4" />}
                     </button>
@@ -275,13 +275,13 @@ export default function CardView() {
 
                 <button
                   onClick={() => copyText(`Lien : ${shareUrl}\nMot de passe : ${generatedPassword}`, 'both')}
-                  className="w-full inline-flex items-center justify-center gap-2 bg-sky-600/20 hover:bg-sky-600/30 border border-sky-600/40 text-sky-300 text-sm font-medium py-2.5 rounded-xl transition"
+                  className="w-full inline-flex items-center justify-center gap-2 bg-sky-100 hover:bg-sky-200 border border-sky-300 text-sky-600 text-sm font-medium py-2.5 rounded-xl transition"
                 >
                   <ClipboardCopy className="w-4 h-4" />
                   {copiedId === 'both' ? 'Copié !' : 'Copier lien + mot de passe'}
                 </button>
 
-                <p className="text-slate-600 text-xs text-center">
+                <p className="text-slate-500 text-xs text-center">
                   Valable {expiryDays} jours — consultations illimitées
                 </p>
               </div>

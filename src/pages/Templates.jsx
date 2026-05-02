@@ -56,7 +56,7 @@ export default function Templates() {
                 ? f.key === 'vip'    ? 'bg-amber-600 text-white' :
                   f.key === 'premium' ? 'bg-sky-600 text-white' :
                                         'bg-sky-600 text-white'
-                : 'bg-slate-800 text-slate-400 hover:bg-slate-700 hover:text-white'
+                : 'bg-slate-100 text-slate-600 hover:bg-slate-200 hover:text-slate-900'
             }`}
           >
             {f.label}
@@ -69,13 +69,13 @@ export default function Templates() {
         <div className={`mb-8 rounded-2xl p-4 border flex flex-wrap gap-3 items-center ${
           filter === 'vip'    ? 'bg-amber-900/15 border-amber-700/30' :
           filter === 'premium' ? 'bg-sky-900/20 border-sky-700/30' :
-                                 'bg-slate-800/40 border-slate-700/50'
+                                 'bg-slate-50 border-slate-200'
         }`}>
           <span className={`text-xs font-bold uppercase tracking-[0.18em] px-2.5 py-1 rounded-full ${activeTier.badge} ${activeTier.color}`}>
             {activeTier.label}
           </span>
           {activeTier.features.map(f => (
-            <span key={f} className="inline-flex items-center gap-1.5 text-xs text-slate-300">
+            <span key={f} className="inline-flex items-center gap-1.5 text-xs text-slate-600">
               <Check className="w-3.5 h-3.5 text-green-400 shrink-0" />
               {f}
             </span>
@@ -97,10 +97,10 @@ export default function Templates() {
           return (
             <div
               key={template.id}
-              className={`bg-slate-800/50 border rounded-2xl p-4 flex flex-col items-center gap-4 transition-all duration-200 cursor-pointer ${
+              className={`bg-white border rounded-2xl p-4 flex flex-col items-center gap-4 transition-all duration-200 cursor-pointer shadow-sm ${
                 selected === template.id
                   ? 'border-sky-400 shadow-lg shadow-sky-900/20'
-                  : 'border-slate-700 hover:border-slate-600'
+                  : 'border-slate-200 hover:border-slate-300'
               }`}
               onClick={() => setSelected(template.id)}
             >
@@ -129,7 +129,7 @@ export default function Templates() {
               {perks.length > 0 && (
                 <div className="w-full grid grid-cols-2 gap-2 text-[11px]">
                   {perks.map(perk => (
-                    <span key={perk} className="rounded-full bg-slate-900/80 px-2.5 py-1 text-slate-300 text-center">
+                    <span key={perk} className="rounded-full bg-slate-100 px-2.5 py-1 text-slate-600 text-center">
                       {perk}
                     </span>
                   ))}
@@ -152,22 +152,22 @@ export default function Templates() {
       </div>
 
       {/* Tier comparison footer */}
-      <div className="mt-12 border-t border-slate-800 pt-10">
-        <h2 className="text-center font-bold text-lg mb-6 text-slate-300">Comparatif des niveaux</h2>
+      <div className="mt-12 border-t border-slate-200 pt-10">
+        <h2 className="text-center font-bold text-lg mb-6 text-slate-600">Comparatif des niveaux</h2>
         <div className="grid sm:grid-cols-3 gap-4 max-w-4xl mx-auto">
           {Object.entries(TIERS).map(([key, tier]) => (
             <div key={key} className={`rounded-2xl p-5 border ${
               key === 'vip'     ? 'border-amber-700/40 bg-amber-900/10' :
               key === 'premium' ? 'border-sky-700/40 bg-sky-900/10' :
-                                  'border-slate-700 bg-slate-800/30'
+                                  'border-slate-200 bg-white'
             }`}>
               <div className="flex items-center justify-between mb-3">
                 <span className={`text-xs font-bold uppercase tracking-[0.18em] ${tier.color}`}>{tier.label}</span>
-                <span className="text-sm font-bold text-slate-300">{tier.price.toLocaleString('fr-FR')} F</span>
+                <span className="text-sm font-bold text-slate-600">{tier.price.toLocaleString('fr-FR')} F</span>
               </div>
               <ul className="space-y-1.5">
                 {tier.features.map(f => (
-                  <li key={f} className="flex items-start gap-1.5 text-xs text-slate-400">
+                  <li key={f} className="flex items-start gap-1.5 text-xs text-slate-500">
                     <Check className="w-3.5 h-3.5 text-green-500 mt-0.5 shrink-0" />
                     {f}
                   </li>

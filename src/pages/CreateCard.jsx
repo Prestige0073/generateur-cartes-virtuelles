@@ -199,7 +199,7 @@ export default function CreateCard() {
     <div className="max-w-5xl mx-auto px-4 py-10 md:py-12">
       <div className="text-center mb-8 md:mb-10">
         <h1 className="text-xl md:text-2xl font-bold mb-2">Personnalise ta carte</h1>
-        <p className="text-slate-400 text-sm">Ces informations sont définitives — elles ne pourront plus être modifiées.</p>
+        <p className="text-slate-500 text-sm">Ces informations sont définitives — elles ne pourront plus être modifiées.</p>
       </div>
 
       <div className="flex flex-col lg:grid lg:grid-cols-2 gap-6 lg:gap-10 items-start">
@@ -209,7 +209,7 @@ export default function CreateCard() {
           <p className="text-slate-600 text-xs">Aperçu en temps réel — cliquer pour retourner</p>
         </div>
 
-        <div className="w-full bg-slate-800/50 border border-slate-700 rounded-2xl p-5 md:p-6 order-1 lg:order-2">
+        <div className="w-full bg-white border border-slate-200 rounded-2xl p-5 md:p-6 shadow-sm order-1 lg:order-2">
           <form onSubmit={handleSubmit} className="space-y-5">
             {error && (
               <div className="bg-red-900/30 border border-red-700/50 text-red-300 text-sm rounded-xl px-4 py-3">
@@ -218,7 +218,7 @@ export default function CreateCard() {
             )}
 
             <div>
-              <label className="block text-sm font-medium text-slate-300 mb-1.5">Nom du titulaire</label>
+              <label className="block text-sm font-medium text-slate-600 mb-1.5">Nom du titulaire</label>
               <input
                 type="text"
                 required
@@ -232,7 +232,7 @@ export default function CreateCard() {
 
             <div>
               <div className="flex justify-between items-center mb-1.5">
-                <label className="text-sm font-medium text-slate-300">Numéro de carte (16 chiffres)</label>
+                <label className="text-sm font-medium text-slate-600">Numéro de carte (16 chiffres)</label>
                 <button
                   type="button"
                   onClick={() => set('card_number', generateRandomCardNumber())}
@@ -253,7 +253,7 @@ export default function CreateCard() {
 
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium text-slate-300 mb-1.5">Date d'expiration</label>
+                <label className="block text-sm font-medium text-slate-600 mb-1.5">Date d'expiration</label>
                 <input
                   type="text"
                   value={form.expiry_date}
@@ -264,7 +264,7 @@ export default function CreateCard() {
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-slate-300 mb-1.5">CVV</label>
+                <label className="block text-sm font-medium text-slate-600 mb-1.5">CVV</label>
                 <input
                   type="text"
                   value={form.cvv}
@@ -278,7 +278,7 @@ export default function CreateCard() {
 
             {canDisplayAmount ? (
               <div>
-                <label className="block text-sm font-medium text-slate-300 mb-1.5">Solde esthétique (optionnel)</label>
+                <label className="block text-sm font-medium text-slate-600 mb-1.5">Solde esthétique (optionnel)</label>
                 <div className="relative">
                   <input
                     type="number"
@@ -293,18 +293,18 @@ export default function CreateCard() {
                 <p className="text-slate-600 text-xs mt-1">Affiché au verso de la carte, purement décoratif.</p>
               </div>
             ) : (
-              <div className="bg-slate-900/60 border border-slate-700/50 rounded-xl px-4 py-3 flex items-center gap-3">
+              <div className="bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 flex items-center gap-3">
                 <div className="flex-1">
                   <p className="text-slate-500 text-sm font-medium">Solde esthétique</p>
-                  <p className="text-slate-600 text-xs mt-0.5">Disponible à partir du niveau <span className="text-sky-400 font-medium">Premium</span></p>
+                  <p className="text-slate-500 text-xs mt-0.5">Disponible à partir du niveau <span className="text-sky-500 font-medium">Premium</span></p>
                 </div>
-                <span className="text-xs font-bold px-2 py-1 rounded-full bg-slate-700/80 text-slate-400">Basique</span>
+                <span className="text-xs font-bold px-2 py-1 rounded-full bg-slate-200 text-slate-500">Basique</span>
               </div>
             )}
 
             {canCustomBankName ? (
               <div>
-                <label className="block text-sm font-medium text-slate-300 mb-1.5">Nom de la banque (optionnel)</label>
+                <label className="block text-sm font-medium text-slate-600 mb-1.5">Nom de la banque (optionnel)</label>
                 <input
                   type="text"
                   value={form.bank_name}
@@ -316,17 +316,17 @@ export default function CreateCard() {
                 <p className="text-slate-600 text-xs mt-1">Affiché en haut de la carte pour un look plus officiel.</p>
               </div>
             ) : (
-              <div className="bg-slate-900/60 border border-slate-700/50 rounded-xl px-4 py-3 flex items-center gap-3">
+              <div className="bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 flex items-center gap-3">
                 <div className="flex-1">
                   <p className="text-slate-500 text-sm font-medium">Nom de banque personnalisé</p>
-                  <p className="text-slate-600 text-xs mt-0.5">Disponible uniquement avec le niveau <span className="text-amber-400 font-medium">VIP</span></p>
+                  <p className="text-slate-500 text-xs mt-0.5">Disponible uniquement avec le niveau <span className="text-amber-500 font-medium">VIP</span></p>
                 </div>
-                <span className="text-xs font-bold px-2 py-1 rounded-full bg-amber-900/60 text-amber-400">VIP</span>
+                <span className="text-xs font-bold px-2 py-1 rounded-full bg-amber-100 text-amber-600">VIP</span>
               </div>
             )}
 
             <div>
-              <label className="block text-sm font-medium text-slate-300 mb-2">Langue de la carte</label>
+              <label className="block text-sm font-medium text-slate-600 mb-2">Langue de la carte</label>
               <div className="flex gap-3">
                 {[{ id: 'fr', label: 'FR — Français' }, { id: 'en', label: 'EN — English' }].map(l => (
                   <button
@@ -335,8 +335,8 @@ export default function CreateCard() {
                     onClick={() => set('language', l.id)}
                     className={`flex-1 py-2.5 rounded-xl border text-sm font-medium transition ${
                       form.language === l.id
-                        ? 'border-sky-400 bg-sky-900/30 text-white'
-                        : 'border-slate-700 bg-slate-800 text-slate-400 hover:border-slate-600'
+                        ? 'border-sky-400 bg-sky-50 text-sky-700'
+                        : 'border-slate-200 bg-white text-slate-500 hover:border-slate-300'
                     }`}
                   >
                     {l.label}
@@ -347,7 +347,7 @@ export default function CreateCard() {
 
             {canPickStyle && (
               <div>
-                <label className="block text-sm font-medium text-slate-300 mb-2">Style de carte</label>
+                <label className="block text-sm font-medium text-slate-600 mb-2">Style de carte</label>
                 <div className="grid grid-cols-3 gap-3">
                   {STYLE_OPTIONS.map(option => (
                     <button
@@ -356,8 +356,8 @@ export default function CreateCard() {
                       onClick={() => set('style_variant', option.id)}
                       className={`py-2.5 rounded-xl border text-sm font-medium transition ${
                         form.style_variant === option.id
-                          ? 'border-sky-400 bg-sky-900/30 text-white'
-                          : 'border-slate-700 bg-slate-800 text-slate-400 hover:border-slate-600'
+                          ? 'border-sky-400 bg-sky-50 text-sky-700'
+                          : 'border-slate-200 bg-white text-slate-500 hover:border-slate-300'
                       }`}
                     >
                       {option.label}
@@ -370,7 +370,7 @@ export default function CreateCard() {
 
             {canPickFont && (
               <div>
-                <label className="block text-sm font-medium text-slate-300 mb-2">Police du nom</label>
+                <label className="block text-sm font-medium text-slate-600 mb-2">Police du nom</label>
                 <div className="grid grid-cols-3 gap-3">
                   {FONT_OPTIONS.map(option => (
                     <button
@@ -379,8 +379,8 @@ export default function CreateCard() {
                       onClick={() => set('font_variant', option.id)}
                       className={`py-2.5 rounded-xl border text-sm font-medium transition ${
                         form.font_variant === option.id
-                          ? 'border-sky-400 bg-sky-900/30 text-white'
-                          : 'border-slate-700 bg-slate-800 text-slate-400 hover:border-slate-600'
+                          ? 'border-sky-400 bg-sky-50 text-sky-700'
+                          : 'border-slate-200 bg-white text-slate-500 hover:border-slate-300'
                       }`}
                     >
                       {option.label}

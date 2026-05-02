@@ -67,11 +67,11 @@ export default function Signup() {
         <div className="text-center max-w-md">
           <CheckCircle2 className="mx-auto h-14 w-14 text-sky-400 mb-4" />
           <h2 className="text-2xl font-bold mb-3">Vérifie ton email !</h2>
-          <p className="text-slate-400 mb-2">
+          <p className="text-slate-500 mb-2">
             Un lien de confirmation a été envoyé à{' '}
-            <strong className="text-white">{email}</strong>.
+            <strong className="text-slate-900">{email}</strong>.
           </p>
-          <p className="text-slate-400 text-sm mb-8">
+          <p className="text-slate-500 text-sm mb-8">
             Clique sur le lien dans l'email pour activer ton compte, puis connecte-toi.
           </p>
           <Link
@@ -91,10 +91,10 @@ export default function Signup() {
         <div className="text-center mb-8">
           <Mail className="mx-auto h-10 w-10 text-sky-400" />
           <h1 className="text-2xl font-bold mt-3">Créer un compte</h1>
-          <p className="text-slate-400 text-sm mt-1">Rejoins CardGen gratuitement</p>
+          <p className="text-slate-500 text-sm mt-1">Rejoins CardGen gratuitement</p>
         </div>
 
-        <div className="bg-slate-800/50 border border-slate-700 rounded-2xl p-8">
+        <div className="bg-white border border-slate-200 rounded-2xl p-8 shadow-sm">
           <form onSubmit={handleSubmit} className="space-y-5">
             {error && (
               <div className="bg-red-900/30 border border-red-700/50 text-red-300 text-sm rounded-xl px-4 py-3">
@@ -103,7 +103,7 @@ export default function Signup() {
             )}
 
             <div>
-              <label className="block text-sm font-medium text-slate-300 mb-1.5">Email</label>
+              <label className="block text-sm font-medium text-slate-600 mb-1.5">Email</label>
               <input
                 type="email"
                 required
@@ -116,7 +116,7 @@ export default function Signup() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-slate-300 mb-1.5">Mot de passe</label>
+              <label className="block text-sm font-medium text-slate-600 mb-1.5">Mot de passe</label>
               <div className="relative">
                 <input
                   type={showPassword ? 'text' : 'password'}
@@ -130,7 +130,7 @@ export default function Signup() {
                 <button
                   type="button"
                   onClick={() => setShowPassword(v => !v)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-200 transition"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 transition"
                   tabIndex={-1}
                 >
                   {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
@@ -144,7 +144,7 @@ export default function Signup() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-slate-300 mb-1.5">Confirmer le mot de passe</label>
+              <label className="block text-sm font-medium text-slate-600 mb-1.5">Confirmer le mot de passe</label>
               <div className="relative">
                 <input
                   type={showConfirm ? 'text' : 'password'}
@@ -158,7 +158,7 @@ export default function Signup() {
                 <button
                   type="button"
                   onClick={() => setShowConfirm(v => !v)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-200 transition"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 transition"
                   tabIndex={-1}
                 >
                   {showConfirm ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
@@ -175,7 +175,7 @@ export default function Signup() {
           </form>
         </div>
 
-        <p className="text-center text-slate-400 text-sm mt-6">
+        <p className="text-center text-slate-500 text-sm mt-6">
           Déjà un compte ?{' '}
           <Link to="/login" className="text-sky-400 hover:text-sky-300 font-medium transition">
             Se connecter

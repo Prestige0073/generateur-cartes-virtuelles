@@ -149,7 +149,7 @@ export default function Payment() {
         <div className="text-center max-w-sm">
           <CheckCircle2 className="mx-auto h-14 w-14 text-sky-400 mb-6" />
           <h2 className="text-xl font-bold mb-2">Paiement confirmé !</h2>
-          <p className="text-slate-400 text-sm">Redirection vers la création de ta carte…</p>
+          <p className="text-slate-500 text-sm">Redirection vers la création de ta carte…</p>
         </div>
       </div>
     )
@@ -163,26 +163,26 @@ export default function Payment() {
         <div className="text-center mb-8">
           <CreditCard className="mx-auto h-10 w-10 text-sky-400 mb-3" />
           <h1 className="text-2xl font-bold">Finaliser l'achat</h1>
-          <p className="text-slate-400 text-sm mt-1">Le widget de paiement s'ouvre automatiquement</p>
+          <p className="text-slate-500 text-sm mt-1">Le widget de paiement s'ouvre automatiquement</p>
         </div>
 
         {/* Summary */}
-        <div className="bg-slate-800/50 border border-slate-700 rounded-2xl p-6 mb-4">
+        <div className="bg-white border border-slate-200 rounded-2xl p-6 mb-4 shadow-sm">
           <h2 className="text-xs font-semibold text-slate-500 uppercase tracking-widest mb-4">Récapitulatif</h2>
           <div className="space-y-3">
             <div className="flex justify-between items-center">
-              <span className="text-slate-400 text-sm">Design</span>
-              <span className="font-medium text-sm">{template.name}</span>
+              <span className="text-slate-500 text-sm">Design</span>
+              <span className="font-medium text-sm text-slate-800">{template.name}</span>
             </div>
             <div className="flex justify-between items-center">
-              <span className="text-slate-400 text-sm">Niveau</span>
+              <span className="text-slate-500 text-sm">Niveau</span>
               <span className={`text-sm font-semibold ${tierInfo.color}`}>{tierInfo.label}</span>
             </div>
             <div className="flex justify-between items-center">
-              <span className="text-slate-400 text-sm">Lien de partage</span>
-              <span className="text-sm text-slate-300">{tierInfo.shareExpiry} jours</span>
+              <span className="text-slate-500 text-sm">Lien de partage</span>
+              <span className="text-sm text-slate-600">{tierInfo.shareExpiry} jours</span>
             </div>
-            <div className="border-t border-slate-700 pt-3 flex justify-between items-center">
+            <div className="border-t border-slate-200 pt-3 flex justify-between items-center">
               <span className="font-semibold">Total</span>
               <span className="text-2xl font-bold text-sky-400">
                 {tierInfo.price.toLocaleString('fr-FR')} <span className="text-base font-medium">FCFA</span>
@@ -192,9 +192,9 @@ export default function Payment() {
         </div>
 
         {/* Security badge */}
-        <div className="flex items-center gap-2 bg-sky-900/20 border border-sky-800/40 rounded-xl px-4 py-2.5 mb-6">
-          <ShieldCheck className="w-4 h-4 text-sky-400 shrink-0" />
-          <p className="text-sky-300 text-xs">Paiement Mobile Money sécurisé via LeekPay</p>
+        <div className="flex items-center gap-2 bg-sky-50 border border-sky-200 rounded-xl px-4 py-2.5 mb-6">
+          <ShieldCheck className="w-4 h-4 text-sky-500 shrink-0" />
+          <p className="text-sky-600 text-xs">Paiement Mobile Money sécurisé via LeekPay</p>
         </div>
 
         {/* Error */}
@@ -208,7 +208,7 @@ export default function Payment() {
         {step === 'loading' && (
           <div className="flex flex-col items-center gap-3 py-4">
             <Loader2 className="w-7 h-7 text-sky-400 animate-spin" />
-            <p className="text-slate-400 text-sm">Chargement du paiement…</p>
+            <p className="text-slate-500 text-sm">Chargement du paiement…</p>
           </div>
         )}
 

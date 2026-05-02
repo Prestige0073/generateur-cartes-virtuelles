@@ -50,9 +50,9 @@ export default function Home() {
         <div className="max-w-6xl mx-auto px-4 py-14 md:py-20 w-full relative z-10">
           <div className="flex flex-col items-center text-center md:grid md:grid-cols-2 md:gap-12 md:items-center md:text-left">
             <div>
-              <div className="inline-flex items-center gap-2 bg-slate-800/50 border border-slate-700/50 rounded-full px-4 py-1.5 mb-5">
+              <div className="inline-flex items-center gap-2 bg-white border border-slate-200 rounded-full px-4 py-1.5 mb-5">
                 <span className="w-2 h-2 bg-sky-400 rounded-full animate-pulse" />
-                <span className="text-slate-300 text-xs md:text-sm font-medium">Carte bancaire professionnelle</span>
+                <span className="text-slate-600 text-xs md:text-sm font-medium">Carte bancaire professionnelle</span>
               </div>
               <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold leading-tight mb-5">
                 Génère ta carte bancaire<br />
@@ -75,7 +75,7 @@ export default function Home() {
                     Créer mon compte
                   </Link>
                 )}
-                <Link to="/templates" className="bg-slate-800 hover:bg-slate-700 text-white font-semibold px-8 py-3.5 rounded-xl transition text-sm border border-slate-700 text-center">
+                <Link to="/templates" className="bg-slate-100 hover:bg-slate-200 text-slate-800 font-semibold px-8 py-3.5 rounded-xl transition text-sm border border-slate-300 text-center">
                   Voir le catalogue
                 </Link>
               </div>
@@ -90,7 +90,7 @@ export default function Home() {
       </section>
 
       {/* Features */}
-      <section className="py-16 md:py-20 border-t border-slate-800">
+      <section className="py-16 md:py-20 border-t border-slate-200">
         <div className="max-w-6xl mx-auto px-4">
           <h2 className="text-2xl md:text-3xl font-bold text-center mb-3">Tout ce qu'il te faut</h2>
           <p className="text-slate-500 text-sm md:text-base text-center mb-10">
@@ -98,7 +98,7 @@ export default function Home() {
           </p>
           <div className="grid sm:grid-cols-3 gap-4 md:gap-6">
             {FEATURES.map(item => (
-              <div key={item.title} className="bg-slate-800/50 border border-slate-700/50 rounded-2xl p-5 md:p-6 hover:border-sky-600/40 transition">
+              <div key={item.title} className="bg-white border border-slate-200 rounded-2xl p-5 md:p-6 hover:border-sky-600/40 shadow-sm transition">
                 <div className="mb-3 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-sky-900/35 text-sky-300">
                   <item.Icon className="w-6 h-6" />
                 </div>
@@ -111,7 +111,7 @@ export default function Home() {
       </section>
 
       {/* Pricing / Tier comparison */}
-      <section className="py-16 md:py-20 border-t border-slate-800">
+      <section className="py-16 md:py-20 border-t border-slate-200">
         <div className="max-w-5xl mx-auto px-4">
           <h2 className="text-2xl md:text-3xl font-bold text-center mb-3">Choisis ton niveau</h2>
           <p className="text-slate-500 text-center text-sm mb-12">Un paiement unique par carte — aucun abonnement</p>
@@ -121,10 +121,10 @@ export default function Home() {
               const highlight = key === 'premium'
               const isVip = key === 'vip'
               return (
-                <div key={key} className={`relative bg-slate-800/50 rounded-2xl p-6 border-2 transition ${
+                <div key={key} className={`relative bg-white rounded-2xl p-6 border-2 transition ${
                   isVip    ? 'border-amber-700/50 shadow-lg shadow-amber-900/10' :
                   highlight? 'border-sky-700/60 shadow-lg shadow-sky-900/10' :
-                             'border-slate-700'
+                             'border-slate-200'
                 }`}>
                   {highlight && (
                     <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-sky-500 text-white text-xs font-bold px-3 py-1 rounded-full whitespace-nowrap">
@@ -148,7 +148,7 @@ export default function Home() {
 
                   <ul className="space-y-2 mb-6">
                     {tier.features.map(f => (
-                      <li key={f} className="flex items-start gap-2 text-sm text-slate-300">
+                      <li key={f} className="flex items-start gap-2 text-sm text-slate-600">
                         <Check className="w-4 h-4 text-green-400 mt-0.5 shrink-0" />
                         <span>{f}</span>
                       </li>
@@ -166,7 +166,7 @@ export default function Home() {
                     className={`block text-center text-sm font-semibold py-2.5 rounded-xl transition ${
                       isVip    ? 'bg-amber-500/20 hover:bg-amber-500/30 border border-amber-500/40 text-amber-300' :
                       highlight ? 'bg-sky-500/20 hover:bg-sky-500/30 border border-sky-500/40 text-sky-300' :
-                                 'bg-slate-700/60 hover:bg-slate-700 border border-slate-600 text-slate-300'
+                                 'bg-slate-100 hover:bg-slate-200 border border-slate-300 text-slate-600'
                     }`}
                   >
                     Choisir {tier.label}
@@ -179,12 +179,12 @@ export default function Home() {
       </section>
 
       {/* CTA */}
-      <section className="py-16 md:py-20 border-t border-slate-800">
+      <section className="py-16 md:py-20 border-t border-slate-200">
         <div className="max-w-2xl mx-auto px-4 text-center">
           {user ? (
             <>
               <h2 className="text-2xl md:text-3xl font-bold mb-4">Prêt à créer une nouvelle carte ?</h2>
-              <p className="text-slate-400 text-sm md:text-base mb-8">
+              <p className="text-slate-500 text-sm md:text-base mb-8">
                 Choisis un design et personnalise ta carte en quelques clics.
               </p>
               <Link to="/templates" className="inline-block bg-sky-500 hover:bg-sky-400 active:bg-sky-600 text-white font-semibold px-8 md:px-10 py-4 rounded-xl transition">
@@ -194,7 +194,7 @@ export default function Home() {
           ) : (
             <>
               <h2 className="text-2xl md:text-3xl font-bold mb-4">Prêt à créer ta carte ?</h2>
-              <p className="text-slate-400 text-sm md:text-base mb-8">
+              <p className="text-slate-500 text-sm md:text-base mb-8">
                 Inscris-toi gratuitement et choisis ton design en quelques clics.
               </p>
               <Link to="/signup" className="inline-block bg-sky-500 hover:bg-sky-400 active:bg-sky-600 text-white font-semibold px-8 md:px-10 py-4 rounded-xl transition">
@@ -205,7 +205,7 @@ export default function Home() {
         </div>
       </section>
 
-      <footer className="border-t border-slate-800 py-8">
+      <footer className="border-t border-slate-200 py-8">
         <div className="max-w-6xl mx-auto px-4 text-center">
           <p className="text-slate-600 text-xs leading-relaxed">
             <AlertTriangle className="inline h-4 w-4 align-text-bottom mr-1" />

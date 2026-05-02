@@ -58,10 +58,10 @@ export default function Login() {
         <div className="text-center mb-8">
           <LogIn className="mx-auto h-10 w-10 text-sky-400" />
           <h1 className="text-2xl font-bold mt-3">Connexion</h1>
-          <p className="text-slate-400 text-sm mt-1">Accède à tes cartes bancaires</p>
+          <p className="text-slate-500 text-sm mt-1">Accède à tes cartes bancaires</p>
         </div>
 
-        <div className="bg-slate-800/50 border border-slate-700 rounded-2xl p-8">
+        <div className="bg-white border border-slate-200 rounded-2xl p-8 shadow-sm">
           <form onSubmit={handleSubmit} className="space-y-5">
             {successMessage && (
               <div className="bg-green-900/30 border border-green-700/50 text-green-300 text-sm rounded-xl px-4 py-3">
@@ -75,7 +75,7 @@ export default function Login() {
             )}
 
             <div>
-              <label className="block text-sm font-medium text-slate-300 mb-1.5">Email</label>
+              <label className="block text-sm font-medium text-slate-600 mb-1.5">Email</label>
               <input
                 type="email"
                 required
@@ -88,7 +88,7 @@ export default function Login() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-slate-300 mb-1.5">Mot de passe</label>
+              <label className="block text-sm font-medium text-slate-600 mb-1.5">Mot de passe</label>
               <div className="relative">
                 <input
                   type={showPassword ? 'text' : 'password'}
@@ -102,7 +102,7 @@ export default function Login() {
                 <button
                   type="button"
                   onClick={() => setShowPassword(v => !v)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-200 transition"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 transition"
                   tabIndex={-1}
                 >
                   {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
@@ -122,7 +122,7 @@ export default function Login() {
           </form>
         </div>
 
-        <p className="text-center text-slate-400 text-sm mt-6">
+        <p className="text-center text-slate-500 text-sm mt-6">
           Pas encore de compte ?{' '}
           <Link to="/signup" className="text-sky-400 hover:text-sky-300 font-medium transition">
             S'inscrire
