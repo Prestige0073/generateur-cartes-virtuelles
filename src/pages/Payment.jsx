@@ -84,27 +84,14 @@ export default function Payment() {
         amount: tierInfo.price,
         currency: 'XOF',
         apiKey: LEEKPAY_PUBLIC_KEY,
-        callback: async (response) => {
-          const success = response && (
-            response.status === 'approved' ||
-            response.status === 'success' ||
-            response.approved === true
-          )
-
-          if (!success) {
-            opened.current = false
-            setError('Le paiement a échoué ou a été annulé. Réessaie.')
-            setStep('ready')
-            return
-          }
-
+        onSuccess: async (transaction) => {
           setStep('processing')
 
           const { data: paymentId, error: payErr } = await supabase.rpc('record_payment', {
             p_tier:           tier,
             p_amount:         tierInfo.price,
-            p_provider:       response.provider || 'leekpay',
-            p_transaction_id: response.transaction_id || response.id || null,
+            p_provider:       'leekpay',
+            p_transaction_id: transaction?.payment_id || transaction?.id || null,
           })
 
           if (payErr || !paymentId) {
@@ -113,14 +100,17 @@ export default function Payment() {
             return
           }
 
-          const paymentData = { id: paymentId }
-
           setStep('success')
           setTimeout(() => {
-            navigate(`/create-card?templateId=${templateId}&paymentId=${paymentData.id}`)
+            navigate(`/create-card?templateId=${templateId}&paymentId=${paymentId}`)
           }, 1500)
         },
-        onClose: () => {
+        onError: (err) => {
+          opened.current = false
+          setError(err?.message || 'Le paiement a échoué. Réessaie.')
+          setStep('ready')
+        },
+        onCancel: () => {
           opened.current = false
           setStep('ready')
         },
