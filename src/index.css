@@ -24,7 +24,7 @@ body {
   width: 100%;
   height: 100%;
   transform-style: preserve-3d;
-  transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform 0.65s cubic-bezier(0.45, 0.05, 0.55, 0.95);
 }
 
 .card-inner.flipped {
@@ -61,43 +61,73 @@ body {
   scrollbar-width: none;
   -ms-overflow-style: none;
 }
-.scrollbar-none::-webkit-scrollbar {
-  display: none;
+.scrollbar-none::-webkit-scrollbar { display: none; }
+
+/* ── Page fade-in ────────────────────────────────────────────── */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0);    }
 }
 
-/* ── Card shimmer sweep ───────────────────────────────────────── */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.96); }
+  to   { opacity: 1; transform: scale(1);    }
+}
+
+.animate-fadeInUp  { animation: fadeInUp 0.40s ease-out both; }
+.animate-fadeIn    { animation: fadeIn   0.30s ease-out both; }
+.animate-scaleIn   { animation: scaleIn  0.35s ease-out both; }
+
+.delay-1 { animation-delay: 0.06s; }
+.delay-2 { animation-delay: 0.12s; }
+.delay-3 { animation-delay: 0.18s; }
+.delay-4 { animation-delay: 0.24s; }
+.delay-5 { animation-delay: 0.30s; }
+
+/* ── Card shimmer sweep ─────────────────────────────��─────────── */
 @keyframes card-shimmer {
-  0%   { left: -60%; opacity: 0; }
-  4%   { opacity: 1; }
-  38%  { left: 160%; opacity: 0; }
-  100% { left: 160%; opacity: 0; }
+  0%   { left: -60%; opacity: 0;   }
+  5%   { opacity: 1;               }
+  42%  { left: 160%; opacity: 0;   }
+  100% { left: 160%; opacity: 0;   }
 }
 
 .card-shimmer-beam {
   position: absolute;
   top: -60%;
   left: -60%;
-  width: 30%;
+  width: 28%;
   height: 280%;
   background: linear-gradient(
     to right,
-    transparent 0%,
-    rgba(255,255,255,0.06) 40%,
-    rgba(255,255,255,0.13) 50%,
-    rgba(255,255,255,0.06) 60%,
-    transparent 100%
+    transparent                  0%,
+    rgba(255,255,255,0.05)      38%,
+    rgba(255,255,255,0.12)      50%,
+    rgba(255,255,255,0.05)      62%,
+    transparent                100%
   );
   transform: skewX(-18deg);
   pointer-events: none;
-  animation: card-shimmer 7s ease-in-out infinite;
+  animation: card-shimmer 8s ease-in-out infinite;
 }
 
 /* ── VIP golden pulse ─────────────────────────────────────────── */
 @keyframes vip-pulse {
-  0%, 100% { box-shadow: 0 0 18px rgba(212,175,55,0.18), 0 30px 70px rgba(0,0,0,0.7), 0 8px 20px rgba(0,0,0,0.4); }
-  50%       { box-shadow: 0 0 32px rgba(212,175,55,0.30), 0 30px 70px rgba(0,0,0,0.7), 0 8px 20px rgba(0,0,0,0.4); }
+  0%, 100% { box-shadow: 0 0 20px rgba(212,175,55,0.16), 0 30px 70px rgba(0,0,0,0.70), 0 8px 20px rgba(0,0,0,0.40); }
+  50%       { box-shadow: 0 0 36px rgba(212,175,55,0.28), 0 30px 70px rgba(0,0,0,0.70), 0 8px 20px rgba(0,0,0,0.40); }
 }
 
 .card-face-vip {
-  animation: vip-pulse 4s ease-in-out infinite;
+  animation: vip-pulse 4.5s ease-in-out infinite;
+}
+
+/* ── Button press micro-interaction ──────────��───────────────── */
+.btn-primary:not(:disabled):active,
+.btn-secondary:not(:disabled):active {
+  transform: scale(0.985);
 }
