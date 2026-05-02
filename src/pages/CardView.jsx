@@ -13,7 +13,6 @@ import {
   KeyRound,
   Link2,
   Loader2,
-  RefreshCcw,
 } from 'lucide-react'
 
 async function sha256(str) {
@@ -206,15 +205,8 @@ export default function CardView() {
                   </div>
                 </div>
                 <p className="text-slate-600 text-xs">
-                  Le mot de passe est visible dans ton dashboard si généré depuis cet appareil.
-                  Pour un nouveau lien, clique ci-dessous.
+                  Le mot de passe a été sauvegardé dans ton dashboard lors de la génération.
                 </p>
-                <button onClick={generateShareLink} disabled={loadingShare}
-                  className="btn-secondary text-sm py-2.5 inline-flex items-center justify-center gap-2"
-                >
-                  {loadingShare ? <Loader2 className="w-4 h-4 animate-spin" /> : <RefreshCcw className="w-4 h-4" />}
-                  {loadingShare ? 'Génération...' : 'Regénérer un nouveau lien'}
-                </button>
               </div>
             )}
 
