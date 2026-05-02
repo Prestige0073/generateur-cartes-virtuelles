@@ -347,7 +347,7 @@ export default function Card3D({ card, interactive = true, size = 'md' }) {
 
                 {/* Numéro de carte — effet embossé */}
                 <div style={{
-                  fontFamily: '"Courier New", Courier, monospace',
+                  fontFamily: '"Share Tech Mono", "Courier Prime", "Courier New", monospace',
                   fontSize: dims.num,
                   fontWeight: 700,
                   letterSpacing: dims.numTrack,
@@ -393,7 +393,7 @@ export default function Card3D({ card, interactive = true, size = 'md' }) {
                     <div style={{
                       fontSize: dims.name, color: textC,
                       letterSpacing: '2.2px', fontWeight: 600,
-                      fontFamily: '"Courier New", Courier, monospace',
+                      fontFamily: '"Share Tech Mono", "Courier Prime", "Courier New", monospace',
                       textShadow: engraveEffect,
                     }}>
                       {card?.expiry_date || 'MM/AA'}
@@ -457,7 +457,7 @@ export default function Card3D({ card, interactive = true, size = 'md' }) {
                 }}>
                   <div style={{ fontSize: dims.label - 0.5, color:'#888', letterSpacing:'1px', fontWeight:700,
                     fontFamily:'"Helvetica Neue", Arial, sans-serif' }}>CVV</div>
-                  <div style={{ fontFamily:'"Courier New", Courier, monospace',
+                  <div style={{ fontFamily:'"Share Tech Mono", "Courier Prime", "Courier New", monospace',
                     fontSize: dims.name + 1.5, color:'#111', fontWeight:800, letterSpacing:'3px' }}>
                     {card?.cvv || '•••'}
                   </div>
@@ -494,7 +494,7 @@ export default function Card3D({ card, interactive = true, size = 'md' }) {
                   <span style={{
                     fontSize: dims.name + 1, color: textC,
                     fontWeight: 700, letterSpacing:'1px',
-                    fontFamily:'"Courier New", Courier, monospace',
+                    fontFamily:'"Share Tech Mono", "Courier Prime", "Courier New", monospace',
                     textShadow: engraveEffect,
                   }}>
                     {Number(card.display_amount).toLocaleString('fr-FR')} FCFA
