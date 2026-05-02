@@ -26,17 +26,29 @@ const _rawBase = import.meta.env.VITE_SHARE_DOMAIN
   : (import.meta.env.VITE_APP_URL || window.location.origin)
 const SHARE_BASE = _rawBase.replace(/\/+$/, '')
 
-function getSavedPw(linkId) {
+function parseSavedPassword(raw) {
+  if (!raw) return null
   try {
-    const raw = localStorage.getItem(`cardgen_pw_${linkId}`)
-    if (!raw) return null
     const parsed = JSON.parse(raw)
     if (parsed && typeof parsed === 'object' && typeof parsed.password === 'string') {
       return parsed.password
     }
-    return raw
   } catch {
-    return raw
+    // ignore parse failure, raw string may already be the password
+  }
+  return raw
+}
+
+function getSavedPw(link) {
+  try {
+    const rawById = localStorage.getItem(`cardgen_pw_${link.id}`)
+    const pwById = parseSavedPassword(rawById)
+    if (pwById) return pwById
+
+    const rawBySlug = localStorage.getItem(`cardgen_pw_${link.slug}`)
+    return parseSavedPassword(rawBySlug)
+  } catch {
+    return null
   }
 }
 
