@@ -52,6 +52,7 @@ export default function CreateCard() {
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
   const [checking, setChecking] = useState(true)
+  const [verifyError, setVerifyError] = useState('')
 
   useEffect(() => {
     if (!template) { navigate('/templates'); return }
@@ -66,8 +67,12 @@ export default function CreateCard() {
         .eq('user_id', user.id)
         .single()
 
-      if (err || !data) { navigate('/templates'); return }
-      if (data.status !== 'success') { navigate('/templates'); return }
+      if (err) {
+        setVerifyError('Impossible de vérifier ton paiement. Vérifie ta connexion ou contacte le support.')
+        setChecking(false)
+        return
+      }
+      if (!data || data.status !== 'success') { navigate('/templates'); return }
       if (data.card_id) { navigate(`/card/${data.card_id}`); return }
       if (data.tier !== template.tier) { navigate('/templates'); return }
 
@@ -143,24 +148,41 @@ export default function CreateCard() {
 
     if (paymentId) {
       cardData.payment_id = paymentId
-      await supabase.from('payments').update({ card_id: null }).eq('id', paymentId)
     }
 
     const { data, error: err2 } = await supabase.from('cards').insert(cardData).select().single()
-    setLoading(false)
 
-    if (err2) {
-      setError(err2.message || 'Erreur lors de la création. Réessaie.')
-    } else {
-      if (paymentId) {
-        await supabase.from('payments').update({ card_id: data.id }).eq('id', paymentId)
-      }
-      navigate(`/card/${data.id}`)
+    if (err2 || !data) {
+      setLoading(false)
+      setError(err2?.message || 'Erreur lors de la création. Réessaie.')
+      return
     }
+
+    // Lier la carte au paiement (best-effort — la carte est déjà créée)
+    if (paymentId) {
+      await supabase.from('payments').update({ card_id: data.id }).eq('id', paymentId)
+    }
+
+    navigate(`/card/${data.id}`)
   }
 
   if (!template || checking) {
     return <Loading message="Vérification de votre paiement..." />
+  }
+
+  if (verifyError) {
+    return (
+      <div className="min-h-screen flex items-center justify-center px-4">
+        <div className="text-center max-w-md">
+          <AlertTriangle className="mx-auto h-10 w-10 text-red-400 mb-4" />
+          <h2 className="text-xl font-bold mb-3">Erreur de vérification</h2>
+          <p className="text-slate-400 text-sm mb-6">{verifyError}</p>
+          <button onClick={() => navigate('/dashboard')} className="btn-primary">
+            Retour au dashboard
+          </button>
+        </div>
+      </div>
+    )
   }
 
   return (
