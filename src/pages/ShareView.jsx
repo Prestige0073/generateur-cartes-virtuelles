@@ -107,20 +107,20 @@ export default function ShareView() {
         </div>
 
         {/* Card */}
-        <div className="w-full max-w-sm bg-white border border-slate-200 rounded-2xl shadow-sm overflow-hidden">
+        <div className="w-full max-w-sm bg-white border border-slate-300 rounded-2xl shadow-md overflow-hidden">
 
           {/* Header */}
-          <div className="px-6 pt-7 pb-5 border-b border-slate-100 text-center">
-            <div className="w-14 h-14 mx-auto rounded-2xl bg-sky-50 border border-sky-100 flex items-center justify-center mb-4">
-              <Lock className="w-7 h-7 text-sky-500" />
+          <div className="px-6 pt-7 pb-5 border-b border-slate-200 text-center">
+            <div className="w-14 h-14 mx-auto rounded-2xl bg-sky-50 border border-sky-200 flex items-center justify-center mb-4">
+              <Lock className="w-7 h-7 text-sky-600" />
             </div>
             <h1 className="text-slate-900 text-xl font-extrabold mb-1">Carte partagée</h1>
-            <p className="text-slate-500 text-sm">Entre le mot de passe pour accéder à la carte bancaire.</p>
+            <p className="text-slate-600 text-sm">Entre le mot de passe pour accéder à la carte bancaire.</p>
           </div>
 
           {/* Form */}
-          <div className="px-6 py-5">
-            <form onSubmit={handleSubmit} className="space-y-4">
+          <div className="px-6 py-6">
+            <form onSubmit={handleSubmit} className="space-y-5">
               {error && (
                 <div className="bg-red-50 border border-red-200 text-red-600 text-sm rounded-xl px-4 py-3 flex items-start gap-2">
                   <AlertTriangle className="w-4 h-4 mt-0.5 shrink-0" />
@@ -128,20 +128,20 @@ export default function ShareView() {
                 </div>
               )}
               <div>
-                <label className="block text-sm font-semibold text-slate-700 mb-1.5">Mot de passe</label>
+                <label className="block text-sm font-bold text-slate-800 mb-2">Mot de passe</label>
                 <input
                   type="password"
                   required
                   value={password}
                   onChange={e => setPassword(e.target.value)}
-                  className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-slate-900 placeholder-slate-400 text-sm focus:outline-none focus:ring-2 focus:ring-sky-400 focus:border-transparent transition"
+                  className="w-full bg-white border-2 border-slate-300 rounded-xl px-4 py-3 text-slate-900 placeholder-slate-400 text-sm font-medium focus:outline-none focus:border-sky-400 focus:ring-2 focus:ring-sky-100 transition"
                   placeholder="••••••••••"
                   autoFocus
                 />
               </div>
               <button
                 type="submit"
-                className="w-full bg-sky-500 hover:bg-sky-600 active:bg-sky-700 text-white font-semibold text-sm py-2.5 rounded-xl transition flex items-center justify-center gap-2"
+                className="w-full bg-sky-500 hover:bg-sky-600 active:bg-sky-700 text-white font-bold text-sm py-3 rounded-xl transition flex items-center justify-center gap-2 shadow-sm"
               >
                 <ShieldCheck className="w-4 h-4" />
                 Voir la carte
@@ -150,9 +150,9 @@ export default function ShareView() {
           </div>
 
           {/* Footer */}
-          <div className="px-6 py-3 bg-slate-50 border-t border-slate-100 flex items-center justify-center gap-1.5">
+          <div className="px-6 py-3 bg-slate-50 border-t border-slate-200 flex items-center justify-center gap-1.5">
             <ShieldCheck className="w-3.5 h-3.5 text-slate-400 shrink-0" />
-            <span className="text-slate-400 text-xs">Consultation sécurisée · Lecture seule</span>
+            <span className="text-slate-500 text-xs font-medium">Consultation sécurisée</span>
           </div>
         </div>
       </div>
