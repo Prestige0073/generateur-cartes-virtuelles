@@ -62,8 +62,8 @@ export default function ResetPassword() {
     return (
       <div className="min-h-screen flex items-center justify-center px-4">
         <div className="text-center max-w-md">
-          <Loader2 className="mx-auto h-8 w-8 text-sky-400 animate-spin mb-4" />
-          <p className="text-slate-400">Vérification du lien de réinitialisation...</p>
+          <Loader2 className="mx-auto h-8 w-8 text-sky-500 animate-spin mb-4" />
+          <p className="text-slate-600">Vérification du lien de réinitialisation...</p>
         </div>
       </div>
     )
@@ -73,20 +73,20 @@ export default function ResetPassword() {
     <div className="min-h-screen flex items-center justify-center px-4 py-12">
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
-          <Lock className="mx-auto h-10 w-10 text-sky-400" />
+          <Lock className="mx-auto h-10 w-10 text-sky-500" />
           <h1 className="text-2xl font-bold mt-3">Nouveau mot de passe</h1>
-          <p className="text-slate-400 text-sm mt-1">Choisis un nouveau mot de passe sécurisé</p>
+          <p className="text-slate-500 text-sm mt-1">Choisis un nouveau mot de passe sécurisé</p>
         </div>
 
-        <div className="bg-slate-800/50 border border-slate-700 rounded-2xl p-8">
+        <div className="bg-white border border-slate-200 rounded-2xl p-8 shadow-sm">
           <form onSubmit={handleSubmit} className="space-y-5">
             {error && (
-              <div className="bg-red-900/30 border border-red-700/50 text-red-300 text-sm rounded-xl px-4 py-3">
+              <div className="bg-red-50 border border-red-200 text-red-600 text-sm rounded-xl px-4 py-3">
                 {error}
               </div>
             )}
             <div>
-              <label className="block text-sm font-medium text-slate-300 mb-1.5">Nouveau mot de passe</label>
+              <label className="block text-sm font-medium text-slate-700 mb-1.5">Nouveau mot de passe</label>
               <div className="relative">
                 <input
                   type={showPassword ? 'text' : 'password'}
@@ -101,20 +101,20 @@ export default function ResetPassword() {
                 <button
                   type="button"
                   onClick={() => setShowPassword(v => !v)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-200 transition"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 transition"
                   tabIndex={-1}
                 >
                   {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                 </button>
               </div>
               {password.length > 0 && password.length < 8 && (
-                <p className="text-amber-400 text-xs mt-1">
+                <p className="text-amber-600 text-xs mt-1">
                   {8 - password.length} caractère{8 - password.length > 1 ? 's' : ''} manquant{8 - password.length > 1 ? 's' : ''}
                 </p>
               )}
             </div>
             <div>
-              <label className="block text-sm font-medium text-slate-300 mb-1.5">Confirmer</label>
+              <label className="block text-sm font-medium text-slate-700 mb-1.5">Confirmer</label>
               <div className="relative">
                 <input
                   type={showConfirm ? 'text' : 'password'}
@@ -128,14 +128,14 @@ export default function ResetPassword() {
                 <button
                   type="button"
                   onClick={() => setShowConfirm(v => !v)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-200 transition"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 transition"
                   tabIndex={-1}
                 >
                   {showConfirm ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                 </button>
               </div>
               {confirm.length > 0 && confirm !== password && (
-                <p className="text-red-400 text-xs mt-1">Les mots de passe ne correspondent pas</p>
+                <p className="text-red-600 text-xs mt-1">Les mots de passe ne correspondent pas</p>
               )}
             </div>
             <button type="submit" className="btn-primary" disabled={loading}>

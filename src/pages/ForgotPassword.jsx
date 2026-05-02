@@ -45,16 +45,16 @@ export default function ForgotPassword() {
     return (
       <div className="min-h-screen flex items-center justify-center px-4">
         <div className="text-center max-w-md">
-          <CheckCircle2 className="mx-auto h-14 w-14 text-sky-400 mb-4" />
+          <CheckCircle2 className="mx-auto h-14 w-14 text-sky-500 mb-4" />
           <h2 className="text-2xl font-bold mb-3">Email envoyé !</h2>
-          <p className="text-slate-400 mb-2">
-            Si un compte existe pour <strong className="text-white">{email}</strong>,
+          <p className="text-slate-600 mb-2">
+            Si un compte existe pour <strong className="text-slate-900">{email}</strong>,
             tu recevras un lien de réinitialisation dans les prochaines minutes.
           </p>
           <p className="text-slate-500 text-xs mb-8">
             Vérifie aussi ton dossier spam si tu ne vois rien.
           </p>
-          <Link to="/login" className="text-sky-400 hover:text-sky-300 transition font-medium inline-flex items-center gap-2">
+          <Link to="/login" className="text-sky-600 hover:text-sky-700 transition font-medium inline-flex items-center gap-2">
             <ArrowLeft className="w-4 h-4" /> Retour à la connexion
           </Link>
         </div>
@@ -66,21 +66,21 @@ export default function ForgotPassword() {
     <div className="min-h-screen flex items-center justify-center px-4 py-12">
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
-          <Mail className="mx-auto h-10 w-10 text-sky-400" />
+          <Mail className="mx-auto h-10 w-10 text-sky-500" />
           <h1 className="text-2xl font-bold mt-3">Mot de passe oublié</h1>
-          <p className="text-slate-400 text-sm mt-1">Reçois un lien de réinitialisation par email</p>
+          <p className="text-slate-500 text-sm mt-1">Reçois un lien de réinitialisation par email</p>
         </div>
 
-        <div className="bg-slate-800/50 border border-slate-700 rounded-2xl p-8">
+        <div className="bg-white border border-slate-200 rounded-2xl p-8 shadow-sm">
           <form onSubmit={handleSubmit} className="space-y-5">
             {error && (
-              <div className="bg-red-900/30 border border-red-700/50 text-red-300 text-sm rounded-xl px-4 py-3">
+              <div className="bg-red-50 border border-red-200 text-red-600 text-sm rounded-xl px-4 py-3">
                 {error}
               </div>
             )}
 
             <div>
-              <label className="block text-sm font-medium text-slate-300 mb-1.5">Email</label>
+              <label className="block text-sm font-medium text-slate-700 mb-1.5">Email</label>
               <input
                 type="email"
                 required
@@ -98,8 +98,8 @@ export default function ForgotPassword() {
           </form>
         </div>
 
-        <p className="text-center text-slate-400 text-sm mt-6">
-          <Link to="/login" className="text-sky-400 hover:text-sky-300 transition inline-flex items-center gap-2">
+        <p className="text-center text-slate-500 text-sm mt-6">
+          <Link to="/login" className="text-sky-600 hover:text-sky-700 transition inline-flex items-center gap-2 font-medium">
             <ArrowLeft className="w-4 h-4" /> Retour à la connexion
           </Link>
         </p>

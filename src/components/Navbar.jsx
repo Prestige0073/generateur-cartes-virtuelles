@@ -175,12 +175,12 @@ export default function Navbar() {
                   onClick={() => setMenuOpen(false)}
                   className={`flex items-center gap-4 px-4 py-4 rounded-2xl transition-all ${
                     active
-                      ? 'bg-sky-500/10 border border-sky-500/20 text-sky-400'
+                      ? 'bg-sky-50 border border-sky-200 text-sky-700 font-semibold'
                       : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100 border border-transparent'
                   }`}
                 >
                   <span className={`w-9 h-9 rounded-xl flex items-center justify-center shrink-0 ${
-                    active ? 'bg-sky-500/20 text-sky-400' : 'bg-slate-100 text-slate-500'
+                    active ? 'bg-sky-100 text-sky-600' : 'bg-slate-100 text-slate-500'
                   }`}>
                     <Icon style={{ width: 18, height: 18 }} />
                   </span>

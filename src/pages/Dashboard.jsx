@@ -339,7 +339,7 @@ export default function Dashboard() {
                               </div>
                               <button
                                 onClick={() => copyLinkAndPassword(activeLink.slug, activeLink.id, `both-${card.id}`)}
-                                className="w-full text-xs text-sky-600 hover:text-sky-200 transition py-1.5 flex items-center justify-center gap-1.5"
+                                className="w-full text-xs text-sky-600 hover:text-sky-700 font-medium transition py-1.5 flex items-center justify-center gap-1.5"
                               >
                                 <ClipboardCopy className="w-3 h-3" />
                                 {copiedId === `both-${card.id}` ? 'Lien + mot de passe copiés !' : 'Copier lien + mot de passe'}
@@ -395,7 +395,7 @@ export default function Dashboard() {
                     <div className="flex items-center justify-between gap-3">
                       <div className="min-w-0 flex-1">
                         <div className="flex flex-wrap items-center gap-2 mb-1.5">
-                          <span className={`text-xs font-bold uppercase tracking-wider px-2.5 py-1 rounded-full ${TIERS[p.tier]?.badge || 'bg-slate-700'} ${TIERS[p.tier]?.color || 'text-slate-300'}`}>
+                          <span className={`text-xs font-bold uppercase tracking-wider px-2.5 py-1 rounded-full ${TIERS[p.tier]?.badge || 'bg-slate-200'} ${TIERS[p.tier]?.color || 'text-slate-700'`}>
                             {TIERS[p.tier]?.label || p.tier}
                           </span>
                           <span className="text-slate-400 text-xs capitalize">{p.payment_provider}</span>
