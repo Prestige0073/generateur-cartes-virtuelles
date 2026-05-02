@@ -199,8 +199,8 @@ export default function Card3D({ card, interactive = true, size = 'md' }) {
   const isGold    = template.goldTheme === true
 
   const dims = size === 'sm'
-    ? { w: 300, h: 190, num: 17, name: 10.5, label: 7,   numTrack: '4px' }
-    : { w: 400, h: 252, num: 23, name: 13.5, label: 8.5, numTrack: '6px' }
+    ? { w: 300, h: 190, num: 17, name: 10.5, label: 7,   numTrack: '2px' }
+    : { w: 400, h: 252, num: 23, name: 13.5, label: 8.5, numTrack: '3px' }
 
   useEffect(() => {
     function measure() {
@@ -354,6 +354,8 @@ export default function Card3D({ card, interactive = true, size = 'md' }) {
                   color: numberC,
                   textShadow: engraveEffect,
                   marginLeft: 1,
+                  whiteSpace: 'nowrap',
+                  overflow: 'hidden',
                 }}>
                   {fmtNum}
                 </div>
