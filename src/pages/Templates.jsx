@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { TEMPLATES, TIERS } from '../data/templates'
 import Card3D from '../components/Card3D'
@@ -23,10 +23,32 @@ const FILTERS = [
   { key: 'vip',     label: 'VIP • 7 200 F' },
 ]
 
+function SkeletonCard() {
+  return (
+    <div className="bg-white border border-slate-200 rounded-2xl p-4 flex flex-col items-center gap-4 shadow-sm animate-pulse">
+      {/* card shape */}
+      <div className="w-full rounded-xl bg-slate-200" style={{ aspectRatio: '1.586 / 1' }} />
+      {/* name */}
+      <div className="w-full space-y-2 text-center">
+        <div className="h-3.5 bg-slate-200 rounded-full w-3/4 mx-auto" />
+        <div className="h-3 bg-slate-100 rounded-full w-1/2 mx-auto" />
+      </div>
+      {/* button */}
+      <div className="h-10 w-full bg-slate-200 rounded-xl" />
+    </div>
+  )
+}
+
 export default function Templates() {
   const navigate = useNavigate()
   const [filter, setFilter] = useState('all')
   const [selected, setSelected] = useState(null)
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    const t = setTimeout(() => setLoading(false), 500)
+    return () => clearTimeout(t)
+  }, [])
 
   const filtered = filter === 'all' ? TEMPLATES : TEMPLATES.filter(t => t.tier === filter)
 
@@ -38,11 +60,37 @@ export default function Templates() {
 
   const activeTier = filter !== 'all' ? TIERS[filter] : null
 
+  if (loading) {
+    return (
+      <div className="max-w-6xl mx-auto px-4 py-10 md:py-12">
+        {/* Header skeleton */}
+        <div className="text-center mb-8 md:mb-10 animate-pulse">
+          <div className="h-8 bg-slate-200 rounded-full w-64 mx-auto mb-3" />
+          <div className="h-4 bg-slate-100 rounded-full w-48 mx-auto" />
+        </div>
+
+        {/* Filters skeleton */}
+        <div className="flex gap-2 mb-6 justify-center animate-pulse">
+          {[120, 140, 150, 120].map((w, i) => (
+            <div key={i} className="h-9 bg-slate-200 rounded-lg shrink-0" style={{ width: w }} />
+          ))}
+        </div>
+
+        {/* Grid skeleton */}
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
+          {Array.from({ length: 8 }).map((_, i) => (
+            <SkeletonCard key={i} />
+          ))}
+        </div>
+      </div>
+    )
+  }
+
   return (
-    <div className="max-w-6xl mx-auto px-4 py-10 md:py-12">
+    <div className="max-w-6xl mx-auto px-4 py-10 md:py-12 animate-fadeIn">
       <div className="text-center mb-8 md:mb-10">
-        <h1 className="text-2xl md:text-3xl font-bold mb-2">Catalogue de templates</h1>
-        <p className="text-slate-400 text-sm">16 designs exclusifs — un paiement unique par carte</p>
+        <h1 className="text-2xl md:text-3xl font-bold mb-2 text-slate-900">Catalogue de templates</h1>
+        <p className="text-slate-600 text-sm">16 designs exclusifs — un paiement unique par carte</p>
       </div>
 
       {/* Filter tabs */}
@@ -51,12 +99,12 @@ export default function Templates() {
           <button
             key={f.key}
             onClick={() => setFilter(f.key)}
-            className={`px-4 py-2 rounded-lg text-sm font-medium transition whitespace-nowrap shrink-0 ${
+            className={`px-4 py-2 rounded-lg text-sm font-semibold transition whitespace-nowrap shrink-0 ${
               filter === f.key
-                ? f.key === 'vip'    ? 'bg-amber-600 text-white' :
-                  f.key === 'premium' ? 'bg-sky-600 text-white' :
-                                        'bg-sky-600 text-white'
-                : 'bg-slate-100 text-slate-600 hover:bg-slate-200 hover:text-slate-900'
+                ? f.key === 'vip'     ? 'bg-amber-600 text-white'
+                : f.key === 'premium' ? 'bg-sky-600 text-white'
+                :                       'bg-sky-600 text-white'
+                : 'bg-slate-100 text-slate-700 hover:bg-slate-200 hover:text-slate-900'
             }`}
           >
             {f.label}
@@ -67,7 +115,7 @@ export default function Templates() {
       {/* Tier advantages banner */}
       {activeTier && (
         <div className={`mb-8 rounded-2xl p-4 border flex flex-wrap gap-3 items-center ${
-          filter === 'vip'    ? 'bg-amber-50 border-amber-200' :
+          filter === 'vip'     ? 'bg-amber-50 border-amber-200' :
           filter === 'premium' ? 'bg-sky-50 border-sky-200' :
                                  'bg-slate-50 border-slate-200'
         }`}>
@@ -75,8 +123,8 @@ export default function Templates() {
             {activeTier.label}
           </span>
           {activeTier.features.map(f => (
-            <span key={f} className="inline-flex items-center gap-1.5 text-xs text-slate-600">
-              <Check className="w-3.5 h-3.5 text-green-400 shrink-0" />
+            <span key={f} className="inline-flex items-center gap-1.5 text-xs text-slate-700 font-medium">
+              <Check className="w-3.5 h-3.5 text-green-600 shrink-0" />
               {f}
             </span>
           ))}
@@ -85,7 +133,7 @@ export default function Templates() {
 
       {/* Grid */}
       <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
-        {filtered.map(template => {
+        {filtered.map((template, idx) => {
           const tier = TIERS[template.tier]
           const perks = [
             tier.displayAmount && 'Solde décoratif',
@@ -97,31 +145,32 @@ export default function Templates() {
           return (
             <div
               key={template.id}
-              className={`bg-white border rounded-2xl p-4 flex flex-col items-center gap-4 transition-all duration-200 cursor-pointer shadow-sm ${
+              className={`bg-white border rounded-2xl p-4 flex flex-col items-center gap-4 transition-all duration-200 cursor-pointer shadow-sm animate-fadeInUp ${
                 selected === template.id
-                  ? 'border-sky-400 shadow-lg shadow-sky-900/20'
-                  : 'border-slate-200 hover:border-slate-300'
+                  ? 'border-sky-500 shadow-lg shadow-sky-100'
+                  : 'border-slate-200 hover:border-slate-300 hover:shadow-md'
               }`}
+              style={{ animationDelay: `${idx * 0.04}s` }}
               onClick={() => setSelected(template.id)}
             >
               <div className="relative w-full flex justify-center">
                 <Card3D card={PREVIEW_CARD(template)} size="sm" interactive={false} />
                 {selected === template.id && (
-                  <div className="absolute -top-2 -right-2 w-6 h-6 bg-sky-400 rounded-full flex items-center justify-center text-white">
+                  <div className="absolute -top-2 -right-2 w-6 h-6 bg-sky-500 rounded-full flex items-center justify-center text-white shadow-sm">
                     <Check className="w-3.5 h-3.5" />
                   </div>
                 )}
               </div>
 
               <div className="w-full text-center">
-                <div className="font-semibold text-sm mb-1.5">{template.name}</div>
+                <div className="font-bold text-sm text-slate-900 mb-1.5">{template.name}</div>
                 <div className="flex items-center justify-center gap-2">
                   <span className={`text-xs font-bold px-2.5 py-0.5 rounded-full ${tier.badge} ${tier.color}`}>
                     {tier.label}
                   </span>
-                  <span className="text-slate-500 text-xs font-mono">{tier.price.toLocaleString('fr-FR')} F</span>
+                  <span className="text-slate-600 text-xs font-semibold">{tier.price.toLocaleString('fr-FR')} F</span>
                 </div>
-                <div className="text-slate-600 text-xs mt-1 uppercase tracking-widest">
+                <div className="text-slate-500 text-xs mt-1 uppercase tracking-widest">
                   {template.network}
                 </div>
               </div>
@@ -129,7 +178,7 @@ export default function Templates() {
               {perks.length > 0 && (
                 <div className="w-full grid grid-cols-2 gap-2 text-[11px]">
                   {perks.map(perk => (
-                    <span key={perk} className="rounded-full bg-slate-100 px-2.5 py-1 text-slate-600 text-center">
+                    <span key={perk} className="rounded-full bg-slate-100 px-2.5 py-1 text-slate-700 text-center font-medium">
                       {perk}
                     </span>
                   ))}
@@ -139,12 +188,12 @@ export default function Templates() {
               <button
                 onClick={(e) => { e.stopPropagation(); handleChoose(template) }}
                 className={`w-full inline-flex items-center justify-center gap-1.5 text-white text-sm font-semibold py-2.5 rounded-xl transition ${
-                  template.tier === 'vip'    ? 'bg-amber-600 hover:bg-amber-500' :
-                  template.tier === 'premium' ? 'bg-sky-600 hover:bg-sky-500' :
-                                               'bg-sky-600 hover:bg-sky-500'
+                  template.tier === 'vip'     ? 'bg-amber-600 hover:bg-amber-500 active:bg-amber-700' :
+                  template.tier === 'premium' ? 'bg-sky-600 hover:bg-sky-500 active:bg-sky-700' :
+                                               'bg-sky-600 hover:bg-sky-500 active:bg-sky-700'
                 }`}
               >
-                Acheter cette carte <ChevronRight className="w-4 h-4" />
+                Choisir ce design <ChevronRight className="w-4 h-4" />
               </button>
             </div>
           )
@@ -153,7 +202,7 @@ export default function Templates() {
 
       {/* Tier comparison footer */}
       <div className="mt-12 border-t border-slate-200 pt-10">
-        <h2 className="text-center font-bold text-lg mb-6 text-slate-600">Comparatif des niveaux</h2>
+        <h2 className="text-center font-bold text-lg mb-6 text-slate-900">Comparatif des niveaux</h2>
         <div className="grid sm:grid-cols-3 gap-4 max-w-4xl mx-auto">
           {Object.entries(TIERS).map(([key, tier]) => (
             <div key={key} className={`rounded-2xl p-5 border ${
@@ -163,12 +212,12 @@ export default function Templates() {
             }`}>
               <div className="flex items-center justify-between mb-3">
                 <span className={`text-xs font-bold uppercase tracking-[0.18em] ${tier.color}`}>{tier.label}</span>
-                <span className="text-sm font-bold text-slate-600">{tier.price.toLocaleString('fr-FR')} F</span>
+                <span className="text-sm font-bold text-slate-800">{tier.price.toLocaleString('fr-FR')} F</span>
               </div>
               <ul className="space-y-1.5">
                 {tier.features.map(f => (
-                  <li key={f} className="flex items-start gap-1.5 text-xs text-slate-500">
-                    <Check className="w-3.5 h-3.5 text-green-500 mt-0.5 shrink-0" />
+                  <li key={f} className="flex items-start gap-1.5 text-xs text-slate-700">
+                    <Check className="w-3.5 h-3.5 text-green-600 mt-0.5 shrink-0" />
                     {f}
                   </li>
                 ))}

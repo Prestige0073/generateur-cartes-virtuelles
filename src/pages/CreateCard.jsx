@@ -186,7 +186,7 @@ export default function CreateCard() {
         <div className="text-center max-w-md">
           <AlertTriangle className="mx-auto h-10 w-10 text-red-400 mb-4" />
           <h2 className="text-xl font-bold mb-3">Erreur de vérification</h2>
-          <p className="text-slate-400 text-sm mb-6">{verifyError}</p>
+          <p className="text-slate-600 text-sm mb-6">{verifyError}</p>
           <button onClick={() => navigate('/dashboard')} className="btn-primary">
             Retour au dashboard
           </button>

@@ -61,7 +61,7 @@ export default function Home() {
                 </span>{' '}
                 en 3D
               </h1>
-              <p className="text-slate-400 text-base md:text-lg mb-7 leading-relaxed max-w-md mx-auto md:mx-0">
+              <p className="text-slate-600 text-base md:text-lg mb-7 leading-relaxed max-w-md mx-auto md:mx-0">
                 Crée une carte bancaire au design réaliste, animée en 3D recto/verso.
                 Partageable via lien sécurisé avec mot de passe.
               </p>
@@ -103,7 +103,7 @@ export default function Home() {
                   <item.Icon className="w-6 h-6" />
                 </div>
                 <h3 className="font-semibold text-base md:text-lg mb-2">{item.title}</h3>
-                <p className="text-slate-400 text-sm leading-relaxed">{item.desc}</p>
+                <p className="text-slate-600 text-sm leading-relaxed">{item.desc}</p>
               </div>
             ))}
           </div>
@@ -142,14 +142,14 @@ export default function Home() {
                   </div>
                   <div className="text-3xl font-bold mb-0.5">
                     {tier.price.toLocaleString('fr-FR')}
-                    <span className="text-base font-normal text-slate-400 ml-1">FCFA</span>
+                    <span className="text-base font-normal text-slate-500 ml-1">FCFA</span>
                   </div>
                   <p className="text-slate-600 text-xs mb-5">Paiement unique par carte</p>
 
                   <ul className="space-y-2 mb-6">
                     {tier.features.map(f => (
                       <li key={f} className="flex items-start gap-2 text-sm text-slate-600">
-                        <Check className="w-4 h-4 text-green-400 mt-0.5 shrink-0" />
+                        <Check className="w-4 h-4 text-green-600 mt-0.5 shrink-0" />
                         <span>{f}</span>
                       </li>
                     ))}

@@ -139,7 +139,7 @@ export default function Dashboard() {
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between mb-8">
         <div className="min-w-0">
           <h1 className="text-2xl md:text-3xl font-bold text-slate-900">Mon espace</h1>
-          <p className="text-slate-400 text-sm mt-0.5 truncate">{user.email}</p>
+          <p className="text-slate-600 text-sm mt-0.5 truncate">{user.email}</p>
         </div>
         <div className="flex items-center gap-2.5 shrink-0">
           <button
@@ -170,7 +170,7 @@ export default function Dashboard() {
               <stat.Icon className="w-5 h-5 text-sky-400" />
             </div>
             <div className="flex-1 min-w-0">
-              <p className="text-slate-400 text-xs leading-tight">{stat.label}</p>
+              <p className="text-slate-600 text-xs leading-tight">{stat.label}</p>
               <p className="text-slate-900 font-bold text-xl leading-tight mt-0.5">{stat.value}</p>
             </div>
           </div>
@@ -185,7 +185,7 @@ export default function Dashboard() {
             className={`bg-white border border-slate-200 rounded-2xl p-5 animate-fadeInUp delay-${i + 1}`}
           >
             <div className="flex items-center justify-between gap-2 mb-3">
-              <span className="text-slate-400 text-xs uppercase tracking-wider font-medium leading-tight">{stat.label}</span>
+              <span className="text-slate-600 text-xs uppercase tracking-wider font-medium leading-tight">{stat.label}</span>
               <stat.Icon className="w-5 h-5 text-sky-400 shrink-0" />
             </div>
             <p className="text-2xl font-bold text-sky-600 truncate">{stat.value}</p>
@@ -218,7 +218,7 @@ export default function Dashboard() {
               <CreditCard className="w-7 h-7" />
             </div>
             <h3 className="font-bold text-lg text-slate-900 mb-2">Aucune carte créée</h3>
-            <p className="text-slate-400 text-sm mb-6 max-w-xs mx-auto leading-relaxed">
+            <p className="text-slate-600 text-sm mb-6 max-w-xs mx-auto leading-relaxed">
               Choisis un template et génère ta première carte bancaire en quelques clics.
             </p>
             <Link
@@ -395,12 +395,12 @@ export default function Dashboard() {
                     <div className="flex items-center justify-between gap-3">
                       <div className="min-w-0 flex-1">
                         <div className="flex flex-wrap items-center gap-2 mb-1.5">
-                          <span className={`text-xs font-bold uppercase tracking-wider px-2.5 py-1 rounded-full ${TIERS[p.tier]?.badge || 'bg-slate-200'} ${TIERS[p.tier]?.color || 'text-slate-700'`}>
+                          <span className={`text-xs font-bold uppercase tracking-wider px-2.5 py-1 rounded-full ${TIERS[p.tier]?.badge || 'bg-slate-200'} ${TIERS[p.tier]?.color || 'text-slate-700'}`}>
                             {TIERS[p.tier]?.label || p.tier}
                           </span>
-                          <span className="text-slate-400 text-xs capitalize">{p.payment_provider}</span>
+                          <span className="text-slate-600 text-xs capitalize">{p.payment_provider}</span>
                         </div>
-                        <p className="text-slate-400 text-xs">{new Date(p.created_at).toLocaleDateString('fr-FR')}</p>
+                        <p className="text-slate-500 text-xs">{new Date(p.created_at).toLocaleDateString('fr-FR')}</p>
                       </div>
                       <div className="text-right shrink-0 space-y-1.5">
                         <p className="font-mono font-bold text-slate-900">{p.amount.toLocaleString('fr-FR')} F</p>
@@ -439,7 +439,7 @@ export default function Dashboard() {
                             {tierInfo?.label || p.tier}
                           </span>
                         </td>
-                        <td className="px-5 py-4 text-slate-400 capitalize">{p.payment_provider}</td>
+                        <td className="px-5 py-4 text-slate-600 capitalize">{p.payment_provider}</td>
                         <td className="px-5 py-4 text-right font-bold font-mono text-slate-900">{p.amount.toLocaleString('fr-FR')} F</td>
                         <td className="px-5 py-4 text-center">
                           <span className={`inline-flex items-center justify-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold ${status.badge}`}>

@@ -145,7 +145,7 @@ export default function CardView() {
 
       {/* Header */}
       <div className="flex items-center gap-3 mb-8 flex-wrap">
-        <button onClick={() => navigate('/dashboard')} className="inline-flex items-center gap-1.5 text-slate-400 hover:text-slate-900 transition text-sm">
+        <button onClick={() => navigate('/dashboard')} className="inline-flex items-center gap-1.5 text-slate-500 hover:text-slate-900 transition text-sm">
           <ArrowLeft className="w-4 h-4" /> Dashboard
         </button>
         <span className="text-slate-700">/</span>
