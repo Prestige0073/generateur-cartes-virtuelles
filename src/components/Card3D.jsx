@@ -1,82 +1,86 @@
 import { useState, useEffect, useRef, useId } from 'react'
 import { TEMPLATES } from '../data/templates'
 
-// ── Chip EMV dynamique (couleur du template) ──────────────────────
-function Chip({ uid, color = '#d4af37' }) {
+// ── Chip EMV standard (toujours doré — norme industrielle) ────────
+function Chip({ uid }) {
   return (
-    <svg width="52" height="40" viewBox="0 0 52 40" fill="none">
+    <svg width="50" height="38" viewBox="0 0 50 38" fill="none">
       <defs>
-        <linearGradient id={`${uid}-cg`} x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%"   stopColor={color} stopOpacity="0.65"/>
-          <stop offset="20%"  stopColor={color} stopOpacity="1"/>
-          <stop offset="40%"  stopColor="white"  stopOpacity="0.18"/>
-          <stop offset="60%"  stopColor={color} stopOpacity="0.90"/>
-          <stop offset="80%"  stopColor={color} stopOpacity="0.80"/>
-          <stop offset="100%" stopColor={color} stopOpacity="0.70"/>
+        <linearGradient id={`${uid}-cb`} x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%"   stopColor="#9a6e00"/>
+          <stop offset="20%"  stopColor="#d4a020"/>
+          <stop offset="40%"  stopColor="#f0cc50"/>
+          <stop offset="55%"  stopColor="#c49018"/>
+          <stop offset="75%"  stopColor="#e8c040"/>
+          <stop offset="90%"  stopColor="#b88010"/>
+          <stop offset="100%" stopColor="#d4a020"/>
         </linearGradient>
-        <linearGradient id={`${uid}-cs`} x1="0%" y1="0%" x2="55%" y2="100%">
-          <stop offset="0%"   stopColor="rgba(255,255,255,0.50)"/>
-          <stop offset="55%"  stopColor="rgba(255,255,255,0.04)"/>
+        <linearGradient id={`${uid}-ch`} x1="0%" y1="0%" x2="45%" y2="100%">
+          <stop offset="0%"   stopColor="rgba(255,255,255,0.38)"/>
+          <stop offset="50%"  stopColor="rgba(255,255,255,0.06)"/>
           <stop offset="100%" stopColor="rgba(0,0,0,0)"/>
         </linearGradient>
       </defs>
-      {/* Corps */}
-      <rect x="0.5" y="0.5" width="51" height="39" rx="5.5"
-        fill={`url(#${uid}-cg)`} stroke="rgba(0,0,0,0.28)" strokeWidth="1"/>
-      {/* Contacts horizontaux */}
-      <line x1="4" y1="13" x2="48" y2="13" stroke="rgba(0,0,0,0.28)" strokeWidth="0.8"/>
-      <line x1="4" y1="20" x2="48" y2="20" stroke="rgba(0,0,0,0.28)" strokeWidth="0.8"/>
-      <line x1="4" y1="27" x2="48" y2="27" stroke="rgba(0,0,0,0.28)" strokeWidth="0.8"/>
-      {/* Contacts verticaux */}
-      <line x1="17" y1="4" x2="17" y2="36" stroke="rgba(0,0,0,0.28)" strokeWidth="0.8"/>
-      <line x1="35" y1="4" x2="35" y2="36" stroke="rgba(0,0,0,0.28)" strokeWidth="0.8"/>
-      {/* Zone centrale */}
-      <rect x="9" y="10" width="34" height="20" rx="2.5"
-        fill={color} fillOpacity="0.22" stroke="rgba(0,0,0,0.18)" strokeWidth="0.6"/>
-      <rect x="20" y="15" width="12" height="10" rx="1.5"
-        fill={color} fillOpacity="0.18"/>
+      {/* Corps principal */}
+      <rect x="0.5" y="0.5" width="49" height="37" rx="5"
+        fill={`url(#${uid}-cb)`} stroke="#7a5200" strokeWidth="0.8"/>
+      {/* Lignes de contact horizontales */}
+      <line x1="4" y1="12.5" x2="46" y2="12.5" stroke="rgba(80,50,0,0.45)" strokeWidth="0.7"/>
+      <line x1="4" y1="19"   x2="46" y2="19"   stroke="rgba(80,50,0,0.45)" strokeWidth="0.7"/>
+      <line x1="4" y1="25.5" x2="46" y2="25.5" stroke="rgba(80,50,0,0.45)" strokeWidth="0.7"/>
+      {/* Lignes de contact verticales */}
+      <line x1="16" y1="3.5" x2="16" y2="34.5" stroke="rgba(80,50,0,0.45)" strokeWidth="0.7"/>
+      <line x1="34" y1="3.5" x2="34" y2="34.5" stroke="rgba(80,50,0,0.45)" strokeWidth="0.7"/>
+      {/* Zone centrale gravée */}
+      <rect x="8" y="9.5" width="34" height="19" rx="2"
+        fill="rgba(100,65,0,0.22)" stroke="rgba(60,40,0,0.20)" strokeWidth="0.5"/>
+      <rect x="18" y="14.5" width="14" height="9" rx="1.5"
+        fill="rgba(80,52,0,0.18)"/>
       {/* Reflet */}
-      <rect x="0.5" y="0.5" width="51" height="39" rx="5.5"
-        fill={`url(#${uid}-cs)`}/>
+      <rect x="0.5" y="0.5" width="49" height="37" rx="5"
+        fill={`url(#${uid}-ch)`}/>
     </svg>
   )
 }
 
-// ── Icône contactless NFC ─────────────────────────────────────────
-function NFC({ color, size = 22 }) {
+// ── NFC ───────────────────────────────────────────────────────────
+function NFC({ size = 22 }) {
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
-      <circle cx="7.5" cy="12" r="1.8" fill={color} opacity="0.95"/>
-      <path d="M10.5 8.2 a5.3 5.3 0 0 1 0 7.6"  stroke={color} strokeWidth="1.6" strokeLinecap="round" opacity="0.80"/>
-      <path d="M13.3 5.8 a8.2 8.2 0 0 1 0 12.4" stroke={color} strokeWidth="1.6" strokeLinecap="round" opacity="0.55"/>
-      <path d="M16.1 3.4 a11 11 0 0 1 0 17.2"   stroke={color} strokeWidth="1.6" strokeLinecap="round" opacity="0.30"/>
+      <circle cx="7" cy="12" r="1.8" fill="rgba(255,255,255,0.90)"/>
+      <path d="M10 8.0 a5.5 5.5 0 0 1 0 8.0"  stroke="rgba(255,255,255,0.80)" strokeWidth="1.7" strokeLinecap="round"/>
+      <path d="M13 5.5 a8.5 8.5 0 0 1 0 13.0" stroke="rgba(255,255,255,0.55)" strokeWidth="1.7" strokeLinecap="round"/>
+      <path d="M16 3.2 a11.2 11.2 0 0 1 0 17.6" stroke="rgba(255,255,255,0.28)" strokeWidth="1.7" strokeLinecap="round"/>
     </svg>
   )
 }
 
 // ── Logos réseau ──────────────────────────────────────────────────
-function VisaLogo({ color }) {
+function VisaLogo({ gold = false }) {
+  const c = gold ? '#f8e060' : 'rgba(255,255,255,0.92)'
   return (
-    <svg width="64" height="22" viewBox="0 0 64 22">
-      <text x="0" y="19" fontFamily="'Times New Roman', serif" fontWeight="bold" fontStyle="italic"
-        fontSize="22" fill={color} letterSpacing="-1.5">VISA</text>
+    <svg width="62" height="21" viewBox="0 0 62 21">
+      <text x="0" y="18"
+        fontFamily="'Times New Roman', serif"
+        fontWeight="bold" fontStyle="italic"
+        fontSize="21" fill={c} letterSpacing="-1">VISA</text>
     </svg>
   )
 }
 
 function MastercardLogo() {
   return (
-    <svg width="50" height="32" viewBox="0 0 50 32">
-      <circle cx="17" cy="16" r="15" fill="#eb001b" opacity="0.95"/>
-      <circle cx="33" cy="16" r="15" fill="#f79e1b" opacity="0.95"/>
-      <ellipse cx="25" cy="16" rx="6.5" ry="15" fill="#ff5f00"/>
+    <svg width="48" height="30" viewBox="0 0 48 30">
+      <circle cx="16" cy="15" r="14" fill="#eb001b" opacity="0.96"/>
+      <circle cx="32" cy="15" r="14" fill="#f79e1b" opacity="0.96"/>
+      <ellipse cx="24" cy="15" rx="6.2" ry="14" fill="#ff5f00"/>
     </svg>
   )
 }
 
 // ── Patterns décoratifs SVG ───────────────────────────────────────
 function Pattern({ uid, type, color, width, height }) {
-  const pid = `${uid}-pat`
+  const pid = `${uid}-p`
 
   if (type === 'circuit') return (
     <svg style={{ position:'absolute', inset:0, width:'100%', height:'100%', pointerEvents:'none' }}>
@@ -173,6 +177,13 @@ const LABELS = {
   en: { holder: 'CARD HOLDER', validThru: 'VALID THRU' },
 }
 
+// Effet gravure métal pour les textes clairs
+const ENGRAVE_WHITE = '0 1px 0 rgba(0,0,0,0.95), 0 2px 8px rgba(0,0,0,0.75), 0 -1px 0 rgba(255,255,255,0.10)'
+// Effet gravure or
+const ENGRAVE_GOLD  = '0 1px 0 rgba(0,0,0,0.95), 0 2px 8px rgba(0,0,0,0.80), 0 -1px 0 rgba(255,240,80,0.18), 0 0 10px rgba(180,130,0,0.20)'
+// Label subtil
+const LABEL_SHADOW  = '0 1px 3px rgba(0,0,0,0.85)'
+
 export default function Card3D({ card, interactive = true, size = 'md' }) {
   const [flipped, setFlipped]   = useState(false)
   const [hovering, setHovering] = useState(false)
@@ -180,15 +191,16 @@ export default function Card3D({ card, interactive = true, size = 'md' }) {
   const wrapperRef              = useRef(null)
   const uid                     = useId().replace(/:/g, 'u')
 
-  const template = TEMPLATES.find(t => t.id === card?.template_id) || TEMPLATES[0]
-  const labels   = LABELS[card?.language || 'fr']
+  const template  = TEMPLATES.find(t => t.id === card?.template_id) || TEMPLATES[0]
+  const labels    = LABELS[card?.language || 'fr']
   const isFlipped = flipped || hovering
-  const isVip = card?.tier === 'vip'
+  const isVip     = card?.tier === 'vip'
   const isPremium = card?.tier === 'premium'
+  const isGold    = template.goldTheme === true
 
   const dims = size === 'sm'
-    ? { w: 300, h: 190, num: 18, name: 11, label: 7.5, numTrack: '5px' }
-    : { w: 400, h: 252, num: 24, name: 14, label: 9,   numTrack: '7px' }
+    ? { w: 300, h: 190, num: 17, name: 10.5, label: 7,   numTrack: '4px' }
+    : { w: 400, h: 252, num: 23, name: 13.5, label: 8.5, numTrack: '6px' }
 
   useEffect(() => {
     function measure() {
@@ -207,35 +219,50 @@ export default function Card3D({ card, interactive = true, size = 'md' }) {
     ? rawNum.replace(/(\d{4})(?=\d)/g, '$1 ')
     : '•••• •••• •••• ••••'
 
-  const styleVariant = card?.style_variant || 'standard'
   const fontVariant = card?.font_variant || 'classic'
-  const nameFont = fontVariant === 'modern'
-    ? 'Inter, "Segoe UI", sans-serif'
-    : fontVariant === 'rounded'
-    ? 'Segoe UI, "Helvetica Neue", Arial, sans-serif'
-    : '"Times New Roman", Georgia, serif'
+  const nameFont =
+    fontVariant === 'modern'  ? '"Helvetica Neue", Arial, sans-serif' :
+    fontVariant === 'rounded' ? '"Arial Rounded MT Bold", "Helvetica Neue", Arial, sans-serif' :
+                                '"Helvetica Neue", Arial, sans-serif'
+
+  const styleVariant = card?.style_variant || 'standard'
   const isMetal = styleVariant === 'metal'
-  const isLuxe = styleVariant === 'luxe'
-  const p = dims.w * 0.062
-  const pt = dims.h * 0.12
+  const isLuxe  = styleVariant === 'luxe'
+
+  const p  = dims.w * 0.062
+  const pt = dims.h * 0.115
+
+  const textC   = template.textColor
+  const numberC = template.numberColor
+  const labelC  = template.labelColor
+  const engraveEffect = isGold ? ENGRAVE_GOLD : ENGRAVE_WHITE
+
+  const cardBorder = isVip
+    ? '1.5px solid rgba(212,175,55,0.32)'
+    : isPremium
+    ? '1.5px solid rgba(120,190,255,0.18)'
+    : '1px solid rgba(255,255,255,0.09)'
 
   const faceBoxShadow = isVip
     ? undefined
-    : `0 30px 70px rgba(0,0,0,0.75), 0 8px 24px rgba(0,0,0,0.45)`
+    : '0 28px 65px rgba(0,0,0,0.80), 0 8px 22px rgba(0,0,0,0.50)'
 
-  const faceClass = isVip ? 'card-face card-face-vip' : 'card-face'
+  const faceClass     = isVip ? 'card-face card-face-vip'             : 'card-face'
   const faceBackClass = isVip ? 'card-face card-face-back card-face-vip' : 'card-face card-face-back'
 
-  const premiumBorder = isPremium
-    ? '1.5px solid rgba(100,180,255,0.18)'
-    : isVip
-    ? '1.5px solid rgba(212,175,55,0.30)'
-    : '1px solid rgba(255,255,255,0.08)'
+  const sharedFaceProps = {
+    background: template.gradient,
+    boxShadow: faceBoxShadow,
+  }
+
+  const overlayLight = isMetal
+    ? 'radial-gradient(circle at 18% 18%, rgba(255,255,255,0.22), transparent 22%), linear-gradient(135deg, rgba(255,255,255,0.11), transparent 55%)'
+    : isLuxe
+    ? 'radial-gradient(circle at 28% 18%, rgba(255,255,255,0.18), transparent 24%), radial-gradient(circle at 72% 36%, rgba(255,255,255,0.10), transparent 26%)'
+    : 'linear-gradient(135deg, rgba(255,255,255,0.13) 0%, rgba(255,255,255,0.03) 42%, transparent 65%)'
 
   return (
-    <div ref={wrapperRef}
-      style={{ width: dims.w * scale, height: dims.h * scale, flexShrink: 0 }}
-    >
+    <div ref={wrapperRef} style={{ width: dims.w * scale, height: dims.h * scale, flexShrink: 0 }}>
       <div style={{ width: dims.w, height: dims.h, transform: `scale(${scale})`, transformOrigin: 'top left' }}>
         <div
           className="card-scene select-none"
@@ -247,80 +274,59 @@ export default function Card3D({ card, interactive = true, size = 'md' }) {
           <div className={`card-inner${isFlipped ? ' flipped' : ''}`}>
 
             {/* ════════════════ RECTO ════════════════ */}
-            <div
-              className={faceClass}
-              style={{
-                background: template.gradient,
-                boxShadow: faceBoxShadow,
-              }}
-            >
-              {/* Pattern décoratif */}
+            <div className={faceClass} style={sharedFaceProps}>
+
               <Pattern uid={uid} type={template.patternType} color={template.patternColor} width={dims.w} height={dims.h}/>
 
-              {/* Vignette bords */}
-              <div style={{
-                position:'absolute', inset:0, borderRadius:16, pointerEvents:'none',
-                background:'radial-gradient(ellipse at 50% 50%, transparent 45%, rgba(0,0,0,0.55) 100%)',
-              }}/>
+              {/* Vignette */}
+              <div style={{ position:'absolute', inset:0, borderRadius:16, pointerEvents:'none',
+                background:'radial-gradient(ellipse at 50% 50%, transparent 42%, rgba(0,0,0,0.58) 100%)' }}/>
 
-              {/* Reflet haut-gauche */}
-              <div style={{
-                position:'absolute', inset:0, borderRadius:16, pointerEvents:'none',
-                background: isMetal
-                  ? 'radial-gradient(circle at 20% 20%, rgba(255,255,255,0.20), transparent 22%), linear-gradient(135deg, rgba(255,255,255,0.10), rgba(255,255,255,0) 55%)'
-                  : isLuxe
-                  ? 'radial-gradient(circle at 30% 20%, rgba(255,255,255,0.16), transparent 22%), radial-gradient(circle at 70% 35%, rgba(255,255,255,0.10), transparent 24%)'
-                  : 'linear-gradient(135deg, rgba(255,255,255,0.14) 0%, rgba(255,255,255,0.03) 40%, transparent 65%)',
-              }}/>
+              {/* Reflet */}
+              <div style={{ position:'absolute', inset:0, borderRadius:16, pointerEvents:'none', background: overlayLight }}/>
 
-              {/* Shimmer sweep */}
+              {/* Shimmer */}
               <div style={{ position:'absolute', inset:0, borderRadius:16, overflow:'hidden', pointerEvents:'none' }}>
-                <div className="card-shimmer-beam" />
+                <div className="card-shimmer-beam"/>
               </div>
 
               {isLuxe && (
                 <div style={{
                   position:'absolute', top: dims.h * 0.18, left: dims.w * 0.08,
-                  width: dims.w * 0.34, height: dims.h * 0.014,
-                  background:'rgba(255,255,255,0.20)',
-                  transform:'rotate(-12deg)',
-                  borderRadius:999,
+                  width: dims.w * 0.32, height: dims.h * 0.012,
+                  background:'rgba(255,255,255,0.22)', transform:'rotate(-12deg)', borderRadius:999,
                 }}/>
               )}
 
               {/* Bordure */}
-              <div style={{
-                position:'absolute', inset:0, borderRadius:16, pointerEvents:'none',
-                border: premiumBorder,
-              }}/>
+              <div style={{ position:'absolute', inset:0, borderRadius:16, pointerEvents:'none', border: cardBorder }}/>
 
               {/* ── Contenu recto ── */}
               <div style={{ position:'relative', padding:`${pt}px ${p}px`, height:'100%', display:'flex', flexDirection:'column', justifyContent:'space-between' }}>
 
-                {/* Ligne 1 : Chip + NFC + Logo */}
+                {/* Ligne 1 : Chip + NFC + Logo réseau */}
                 <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between' }}>
-                  <div style={{ display:'flex', alignItems:'center', gap: dims.w * 0.04 }}>
-                    <Chip uid={uid} color={template.chipColor}/>
-                    <NFC color={template.textColor} size={dims.h * 0.12}/>
+                  <div style={{ display:'flex', alignItems:'center', gap: dims.w * 0.038 }}>
+                    <Chip uid={uid}/>
+                    <NFC size={dims.h * 0.115}/>
                   </div>
                   {card?.network_type === 'mastercard'
                     ? <MastercardLogo/>
-                    : <VisaLogo color={template.textColor}/>
+                    : <VisaLogo gold={isGold}/>
                   }
                 </div>
 
-                {/* Nom de banque (VIP) */}
-                {card?.bank_name && card?.tier === 'vip' && (
+                {/* Nom de banque (VIP uniquement) */}
+                {card?.bank_name && isVip && (
                   <div style={{
-                    fontSize: dims.label - 1,
-                    color: template.labelColor,
-                    letterSpacing: '1.5px',
+                    fontSize: dims.label,
+                    color: labelC,
+                    letterSpacing: '2px',
                     textTransform: 'uppercase',
-                    fontWeight: 600,
-                    opacity: 0.85,
-                    marginTop: dims.h * 0.02,
-                    fontFamily: nameFont,
-                    textShadow: `0 1px 4px rgba(0,0,0,0.6)`,
+                    fontWeight: 500,
+                    fontFamily: '"Helvetica Neue", Arial, sans-serif',
+                    textShadow: LABEL_SHADOW,
+                    marginTop: dims.h * 0.015,
                   }}>
                     {card.bank_name}
                   </div>
@@ -329,47 +335,67 @@ export default function Card3D({ card, interactive = true, size = 'md' }) {
                 {/* Badge VIP */}
                 {isVip && (
                   <div style={{
-                    position:'absolute',
-                    top: dims.h * 0.055,
-                    right: p,
-                    fontSize: Math.max(5.5, dims.label - 1.5),
+                    position:'absolute', top: dims.h * 0.05, right: p,
+                    fontSize: Math.max(6, dims.label - 1),
                     letterSpacing: '2.5px',
-                    color: template.labelColor,
+                    color: isGold ? '#f8e060' : 'rgba(255,255,255,0.70)',
                     fontWeight: 700,
-                    opacity: 0.72,
-                    fontFamily: 'monospace',
-                    textShadow: `0 1px 6px rgba(0,0,0,0.7)`,
+                    fontFamily: '"Helvetica Neue", Arial, sans-serif',
+                    textShadow: LABEL_SHADOW,
                   }}>◈ VIP</div>
                 )}
 
-                {/* Ligne 2 : Numéro */}
+                {/* Numéro de carte — effet embossé */}
                 <div style={{
-                  fontFamily: '"Courier Prime", "OCR B", "Courier New", monospace',
+                  fontFamily: '"Courier New", Courier, monospace',
                   fontSize: dims.num,
+                  fontWeight: 700,
                   letterSpacing: dims.numTrack,
-                  color: template.numberColor,
-                  textShadow: `0 2px 8px rgba(0,0,0,0.7), 0 0 24px rgba(0,0,0,0.35)`,
-                  fontWeight: 600,
-                  marginLeft: 2,
+                  color: numberC,
+                  textShadow: engraveEffect,
+                  marginLeft: 1,
                 }}>
                   {fmtNum}
                 </div>
 
-                {/* Ligne 3 : Titulaire + Expiration */}
-                <div style={{ display:'flex', justifyContent:'space-between', alignItems:'flex-end', paddingBottom: dims.h * 0.04 }}>
+                {/* Titulaire + Expiration */}
+                <div style={{ display:'flex', justifyContent:'space-between', alignItems:'flex-end', paddingBottom: dims.h * 0.038 }}>
                   <div>
-                    <div style={{ fontSize: dims.label, color: template.labelColor, letterSpacing:'1.5px', marginBottom: 4, textTransform:'uppercase', fontWeight:500 }}>
+                    <div style={{
+                      fontSize: dims.label, color: labelC,
+                      letterSpacing: '1.8px', marginBottom: 3,
+                      textTransform: 'uppercase', fontWeight: 500,
+                      fontFamily: '"Helvetica Neue", Arial, sans-serif',
+                      textShadow: LABEL_SHADOW,
+                    }}>
                       {labels.holder}
                     </div>
-                    <div style={{ fontSize: dims.name, color: template.textColor, letterSpacing:'2px', textTransform:'uppercase', fontWeight:600, textShadow:'0 1px 4px rgba(0,0,0,0.6)', fontFamily: nameFont }}>
+                    <div style={{
+                      fontSize: dims.name, color: textC,
+                      letterSpacing: '2.2px', textTransform: 'uppercase',
+                      fontWeight: 600,
+                      fontFamily: nameFont,
+                      textShadow: engraveEffect,
+                    }}>
                       {card?.cardholder_name || 'VOTRE NOM'}
                     </div>
                   </div>
                   <div style={{ textAlign:'right' }}>
-                    <div style={{ fontSize: dims.label, color: template.labelColor, letterSpacing:'1.5px', marginBottom: 4, textTransform:'uppercase', fontWeight:500 }}>
+                    <div style={{
+                      fontSize: dims.label, color: labelC,
+                      letterSpacing: '1.8px', marginBottom: 3,
+                      textTransform: 'uppercase', fontWeight: 500,
+                      fontFamily: '"Helvetica Neue", Arial, sans-serif',
+                      textShadow: LABEL_SHADOW,
+                    }}>
                       {labels.validThru}
                     </div>
-                    <div style={{ fontSize: dims.name, color: template.textColor, letterSpacing:'2px', fontWeight:600, textShadow:'0 1px 4px rgba(0,0,0,0.6)' }}>
+                    <div style={{
+                      fontSize: dims.name, color: textC,
+                      letterSpacing: '2.2px', fontWeight: 600,
+                      fontFamily: '"Courier New", Courier, monospace',
+                      textShadow: engraveEffect,
+                    }}>
                       {card?.expiry_date || 'MM/AA'}
                     </div>
                   </div>
@@ -378,102 +404,99 @@ export default function Card3D({ card, interactive = true, size = 'md' }) {
             </div>
 
             {/* ════════════════ VERSO ════════════════ */}
-            <div
-              className={faceBackClass}
-              style={{
-                background: template.gradient,
-                boxShadow: faceBoxShadow,
-              }}
-            >
+            <div className={faceBackClass} style={sharedFaceProps}>
+
               <Pattern uid={`${uid}b`} type={template.patternType} color={template.patternColor} width={dims.w} height={dims.h}/>
 
-              <div style={{
-                position:'absolute', inset:0, borderRadius:16, pointerEvents:'none',
-                background:'radial-gradient(ellipse at 50% 50%, transparent 45%, rgba(0,0,0,0.55) 100%)',
-              }}/>
+              <div style={{ position:'absolute', inset:0, borderRadius:16, pointerEvents:'none',
+                background:'radial-gradient(ellipse at 50% 50%, transparent 42%, rgba(0,0,0,0.58) 100%)' }}/>
 
-              {/* Shimmer sweep verso */}
+              {/* Shimmer verso */}
               <div style={{ position:'absolute', inset:0, borderRadius:16, overflow:'hidden', pointerEvents:'none' }}>
-                <div className="card-shimmer-beam" style={{ animationDelay: '3.5s' }} />
+                <div className="card-shimmer-beam" style={{ animationDelay:'3.5s' }}/>
               </div>
 
-              {/* Bordure */}
-              <div style={{ position:'absolute', inset:0, borderRadius:16, pointerEvents:'none', border: premiumBorder }}/>
+              <div style={{ position:'absolute', inset:0, borderRadius:16, pointerEvents:'none', border: cardBorder }}/>
 
               {/* Bande magnétique */}
               <div style={{
                 position:'absolute', top: dims.h * 0.14, left:0, right:0,
-                height: dims.h * 0.20,
-                background:'linear-gradient(90deg, #060606 0%, #1a1a1a 25%, #242424 50%, #1a1a1a 75%, #060606 100%)',
-                boxShadow:'inset 0 2px 6px rgba(255,255,255,0.04), inset 0 -2px 6px rgba(0,0,0,0.6)',
+                height: dims.h * 0.195,
+                background:'linear-gradient(90deg, #050505 0%, #181818 20%, #222222 50%, #181818 80%, #050505 100%)',
+                boxShadow:'inset 0 2px 5px rgba(255,255,255,0.04), inset 0 -2px 5px rgba(0,0,0,0.65)',
               }}/>
 
-              {/* Bande de signature */}
+              {/* Bande signature */}
               <div style={{
-                position:'absolute',
-                top: dims.h * 0.42,
-                left: p, right: p,
-                height: dims.h * 0.18,
-                display:'flex', borderRadius:4, overflow:'hidden',
-                boxShadow:'0 2px 6px rgba(0,0,0,0.5)',
+                position:'absolute', top: dims.h * 0.42, left: p, right: p,
+                height: dims.h * 0.175,
+                display:'flex', borderRadius:3, overflow:'hidden',
+                boxShadow:'0 2px 8px rgba(0,0,0,0.55)',
               }}>
                 <div style={{
                   flex:1, height:'100%',
-                  background:'repeating-linear-gradient(90deg, #f0efea 0px, #e6e4dc 10px, #f2f0e8 10px, #f0efea 20px)',
-                  display:'flex', alignItems:'center', paddingLeft:10,
+                  background:'repeating-linear-gradient(90deg, #f0eeea 0px, #e8e5dd 9px, #f4f2ea 9px, #f0eeea 18px)',
+                  display:'flex', alignItems:'center', paddingLeft: 10,
                 }}>
-                  <span style={{ fontFamily:'cursive', fontSize: dims.name + 1, color:'#555', opacity:0.50 }}>
+                  <span style={{
+                    fontFamily: 'Georgia, serif',
+                    fontStyle: 'italic',
+                    fontSize: dims.name,
+                    color: '#444',
+                    opacity: 0.45,
+                  }}>
                     {card?.cardholder_name || ''}
                   </span>
                 </div>
                 <div style={{
-                  width: dims.w * 0.17, height:'100%',
-                  background:'linear-gradient(135deg, #f8f7f2 0%, #eae8e0 100%)',
-                  borderLeft:'2px solid #ccc',
+                  width: dims.w * 0.16, height:'100%',
+                  background:'linear-gradient(160deg, #f8f6f0 0%, #ebe9e0 100%)',
+                  borderLeft:'2px solid #d0cec8',
                   display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center',
-                  gap: 2,
+                  gap: 1,
                 }}>
-                  <div style={{ fontSize: dims.label, color:'#888', letterSpacing:'1px', fontWeight:600 }}>CVV</div>
-                  <div style={{ fontFamily:'"Courier New", monospace', fontSize: dims.name + 2, color:'#111', fontWeight:800, letterSpacing:'2px' }}>
+                  <div style={{ fontSize: dims.label - 0.5, color:'#888', letterSpacing:'1px', fontWeight:700,
+                    fontFamily:'"Helvetica Neue", Arial, sans-serif' }}>CVV</div>
+                  <div style={{ fontFamily:'"Courier New", Courier, monospace',
+                    fontSize: dims.name + 1.5, color:'#111', fontWeight:800, letterSpacing:'3px' }}>
                     {card?.cvv || '•••'}
                   </div>
                 </div>
               </div>
 
-              {/* Hologramme amélioré */}
+              {/* Hologramme */}
               <div style={{
                 position:'absolute',
                 top: dims.h * 0.415,
-                right: p + dims.w * 0.17 + p * 0.6,
-                width: dims.h * 0.16,
-                height: dims.h * 0.16,
+                right: p + dims.w * 0.16 + p * 0.55,
+                width: dims.h * 0.155, height: dims.h * 0.155,
                 borderRadius:'50%',
-                background:'conic-gradient(from 0deg, #ff0066cc, #ff6600cc, #ffee00cc, #00ff88cc, #0099ffcc, #8800ffcc, #ff0066cc)',
-                filter:'blur(0.5px)',
-                boxShadow:`0 0 10px rgba(255,255,255,0.20), 0 0 20px rgba(120,120,255,0.15)`,
+                background:'conic-gradient(from 0deg, #ff0066cc, #ff6600cc, #ffe800cc, #00ff88cc, #0099ffcc, #8800ffcc, #ff0066cc)',
+                filter:'blur(0.4px)',
+                boxShadow:'0 0 8px rgba(255,255,255,0.18)',
               }}>
-                <div style={{
-                  position:'absolute', inset:'22%',
-                  borderRadius:'50%',
-                  border:'1px solid rgba(255,255,255,0.55)',
-                }}/>
-                <div style={{
-                  position:'absolute', inset:'44%',
-                  borderRadius:'50%',
-                  background:'rgba(255,255,255,0.55)',
-                }}/>
+                <div style={{ position:'absolute', inset:'20%', borderRadius:'50%', border:'1px solid rgba(255,255,255,0.50)' }}/>
+                <div style={{ position:'absolute', inset:'43%', borderRadius:'50%', background:'rgba(255,255,255,0.52)' }}/>
               </div>
 
-              {/* Solde esthétique */}
+              {/* Solde */}
               {card?.display_amount && (
                 <div style={{
-                  position:'absolute',
-                  top: dims.h * 0.67,
-                  left: p, right: p,
-                  display:'flex', alignItems:'center', gap: 8,
+                  position:'absolute', top: dims.h * 0.67, left: p, right: p,
+                  display:'flex', alignItems:'baseline', gap: 6,
                 }}>
-                  <span style={{ fontSize: dims.label, color: template.labelColor, textTransform:'uppercase', letterSpacing:'1.5px' }}>Solde</span>
-                  <span style={{ fontSize: dims.name + 1, color: template.textColor, fontWeight:700, letterSpacing:'1px', textShadow:'0 1px 4px rgba(0,0,0,0.6)' }}>
+                  <span style={{
+                    fontSize: dims.label, color: labelC,
+                    textTransform:'uppercase', letterSpacing:'2px',
+                    fontFamily:'"Helvetica Neue", Arial, sans-serif',
+                    textShadow: LABEL_SHADOW,
+                  }}>Solde</span>
+                  <span style={{
+                    fontSize: dims.name + 1, color: textC,
+                    fontWeight: 700, letterSpacing:'1px',
+                    fontFamily:'"Courier New", Courier, monospace',
+                    textShadow: engraveEffect,
+                  }}>
                     {Number(card.display_amount).toLocaleString('fr-FR')} FCFA
                   </span>
                 </div>
@@ -481,16 +504,21 @@ export default function Card3D({ card, interactive = true, size = 'md' }) {
 
               {/* Bas verso */}
               <div style={{
-                position:'absolute', bottom: dims.h * 0.07,
+                position:'absolute', bottom: dims.h * 0.065,
                 left: p, right: p,
                 display:'flex', justifyContent:'space-between', alignItems:'center',
               }}>
-                <span style={{ fontSize: dims.label - 0.5, color: template.labelColor, opacity:0.65, maxWidth:'58%', lineHeight:1.4, letterSpacing:'0.5px' }}>
+                <span style={{
+                  fontSize: dims.label - 0.5, color: labelC,
+                  opacity: 0.60, maxWidth:'58%', lineHeight:1.4,
+                  letterSpacing:'0.5px',
+                  fontFamily:'"Helvetica Neue", Arial, sans-serif',
+                }}>
                   Carte bancaire professionnelle
                 </span>
                 {card?.network_type === 'mastercard'
                   ? <MastercardLogo/>
-                  : <VisaLogo color={template.textColor}/>
+                  : <VisaLogo gold={isGold}/>
                 }
               </div>
             </div>
