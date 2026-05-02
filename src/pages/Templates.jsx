@@ -211,7 +211,9 @@ export default function Templates() {
                                   'border-slate-200 bg-white'
             }`}>
               <div className="flex items-center justify-between mb-3">
-                <span className={`text-xs font-bold uppercase tracking-[0.18em] ${tier.color}`}>{tier.label}</span>
+                <span className={`text-xs font-bold uppercase tracking-[0.18em] ${
+                  key === 'vip' ? 'text-amber-600' : key === 'premium' ? 'text-sky-600' : 'text-slate-700'
+                }`}>{tier.label}</span>
                 <span className="text-sm font-bold text-slate-800">{tier.price.toLocaleString('fr-FR')} F</span>
               </div>
               <ul className="space-y-1.5">

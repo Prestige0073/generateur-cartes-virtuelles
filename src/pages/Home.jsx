@@ -137,7 +137,9 @@ export default function Home() {
                     </div>
                   )}
 
-                  <div className={`text-xs font-bold uppercase tracking-[0.2em] mb-3 ${tier.color}`}>
+                  <div className={`text-xs font-bold uppercase tracking-[0.2em] mb-3 ${
+                    key === 'vip' ? 'text-amber-600' : key === 'premium' ? 'text-sky-600' : 'text-slate-700'
+                  }`}>
                     {tier.label}
                   </div>
                   <div className="text-3xl font-bold mb-0.5">
