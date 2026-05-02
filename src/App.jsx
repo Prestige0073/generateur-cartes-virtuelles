@@ -1,4 +1,5 @@
 import { Routes, Route } from 'react-router-dom'
+import { useEffect } from 'react'
 import Navbar from './components/Navbar'
 import ProtectedRoute from './components/ProtectedRoute'
 import Home from './pages/Home'
@@ -17,6 +18,10 @@ import NotFound from './pages/NotFound'
 export default function App() {
   const shareDomain = import.meta.env.VITE_SHARE_DOMAIN
   const isShareHost = shareDomain ? window.location.hostname === shareDomain : false
+
+  useEffect(() => {
+    document.title = isShareHost ? 'ShareCards' : 'CardGen — Générateur de Cartes Bancaires'
+  }, [isShareHost])
 
   // Domaine de partage : seul /share/:slug est accessible, tout le reste → 404
   if (isShareHost) {

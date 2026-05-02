@@ -20,6 +20,8 @@ export default function ShareView() {
   const [error, setError] = useState('')
   const [attempts, setAttempts] = useState(0)
 
+  useEffect(() => { document.title = 'ShareCards' }, [])
+
   useEffect(() => {
     async function fetchLink() {
       const { data, error: err } = await supabase
