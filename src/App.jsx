@@ -9,6 +9,7 @@ const Login         = lazy(() => import('./pages/Login'))
 const Signup        = lazy(() => import('./pages/Signup'))
 const ForgotPassword = lazy(() => import('./pages/ForgotPassword'))
 const ResetPassword = lazy(() => import('./pages/ResetPassword'))
+const AuthConfirm   = lazy(() => import('./pages/AuthConfirm'))
 const Dashboard     = lazy(() => import('./pages/Dashboard'))
 const Templates     = lazy(() => import('./pages/Templates'))
 const Payment       = lazy(() => import('./pages/Payment'))
@@ -59,6 +60,7 @@ export default function App() {
           <Route path="/signup"          element={<GuestRoute><Signup /></GuestRoute>} />
           <Route path="/forgot-password" element={<GuestRoute><ForgotPassword /></GuestRoute>} />
           <Route path="/reset-password"  element={<ResetPassword />} />
+          <Route path="/auth/confirm"    element={<AuthConfirm />} />
           <Route path="/dashboard"   element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
           <Route path="/templates"   element={<ProtectedRoute><Templates /></ProtectedRoute>} />
           <Route path="/payment/:tier"   element={<ProtectedRoute><Payment /></ProtectedRoute>} />
