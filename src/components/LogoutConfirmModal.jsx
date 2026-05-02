@@ -7,35 +7,33 @@ export default function LogoutConfirmModal({ isOpen, onConfirm, onCancel, isLoad
     <>
       {/* Backdrop */}
       <div
-        className="fixed inset-0 z-[100] bg-black/60 backdrop-blur-sm"
+        className="fixed inset-0 z-[100] bg-black/60 backdrop-blur-sm flex items-center justify-center p-4"
         onClick={onCancel}
-      />
-
-      {/* Modal */}
-      <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[101] w-full max-w-sm">
-        <div className="bg-white rounded-3xl shadow-2xl border border-slate-200 overflow-hidden">
+      >
+        {/* Modal */}
+        <div className="w-full max-w-sm bg-white rounded-3xl shadow-2xl border border-slate-200 overflow-hidden mx-auto">
 
           {/* En-tête */}
-          <div className="flex items-center justify-between px-6 py-5 border-b border-slate-200">
-            <h2 className="text-lg font-bold text-slate-900">Confirmer la déconnexion</h2>
+          <div className="flex items-center justify-between px-4 sm:px-6 py-4 sm:py-5 border-b border-slate-200">
+            <h2 className="text-base sm:text-lg font-bold text-slate-900">Confirmer la déconnexion</h2>
             <button
               onClick={onCancel}
               disabled={isLoading}
               className="w-8 h-8 flex items-center justify-center text-slate-400 hover:text-slate-600 rounded-lg hover:bg-slate-100 transition disabled:opacity-50"
             >
-              <X className="w-5 h-5" />
+              <X className="w-4 h-4" />
             </button>
           </div>
 
           {/* Corps */}
-          <div className="px-6 py-6">
-            <p className="text-slate-600 text-center">
+          <div className="px-4 sm:px-6 py-4 sm:py-6">
+            <p className="text-slate-600 text-center text-sm sm:text-base">
               Es-tu sûr de vouloir te déconnecter ? Tu devras te reconnecter pour accéder à ton compte.
             </p>
           </div>
 
           {/* Boutons */}
-          <div className="flex gap-3 px-6 py-5 bg-slate-50 border-t border-slate-200">
+          <div className="flex flex-col sm:flex-row gap-3 px-4 sm:px-6 py-4 sm:py-5 bg-slate-50 border-t border-slate-200">
             <button
               onClick={onCancel}
               disabled={isLoading}
