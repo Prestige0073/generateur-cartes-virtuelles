@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import { useAuth } from '../context/AuthContext'
 import Card3D from '../components/Card3D'
 import { AlertTriangle, Check, CreditCard, Link2, ShieldCheck, X } from 'lucide-react'
 import { TIERS } from '../data/templates'
@@ -34,6 +35,8 @@ const FEATURES = [
 ]
 
 export default function Home() {
+  const { user } = useAuth()
+
   return (
     <div className="overflow-x-hidden">
 
@@ -63,9 +66,15 @@ export default function Home() {
                 Partageable via lien sécurisé avec mot de passe.
               </p>
               <div className="flex flex-col sm:flex-row gap-3 justify-center md:justify-start">
-                <Link to="/signup" className="bg-sky-500 hover:bg-sky-400 active:bg-sky-600 text-white font-semibold px-8 py-3.5 rounded-xl transition text-sm text-center">
-                  Créer mon compte
-                </Link>
+                {user ? (
+                  <Link to="/dashboard" className="bg-sky-500 hover:bg-sky-400 active:bg-sky-600 text-white font-semibold px-8 py-3.5 rounded-xl transition text-sm text-center">
+                    Mon dashboard
+                  </Link>
+                ) : (
+                  <Link to="/signup" className="bg-sky-500 hover:bg-sky-400 active:bg-sky-600 text-white font-semibold px-8 py-3.5 rounded-xl transition text-sm text-center">
+                    Créer mon compte
+                  </Link>
+                )}
                 <Link to="/templates" className="bg-slate-800 hover:bg-slate-700 text-white font-semibold px-8 py-3.5 rounded-xl transition text-sm border border-slate-700 text-center">
                   Voir le catalogue
                 </Link>
@@ -172,13 +181,27 @@ export default function Home() {
       {/* CTA */}
       <section className="py-16 md:py-20 border-t border-slate-800">
         <div className="max-w-2xl mx-auto px-4 text-center">
-          <h2 className="text-2xl md:text-3xl font-bold mb-4">Prêt à créer ta carte ?</h2>
-          <p className="text-slate-400 text-sm md:text-base mb-8">
-            Inscris-toi gratuitement et choisis ton design en quelques clics.
-          </p>
-          <Link to="/signup" className="inline-block bg-sky-500 hover:bg-sky-400 active:bg-sky-600 text-white font-semibold px-8 md:px-10 py-4 rounded-xl transition">
-            Commencer maintenant
-          </Link>
+          {user ? (
+            <>
+              <h2 className="text-2xl md:text-3xl font-bold mb-4">Prêt à créer une nouvelle carte ?</h2>
+              <p className="text-slate-400 text-sm md:text-base mb-8">
+                Choisis un design et personnalise ta carte en quelques clics.
+              </p>
+              <Link to="/templates" className="inline-block bg-sky-500 hover:bg-sky-400 active:bg-sky-600 text-white font-semibold px-8 md:px-10 py-4 rounded-xl transition">
+                Voir le catalogue
+              </Link>
+            </>
+          ) : (
+            <>
+              <h2 className="text-2xl md:text-3xl font-bold mb-4">Prêt à créer ta carte ?</h2>
+              <p className="text-slate-400 text-sm md:text-base mb-8">
+                Inscris-toi gratuitement et choisis ton design en quelques clics.
+              </p>
+              <Link to="/signup" className="inline-block bg-sky-500 hover:bg-sky-400 active:bg-sky-600 text-white font-semibold px-8 md:px-10 py-4 rounded-xl transition">
+                Commencer maintenant
+              </Link>
+            </>
+          )}
         </div>
       </section>
 
