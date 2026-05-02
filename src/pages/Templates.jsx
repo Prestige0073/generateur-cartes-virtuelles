@@ -191,7 +191,7 @@ export default function Templates() {
                                                'bg-sky-600 hover:bg-sky-500 active:bg-sky-700'
                 }`}
               >
-                Choisir ce design <ChevronRight className="w-4 h-4" />
+                Payer cette carte <ChevronRight className="w-4 h-4" />
               </button>
             </div>
           )
