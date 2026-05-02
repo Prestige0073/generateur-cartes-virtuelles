@@ -26,6 +26,12 @@ function generatePassword(len = 12) {
     .map(b => chars[b % chars.length]).join('')
 }
 
+function generateSlug(len = 8) {
+  const chars = 'abcdefghjkmnpqrstuvwxyz23456789'
+  return Array.from(crypto.getRandomValues(new Uint8Array(len)))
+    .map(b => chars[b % chars.length]).join('')
+}
+
 const SHARE_BASE = import.meta.env.VITE_SHARE_DOMAIN
   ? `https://${import.meta.env.VITE_SHARE_DOMAIN}`
   : (import.meta.env.VITE_APP_URL || window.location.origin)
@@ -76,7 +82,7 @@ export default function CardView() {
     setError('')
     const rawPassword = generatePassword()
     const hash = await sha256(rawPassword)
-    const slug = crypto.randomUUID()
+    const slug = generateSlug()
     const expiryDays = TIERS[card.tier]?.shareExpiry || 30
     const expiresAt = new Date(Date.now() + expiryDays * 86_400_000).toISOString()
 
