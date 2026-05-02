@@ -38,9 +38,15 @@ export default function Payment() {
       triggerLeekPay()
     }
 
+    // LeekPay.close() appelle config.onCancel (pas params.onCancel) — on enregistre globalement
+    if (window.LeekPay) {
+      window.LeekPay.configure({
+        onCancel: () => { opened.current = false; setStep('ready') },
+      })
+    }
+
     if (window.LeekPay) {
       setStep('ready')
-      // slight delay so the summary is visible before widget opens
       setTimeout(openWidget, 600)
       return
     }
@@ -49,6 +55,9 @@ export default function Payment() {
     script.src = LEEKPAY_SCRIPT
     script.async = true
     script.onload = () => {
+      window.LeekPay.configure({
+        onCancel: () => { opened.current = false; setStep('ready') },
+      })
       setStep('ready')
       setTimeout(openWidget, 600)
     }
