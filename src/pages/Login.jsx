@@ -48,7 +48,7 @@ export default function Login() {
     if (err) {
       setError(parseLoginError(err))
     } else {
-      navigate('/dashboard')
+      navigate('/dashboard', { state: { welcome: true } })
     }
   }
 

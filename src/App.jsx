@@ -1,5 +1,6 @@
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route, Navigate } from 'react-router-dom'
 import { useEffect } from 'react'
+import { useAuth } from './context/AuthContext'
 import Navbar from './components/Navbar'
 import ProtectedRoute from './components/ProtectedRoute'
 import Home from './pages/Home'
@@ -15,6 +16,14 @@ import CardView from './pages/CardView'
 import ShareView from './pages/ShareView'
 import NotFound from './pages/NotFound'
 
+// Redirige les utilisateurs déjà connectés vers le dashboard
+function GuestRoute({ children }) {
+  const { user, loading } = useAuth()
+  if (loading) return null
+  if (user) return <Navigate to="/dashboard" replace />
+  return children
+}
+
 export default function App() {
   const shareDomain = import.meta.env.VITE_SHARE_DOMAIN
   const isShareHost = shareDomain ? window.location.hostname === shareDomain : false
@@ -23,7 +32,6 @@ export default function App() {
     document.title = isShareHost ? 'ShareCards' : 'CardGen — Générateur de Cartes Bancaires'
   }, [isShareHost])
 
-  // Domaine de partage : seul /share/:slug est accessible, tout le reste → 404
   if (isShareHost) {
     return (
       <div className="min-h-screen bg-slate-950 text-white">
@@ -35,21 +43,20 @@ export default function App() {
     )
   }
 
-  // Site principal
   return (
     <div className="min-h-screen bg-slate-900 text-white">
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/login"          element={<GuestRoute><Login /></GuestRoute>} />
+        <Route path="/signup"         element={<GuestRoute><Signup /></GuestRoute>} />
+        <Route path="/forgot-password"element={<GuestRoute><ForgotPassword /></GuestRoute>} />
         <Route path="/reset-password" element={<ResetPassword />} />
-        <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
-        <Route path="/templates" element={<ProtectedRoute><Templates /></ProtectedRoute>} />
-        <Route path="/payment/:tier" element={<ProtectedRoute><Payment /></ProtectedRoute>} />
-        <Route path="/create-card" element={<ProtectedRoute><CreateCard /></ProtectedRoute>} />
-        <Route path="/card/:id" element={<ProtectedRoute><CardView /></ProtectedRoute>} />
+        <Route path="/dashboard"   element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+        <Route path="/templates"   element={<ProtectedRoute><Templates /></ProtectedRoute>} />
+        <Route path="/payment/:tier"  element={<ProtectedRoute><Payment /></ProtectedRoute>} />
+        <Route path="/create-card"    element={<ProtectedRoute><CreateCard /></ProtectedRoute>} />
+        <Route path="/card/:id"       element={<ProtectedRoute><CardView /></ProtectedRoute>} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </div>

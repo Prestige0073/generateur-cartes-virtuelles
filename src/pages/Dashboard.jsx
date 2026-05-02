@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import { supabase } from '../lib/supabase'
 import { TEMPLATES, TIERS } from '../data/templates'
@@ -35,12 +35,25 @@ function getSavedPw(linkId) {
 export default function Dashboard() {
   const { user } = useAuth()
   const navigate = useNavigate()
+  const location = useLocation()
   const [cards, setCards]       = useState([])
   const [payments, setPayments] = useState([])
   const [loading, setLoading]   = useState(true)
   const [tab, setTab]           = useState('cards')
   const [copiedId, setCopiedId] = useState(null)
   const [visiblePw, setVisiblePw] = useState({})
+  const [showWelcome, setShowWelcome] = useState(false)
+
+  // Toast de bienvenue après connexion
+  useEffect(() => {
+    if (location.state?.welcome) {
+      setShowWelcome(true)
+      // Effacer le state pour éviter de revoir le toast au rechargement
+      navigate(location.pathname, { replace: true, state: {} })
+      const t = setTimeout(() => setShowWelcome(false), 4500)
+      return () => clearTimeout(t)
+    }
+  }, []) // eslint-disable-line
 
   useEffect(() => { fetchData() }, [user.id])
 
@@ -99,6 +112,21 @@ export default function Dashboard() {
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-8 md:py-12 animate-fadeInUp">
+
+      {/* ── Toast de bienvenue ── */}
+      {showWelcome && (
+        <div className="fixed top-5 left-1/2 -translate-x-1/2 z-[200] animate-fadeInUp">
+          <div className="flex items-center gap-3 bg-emerald-950 border border-emerald-700/60 text-emerald-300 px-5 py-3.5 rounded-2xl shadow-2xl shadow-black/40 backdrop-blur-sm">
+            <span className="w-7 h-7 rounded-full bg-emerald-700/40 flex items-center justify-center shrink-0">
+              <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+            </span>
+            <div>
+              <p className="font-semibold text-sm text-emerald-200">Connexion réussie !</p>
+              <p className="text-xs text-emerald-400/80 leading-tight">Bienvenue, {user.email?.split('@')[0]}</p>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* ── Header ── */}
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between mb-8">
