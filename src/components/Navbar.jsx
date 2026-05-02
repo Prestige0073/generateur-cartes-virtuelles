@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import { Menu, X, LogOut, Home, LayoutGrid, LayoutDashboard } from 'lucide-react'
+import LogoutConfirmModal from './LogoutConfirmModal'
 
 function LogoIcon() {
   return (
@@ -48,6 +49,8 @@ export default function Navbar() {
   const navigate = useNavigate()
   const { pathname } = useLocation()
   const [menuOpen, setMenuOpen] = useState(false)
+  const [showLogoutModal, setShowLogoutModal] = useState(false)
+  const [logoutLoading, setLogoutLoading] = useState(false)
 
   useEffect(() => {
     document.body.style.overflow = menuOpen ? 'hidden' : ''
@@ -56,9 +59,12 @@ export default function Navbar() {
 
   useEffect(() => { setMenuOpen(false) }, [pathname])
 
-  async function handleSignOut() {
-    setMenuOpen(false)
+  async function handleSignOutConfirm() {
+    setLogoutLoading(true)
     await signOut()
+    setLogoutLoading(false)
+    setShowLogoutModal(false)
+    setMenuOpen(false)
     navigate('/')
   }
 
@@ -104,7 +110,7 @@ export default function Navbar() {
                   <span className="text-slate-700 text-xs max-w-[130px] truncate">{username}</span>
                 </div>
                 <button
-                  onClick={handleSignOut}
+                  onClick={() => setShowLogoutModal(true)}
                   title="Déconnexion"
                   className="w-8 h-8 flex items-center justify-center text-slate-400 hover:text-red-500 hover:bg-red-50 border border-transparent hover:border-red-200 rounded-lg transition"
                 >
@@ -212,7 +218,7 @@ export default function Navbar() {
                 </div>
               </div>
               <button
-                onClick={handleSignOut}
+                onClick={() => setShowLogoutModal(true)}
                 className="w-full flex items-center justify-center gap-2.5 py-3 rounded-2xl border border-red-200 bg-red-50 text-red-500 hover:bg-red-100 text-sm font-semibold transition active:scale-[0.98]"
               >
                 <LogOut className="w-4 h-4" />
@@ -239,6 +245,14 @@ export default function Navbar() {
           )}
         </div>
       </div>
+
+      {/* Modal déconnexion */}
+      <LogoutConfirmModal
+        isOpen={showLogoutModal}
+        onConfirm={handleSignOutConfirm}
+        onCancel={() => setShowLogoutModal(false)}
+        isLoading={logoutLoading}
+      />
     </>
   )
 }
