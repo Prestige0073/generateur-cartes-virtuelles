@@ -1,5 +1,4 @@
 import { Routes, Route } from 'react-router-dom'
-import { useEffect } from 'react'
 import Navbar from './components/Navbar'
 import ProtectedRoute from './components/ProtectedRoute'
 import Home from './pages/Home'
@@ -15,23 +14,17 @@ import CardView from './pages/CardView'
 import ShareView from './pages/ShareView'
 import NotFound from './pages/NotFound'
 
-function RedirectToMainApp() {
-  const mainApp = import.meta.env.VITE_APP_URL || 'https://mycardsv.vercel.app'
-  useEffect(() => { window.location.replace(mainApp) }, [mainApp])
-  return null
-}
-
 export default function App() {
   const shareDomain = import.meta.env.VITE_SHARE_DOMAIN
   const isShareHost = shareDomain ? window.location.hostname === shareDomain : false
 
-  // Domaine de partage : seul /share/:slug est accessible, tout le reste → site principal
+  // Domaine de partage : seul /share/:slug est accessible, tout le reste → 404
   if (isShareHost) {
     return (
       <div className="min-h-screen bg-slate-950 text-white">
         <Routes>
           <Route path="/share/:slug" element={<ShareView />} />
-          <Route path="*" element={<RedirectToMainApp />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </div>
     )
