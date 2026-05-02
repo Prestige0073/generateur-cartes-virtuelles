@@ -100,23 +100,20 @@ export default function Payment() {
 
           setStep('processing')
 
-          const { data: paymentData, error: payErr } = await supabase
-            .from('payments')
-            .insert({
-              user_id: user.id,
-              tier,
-              amount: tierInfo.price,
-              payment_provider: response.provider || 'leekpay',
-              status: 'success',
-            })
-            .select()
-            .single()
+          const { data: paymentId, error: payErr } = await supabase.rpc('record_payment', {
+            p_tier:           tier,
+            p_amount:         tierInfo.price,
+            p_provider:       response.provider || 'leekpay',
+            p_transaction_id: response.transaction_id || response.id || null,
+          })
 
-          if (payErr || !paymentData) {
+          if (payErr || !paymentId) {
             setError('Paiement reçu mais erreur d\'enregistrement. Contacte le support.')
             setStep('ready')
             return
           }
+
+          const paymentData = { id: paymentId }
 
           setStep('success')
           setTimeout(() => {

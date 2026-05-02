@@ -19,6 +19,13 @@ const FONT_OPTIONS = [
   { id: 'rounded', label: 'Arrondi' },
 ]
 
+function sanitizeName(str) {
+  return str
+    .replace(/<[^>]*>/g, '')
+    .replace(/[^A-Za-zÀ-ÖØ-öø-ÿ\s'\-\.]/g, '')
+    .slice(0, 26)
+}
+
 function formatCardNumber(raw) {
   return raw.replace(/\D/g, '').slice(0, 16).replace(/(\d{4})(?=\d)/g, '$1 ')
 }
@@ -116,7 +123,9 @@ export default function CreateCard() {
   }
 
   function validate() {
-    if (!form.cardholder_name.trim()) return 'Le nom du titulaire est requis.'
+    const name = form.cardholder_name.trim()
+    if (!name) return 'Le nom du titulaire est requis.'
+    if (!/^[A-Za-zÀ-ÖØ-öø-ÿ\s'\-\.]{2,26}$/.test(name)) return 'Le nom ne doit contenir que des lettres et espaces.'
     if (form.card_number.replace(/\s/g, '').length !== 16) return 'Le numéro de carte doit contenir 16 chiffres.'
     if (!/^\d{2}\/\d{2}$/.test(form.expiry_date)) return 'Date d\'expiration invalide (MM/AA).'
     if (!/^\d{3}$/.test(form.cvv)) return 'Le CVV doit contenir 3 chiffres.'
@@ -213,7 +222,7 @@ export default function CreateCard() {
                 type="text"
                 required
                 value={form.cardholder_name}
-                onChange={e => set('cardholder_name', e.target.value.toUpperCase())}
+                onChange={e => set('cardholder_name', sanitizeName(e.target.value).toUpperCase())}
                 className="input-field uppercase"
                 placeholder="PRÉNOM NOM"
                 maxLength={26}
@@ -298,7 +307,7 @@ export default function CreateCard() {
                 <input
                   type="text"
                   value={form.bank_name}
-                  onChange={e => set('bank_name', e.target.value.toUpperCase())}
+                  onChange={e => set('bank_name', sanitizeName(e.target.value).toUpperCase())}
                   className="input-field uppercase"
                   placeholder="BANQUE NATIONALE"
                   maxLength={30}

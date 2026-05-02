@@ -44,18 +44,16 @@ const NAV_LINKS = [
 ]
 
 export default function Navbar() {
-  const { user, signOut } = useAuth()
+  const { user, signOut, loading } = useAuth()
   const navigate = useNavigate()
   const { pathname } = useLocation()
   const [menuOpen, setMenuOpen] = useState(false)
 
-  // Bloquer le scroll du body quand le menu est ouvert
   useEffect(() => {
     document.body.style.overflow = menuOpen ? 'hidden' : ''
     return () => { document.body.style.overflow = '' }
   }, [menuOpen])
 
-  // Fermer le menu sur changement de route
   useEffect(() => { setMenuOpen(false) }, [pathname])
 
   async function handleSignOut() {
@@ -95,7 +93,9 @@ export default function Navbar() {
 
           {/* Auth desktop */}
           <div className="hidden md:flex items-center gap-2.5 shrink-0">
-            {user ? (
+            {loading ? (
+              <div className="w-28 h-8 bg-slate-800/60 rounded-full animate-pulse" />
+            ) : user ? (
               <div className="flex items-center gap-2">
                 <div className="flex items-center gap-2 px-3 py-1.5 bg-slate-800/60 border border-slate-700/50 rounded-full">
                   <span className="w-5 h-5 rounded-full bg-gradient-to-br from-sky-400 to-blue-600 text-white text-[10px] font-bold flex items-center justify-center shrink-0">
@@ -134,23 +134,24 @@ export default function Navbar() {
         </div>
       </nav>
 
-      {/* ════════════════ OVERLAY MOBILE PLEIN ÉCRAN ════════════════ */}
+      {/* ════════════════ BACKDROP MOBILE ════════════════ */}
       <div
-        className={`md:hidden fixed inset-0 z-[60] flex flex-col bg-slate-950 transition-all duration-300 ease-out ${
-          menuOpen
-            ? 'opacity-100 translate-y-0 pointer-events-auto'
-            : 'opacity-0 -translate-y-3 pointer-events-none'
+        onClick={() => setMenuOpen(false)}
+        aria-hidden="true"
+        className={`md:hidden fixed inset-0 z-[59] bg-black/60 backdrop-blur-sm transition-opacity duration-300 ${
+          menuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
+        }`}
+      />
+
+      {/* ════════════════ DRAWER MOBILE (droite → gauche) ════════════════ */}
+      <div
+        className={`md:hidden fixed right-0 top-0 h-full w-[90%] max-w-sm z-[60] flex flex-col bg-slate-950 shadow-2xl shadow-black/70 transition-transform duration-300 ease-out ${
+          menuOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
       >
-        {/* En-tête overlay — réplique la barre */}
+        {/* En-tête drawer */}
         <div className="flex items-center justify-between px-5 h-[62px] border-b border-white/[0.06] shrink-0">
-          <Link to="/" onClick={() => setMenuOpen(false)} className="flex items-center gap-2.5">
-            <LogoIcon />
-            <span className="font-bold text-[17px] tracking-tight leading-none select-none">
-              <span className="text-white">Card</span>
-              <span className="text-sky-400">Gen</span>
-            </span>
-          </Link>
+          <span className="text-white font-semibold text-base">Menu</span>
           <button
             onClick={() => setMenuOpen(false)}
             className="w-9 h-9 flex items-center justify-center text-slate-400 hover:text-white bg-slate-800/60 rounded-xl transition"
@@ -181,7 +182,7 @@ export default function Navbar() {
                   <span className={`w-9 h-9 rounded-xl flex items-center justify-center shrink-0 ${
                     active ? 'bg-sky-500/20 text-sky-400' : 'bg-slate-800 text-slate-400'
                   }`}>
-                    <Icon className="w-4.5 h-4.5" style={{ width: 18, height: 18 }} />
+                    <Icon style={{ width: 18, height: 18 }} />
                   </span>
                   <span className="text-base font-semibold">{label}</span>
                   {active && (
@@ -195,9 +196,12 @@ export default function Navbar() {
 
         {/* Pied — section utilisateur ou auth */}
         <div className="px-5 pb-10 pt-4 border-t border-white/[0.06] shrink-0">
-          {user ? (
+          {loading ? (
             <div className="space-y-3">
-              {/* Carte utilisateur */}
+              <div className="h-14 rounded-2xl bg-slate-800/60 animate-pulse" />
+            </div>
+          ) : user ? (
+            <div className="space-y-3">
               <div className="flex items-center gap-3 px-4 py-3.5 bg-slate-900 border border-slate-800 rounded-2xl">
                 <span className="w-10 h-10 rounded-full bg-gradient-to-br from-sky-400 to-blue-600 text-white text-sm font-bold flex items-center justify-center shrink-0">
                   {initials}
@@ -207,7 +211,6 @@ export default function Navbar() {
                   <p className="text-slate-500 text-xs truncate">{user.email}</p>
                 </div>
               </div>
-              {/* Déconnexion */}
               <button
                 onClick={handleSignOut}
                 className="w-full flex items-center justify-center gap-2.5 py-3 rounded-2xl border border-red-900/50 bg-red-950/30 text-red-400 hover:bg-red-950/50 text-sm font-semibold transition active:scale-[0.98]"
