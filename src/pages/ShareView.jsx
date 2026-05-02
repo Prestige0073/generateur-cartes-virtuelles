@@ -4,7 +4,7 @@ import { supabase } from '../lib/supabase'
 import { TEMPLATES } from '../data/templates'
 import Card3D from '../components/Card3D'
 import NotFound from './NotFound'
-import { AlertTriangle, Clock, Loader2, Lock, Search, ShieldCheck, Wallet, Calendar, Globe, User, CreditCard, Zap } from 'lucide-react'
+import { AlertTriangle, Loader2, Lock, ShieldCheck, Wallet, Calendar, Globe, User, CreditCard } from 'lucide-react'
 
 async function sha256(str) {
   const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str))
@@ -137,138 +137,80 @@ export default function ShareView() {
     )
   }
 
-  const template = TEMPLATES.find(t => t.id === card.template_id) || TEMPLATES[0]
-  const daysLeft = Math.max(0, Math.ceil((new Date(shareLink.expires_at) - Date.now()) / (1000 * 60 * 60 * 24)))
-
   return (
-    <div className="min-h-screen bg-slate-900 flex flex-col items-center px-4 py-8 md:py-14">
-      {/* Header */}
-      <div className="text-center mb-8">
-        <div className="inline-flex items-center justify-center w-12 h-12 bg-gradient-to-br from-sky-500 to-sky-600 rounded-full mb-4">
-          <CreditCard className="w-6 h-6 text-white" />
+    <div className="min-h-screen bg-gradient-to-b from-slate-950 via-[#0d1526] to-slate-950 flex flex-col items-center px-4 py-10 md:py-16">
+
+      {/* Badge vérifié */}
+      <div className="mb-7 text-center">
+        <div className="inline-flex items-center gap-2 bg-sky-500/10 border border-sky-500/20 rounded-full px-4 py-1.5 mb-5">
+          <ShieldCheck className="w-3.5 h-3.5 text-sky-400" />
+          <span className="text-sky-300 text-xs font-semibold tracking-wide">Carte vérifiée & sécurisée</span>
         </div>
-        <h1 className="text-2xl md:text-3xl font-bold mb-1">Carte bancaire</h1>
-        <p className="text-slate-300 text-sm">Partagée et sécurisée</p>
+        <h1 className="text-2xl md:text-3xl font-bold text-white tracking-tight">Carte Bancaire</h1>
       </div>
 
-      {/* Card Container */}
-      <div className="w-full max-w-md md:max-w-lg flex justify-center mb-10 md:mb-12">
+      {/* Carte 3D */}
+      <div className="w-full max-w-md flex justify-center mb-8 drop-shadow-2xl">
         <Card3D card={card} size="md" />
       </div>
 
-      {/* Top Stats */}
-      <div className="w-full max-w-2xl grid grid-cols-1 md:grid-cols-3 gap-3 mb-8">
-        {/* Design */}
-        <div className="bg-gradient-to-br from-slate-800/60 to-slate-800/30 border border-slate-700/40 rounded-xl p-4 text-center hover:border-slate-600/60 transition">
-          <Zap className="w-5 h-5 mx-auto mb-2 text-sky-400" />
-          <span className="text-slate-300 text-xs uppercase tracking-wider block">Design</span>
-          <p className="text-slate-100 font-medium text-sm mt-2">{template.name}</p>
-        </div>
-
-        {/* Solde */}
-        {card.display_amount && (
-          <div className="bg-gradient-to-br from-emerald-900/40 to-emerald-900/20 border border-emerald-700/40 rounded-xl p-4 text-center hover:border-emerald-600/60 transition">
-            <Wallet className="w-5 h-5 mx-auto mb-2 text-emerald-400" />
-            <span className="text-slate-300 text-xs uppercase tracking-wider block">Solde</span>
-            <p className="text-emerald-400 font-bold text-lg mt-2">
+      {/* Solde si présent */}
+      {card.display_amount && (
+        <div className="mb-8 inline-flex items-center gap-3 bg-emerald-950/50 border border-emerald-700/30 rounded-2xl px-6 py-3.5">
+          <Wallet className="w-5 h-5 text-emerald-400 shrink-0" />
+          <div>
+            <p className="text-emerald-400/70 text-[10px] font-semibold uppercase tracking-widest">Solde affiché</p>
+            <p className="text-white font-bold text-xl leading-tight">
               {Number(card.display_amount).toLocaleString('fr-FR')}
+              <span className="text-emerald-400 text-sm font-medium ml-1.5">FCFA</span>
             </p>
-            <span className="text-slate-300 text-xs">FCFA</span>
           </div>
-        )}
-
-        {/* Validité */}
-        <div className={`bg-gradient-to-br from-blue-900/40 to-blue-900/20 border border-blue-700/40 rounded-xl p-4 text-center hover:border-blue-600/60 transition ${!card.display_amount ? 'md:col-span-2' : ''}`}>
-          <Clock className="w-5 h-5 mx-auto mb-2 text-blue-400" />
-          <span className="text-slate-300 text-xs uppercase tracking-wider block">Validité du lien</span>
-          <p className="text-blue-400 font-bold text-lg mt-2">{daysLeft}</p>
-          <span className="text-slate-300 text-xs">jour{daysLeft > 1 ? 's' : ''}</span>
         </div>
-      </div>
+      )}
 
-      {/* Détails de la carte */}
-      <div className="w-full max-w-2xl">
-        <div className="bg-slate-800/40 border border-slate-700/60 rounded-2xl p-6 md:p-8">
-          <h2 className="text-lg font-semibold text-slate-100 mb-6 flex items-center gap-2.5">
-            <div className="w-1 h-6 bg-gradient-to-b from-sky-500 to-sky-600 rounded-full"></div>
-            Informations de la carte
-          </h2>
+      {/* Panneau informations */}
+      <div className="w-full max-w-lg">
+        <div className="rounded-2xl overflow-hidden border border-white/[0.07] bg-white/[0.03] backdrop-blur-sm">
 
-          <div className="space-y-4">
-            {/* Titulaire */}
-            <div className="flex items-center justify-between pb-4 border-b border-slate-700/50 hover:bg-slate-800/30 px-2 py-2 rounded transition">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-slate-700/50 rounded-lg flex items-center justify-center">
-                  <User className="w-5 h-5 text-slate-300" />
-                </div>
-                <span className="text-slate-300 text-sm">Titulaire</span>
-              </div>
-              <span className="text-slate-100 font-medium text-sm md:text-base">{card.cardholder_name || 'N/A'}</span>
+          {/* En-tête panneau */}
+          <div className="flex items-center gap-3 px-6 py-4 border-b border-white/[0.06] bg-white/[0.02]">
+            <div className="w-8 h-8 rounded-lg bg-sky-500/15 border border-sky-500/20 flex items-center justify-center">
+              <CreditCard className="w-4 h-4 text-sky-400" />
             </div>
+            <span className="text-white font-semibold text-sm tracking-wide">Informations de la carte</span>
+          </div>
 
-            {/* Numéro */}
-            <div className="flex items-center justify-between pb-4 border-b border-slate-700/50 hover:bg-slate-800/30 px-2 py-2 rounded transition">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-slate-700/50 rounded-lg flex items-center justify-center">
-                  <CreditCard className="w-5 h-5 text-slate-300" />
+          {/* Lignes */}
+          <div className="divide-y divide-white/[0.05]">
+            {[
+              { label: 'Titulaire',   value: card.cardholder_name,                                       Icon: User,       mono: false },
+              { label: 'Numéro',      value: card.card_number.replace(/(\d{4})(?=\d)/g, '$1 '),          Icon: CreditCard, mono: true  },
+              { label: 'Expiration',  value: card.expiry_date,                                            Icon: Calendar,   mono: true  },
+              { label: 'Réseau',      value: card.network_type === 'visa' ? 'Visa' : 'Mastercard',        Icon: CreditCard, mono: false },
+              { label: 'Langue',      value: card.language === 'fr' ? 'Français' : 'Anglais',             Icon: Globe,      mono: false },
+            ].map(({ label, value, Icon, mono }) => (
+              <div key={label} className="flex items-center justify-between px-6 py-4 hover:bg-white/[0.02] transition-colors">
+                <div className="flex items-center gap-3 shrink-0">
+                  <Icon className="w-4 h-4 text-slate-500" />
+                  <span className="text-slate-400 text-sm">{label}</span>
                 </div>
-                <span className="text-slate-300 text-sm">Numéro</span>
+                <span className={`text-white font-semibold text-sm ml-4 ${mono ? 'font-mono tracking-widest' : ''} whitespace-nowrap`}>
+                  {value}
+                </span>
               </div>
-              <span className="text-slate-100 font-mono text-sm md:text-base">{card.card_number.replace(/(\d{4})(?=\d)/g, '$1 ') || 'N/A'}</span>
-            </div>
-
-            {/* Expiration */}
-            <div className="flex items-center justify-between pb-4 border-b border-slate-700/50 hover:bg-slate-800/30 px-2 py-2 rounded transition">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-slate-700/50 rounded-lg flex items-center justify-center">
-                  <Calendar className="w-5 h-5 text-slate-300" />
-                </div>
-                <span className="text-slate-300 text-sm">Expiration</span>
-              </div>
-              <span className="text-slate-100 font-mono text-sm md:text-base">{card.expiry_date || 'N/A'}</span>
-            </div>
-
-            {/* Réseau */}
-            <div className="flex items-center justify-between pb-4 border-b border-slate-700/50 hover:bg-slate-800/30 px-2 py-2 rounded transition">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-slate-700/50 rounded-lg flex items-center justify-center">
-                  <Zap className="w-5 h-5 text-slate-300" />
-                </div>
-                <span className="text-slate-300 text-sm">Réseau</span>
-              </div>
-              <span className="text-slate-100 font-medium text-sm md:text-base uppercase">{card.network_type === 'visa' ? 'Visa' : 'Mastercard'}</span>
-            </div>
-
-            {/* Langue */}
-            <div className="flex items-center justify-between pb-4 border-b border-slate-700/50 hover:bg-slate-800/30 px-2 py-2 rounded transition">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-slate-700/50 rounded-lg flex items-center justify-center">
-                  <Globe className="w-5 h-5 text-slate-300" />
-                </div>
-                <span className="text-slate-300 text-sm">Langue</span>
-              </div>
-              <span className="text-slate-100 font-medium text-sm md:text-base">{card.language === 'fr' ? 'Français' : 'Anglais'}</span>
-            </div>
-
-            {/* Créée le */}
-            <div className="flex items-center justify-between hover:bg-slate-800/30 px-2 py-2 rounded transition">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-slate-700/50 rounded-lg flex items-center justify-center">
-                  <Clock className="w-5 h-5 text-slate-300" />
-                </div>
-                <span className="text-slate-300 text-sm">Créée le</span>
-              </div>
-              <span className="text-slate-100 font-medium text-sm md:text-base">{new Date(card.created_at).toLocaleDateString('fr-FR')}</span>
-            </div>
+            ))}
           </div>
         </div>
       </div>
 
-      {/* Security footer */}
-      <div className="mt-10 md:mt-12 text-center text-slate-500 text-xs">
-        <AlertTriangle className="inline h-4 w-4 align-text-bottom mr-1.5" />
-        Carte bancaire sécurisée — Lecture seule
+      {/* Footer */}
+      <div className="mt-10 text-center">
+        <div className="inline-flex items-center gap-2 text-slate-600 text-xs">
+          <ShieldCheck className="w-3.5 h-3.5" />
+          <span>Carte décorative · CardGen</span>
+        </div>
       </div>
+
     </div>
   )
 }
