@@ -32,9 +32,17 @@ function generateSlug(len = 8) {
     .map(b => chars[b % chars.length]).join('')
 }
 
-const SHARE_BASE = import.meta.env.VITE_SHARE_DOMAIN
+const _rawBase = import.meta.env.VITE_SHARE_DOMAIN
   ? `https://${import.meta.env.VITE_SHARE_DOMAIN}`
   : (import.meta.env.VITE_APP_URL || window.location.origin)
+const SHARE_BASE = _rawBase.replace(/\/+$/, '')
+
+function getSavedPw(linkId) {
+  try {
+    const raw = localStorage.getItem(`cardgen_pw_${linkId}`)
+    return raw ? JSON.parse(raw).password : null
+  } catch { return null }
+}
 
 export default function CardView() {
   const { id } = useParams()
@@ -72,7 +80,11 @@ export default function CardView() {
         .limit(1)
         .maybeSingle()
 
-      if (link) setShareLink(link)
+      if (link) {
+        setShareLink(link)
+        const saved = getSavedPw(link.id)
+        if (saved) setGeneratedPassword(saved)
+      }
     }
     fetchCard()
   }, [id, user.id, navigate])

@@ -21,9 +21,10 @@ import {
   Wallet,
 } from 'lucide-react'
 
-const SHARE_BASE = import.meta.env.VITE_SHARE_DOMAIN
+const _rawBase = import.meta.env.VITE_SHARE_DOMAIN
   ? `https://${import.meta.env.VITE_SHARE_DOMAIN}`
   : (import.meta.env.VITE_APP_URL || window.location.origin)
+const SHARE_BASE = _rawBase.replace(/\/+$/, '')
 
 function getSavedPw(linkId) {
   try {
