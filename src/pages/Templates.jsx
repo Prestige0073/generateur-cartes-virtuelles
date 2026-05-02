@@ -53,9 +53,7 @@ export default function Templates() {
   const filtered = filter === 'all' ? TEMPLATES : TEMPLATES.filter(t => t.tier === filter)
 
   function handleChoose(template) {
-    // PAIEMENT DÉSACTIVÉ TEMPORAIREMENT — retirer le commentaire ci-dessous pour réactiver
-    // navigate(`/payment/${template.tier}?templateId=${template.id}`)
-    navigate(`/create-card?templateId=${template.id}`)
+    navigate(`/payment/${template.tier}?templateId=${template.id}`)
   }
 
   const activeTier = filter !== 'all' ? TIERS[filter] : null
