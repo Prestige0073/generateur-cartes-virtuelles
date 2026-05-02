@@ -98,7 +98,7 @@ export default function ResetPassword() {
                   onChange={e => setPassword(e.target.value)}
                   onFocus={() => setPasswordFocused(true)}
                   onBlur={() => setPasswordFocused(false)}
-                  className="input-field pl-12 pr-12"
+                  className="input-field pl-14 pr-14"
                   placeholder={passwordFocused || password ? '' : 'Au moins 8 caractères'}
                   autoFocus
                   autoComplete="new-password"
@@ -129,7 +129,7 @@ export default function ResetPassword() {
                   onChange={e => setConfirm(e.target.value)}
                   onFocus={() => setConfirmFocused(true)}
                   onBlur={() => setConfirmFocused(false)}
-                  className="input-field pl-12 pr-12"
+                  className="input-field pl-14 pr-14"
                   placeholder={confirmFocused || confirm ? '' : '••••••••'}
                   autoComplete="new-password"
                 />

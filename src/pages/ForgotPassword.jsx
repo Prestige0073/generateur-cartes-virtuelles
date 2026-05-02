@@ -91,7 +91,7 @@ export default function ForgotPassword() {
                   onChange={e => setEmail(e.target.value)}
                   onFocus={() => setEmailFocused(true)}
                   onBlur={() => setEmailFocused(false)}
-                  className="input-field pl-12"
+                  className="input-field pl-14"
                   placeholder={emailFocused || email ? '' : 'toi@exemple.com'}
                   autoComplete="email"
                 />
