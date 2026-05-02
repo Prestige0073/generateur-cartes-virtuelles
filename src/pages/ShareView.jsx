@@ -83,11 +83,13 @@ export default function ShareView() {
 
   if (status === 'locked') {
     return (
-      <div className="min-h-screen flex items-center justify-center px-4">
-        <div className="text-center max-w-md">
-          <Lock className="mx-auto h-14 w-14 text-slate-400 mb-4" />
-          <h2 className="text-2xl font-bold mb-3">Accès bloqué</h2>
-          <p className="text-slate-300">Trop de tentatives incorrectes.</p>
+      <div className="min-h-screen bg-slate-100 flex items-center justify-center px-4">
+        <div className="bg-white border border-slate-200 rounded-2xl shadow-sm px-8 py-10 text-center max-w-sm w-full">
+          <div className="w-14 h-14 mx-auto rounded-2xl bg-red-50 border border-red-100 flex items-center justify-center mb-4">
+            <Lock className="w-7 h-7 text-red-400" />
+          </div>
+          <h2 className="text-slate-900 text-xl font-extrabold mb-2">Accès bloqué</h2>
+          <p className="text-slate-500 text-sm">Trop de tentatives incorrectes. Ce lien est désormais verrouillé.</p>
         </div>
       </div>
     )
@@ -95,43 +97,63 @@ export default function ShareView() {
 
   if (status === 'form') {
     return (
-      <div className="min-h-screen flex items-center justify-center px-4 py-12">
-        <div className="w-full max-w-sm">
-          <div className="text-center mb-8">
-            <ShieldCheck className="mx-auto h-14 w-14 text-sky-400 mb-4" />
-            <h1 className="text-2xl font-bold mb-2">Carte partagée</h1>
-            <p className="text-slate-300 text-sm">Entre le mot de passe pour visualiser la carte bancaire.</p>
+      <div className="min-h-screen bg-slate-100 flex flex-col items-center justify-center px-4 py-12">
+
+        {/* Badge */}
+        <div className="inline-flex items-center gap-2 bg-emerald-50 border border-emerald-200 rounded-full px-4 py-1.5 mb-6">
+          <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shrink-0" />
+          <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
+          <span className="text-emerald-700 text-xs font-semibold tracking-wide">Lien sécurisé & vérifié</span>
+        </div>
+
+        {/* Card */}
+        <div className="w-full max-w-sm bg-white border border-slate-200 rounded-2xl shadow-sm overflow-hidden">
+
+          {/* Header */}
+          <div className="px-6 pt-7 pb-5 border-b border-slate-100 text-center">
+            <div className="w-14 h-14 mx-auto rounded-2xl bg-sky-50 border border-sky-100 flex items-center justify-center mb-4">
+              <Lock className="w-7 h-7 text-sky-500" />
+            </div>
+            <h1 className="text-slate-900 text-xl font-extrabold mb-1">Carte partagée</h1>
+            <p className="text-slate-500 text-sm">Entre le mot de passe pour accéder à la carte bancaire.</p>
           </div>
 
-          <div className="bg-slate-800/50 border border-slate-700 rounded-2xl p-6">
+          {/* Form */}
+          <div className="px-6 py-5">
             <form onSubmit={handleSubmit} className="space-y-4">
               {error && (
-                <div className="bg-red-900/30 border border-red-700/50 text-red-300 text-sm rounded-xl px-4 py-3">
-                  {error}
+                <div className="bg-red-50 border border-red-200 text-red-600 text-sm rounded-xl px-4 py-3 flex items-start gap-2">
+                  <AlertTriangle className="w-4 h-4 mt-0.5 shrink-0" />
+                  <span>{error}</span>
                 </div>
               )}
               <div>
-                <label className="block text-sm font-medium text-slate-300 mb-1.5">Mot de passe</label>
+                <label className="block text-sm font-semibold text-slate-700 mb-1.5">Mot de passe</label>
                 <input
                   type="password"
                   required
                   value={password}
                   onChange={e => setPassword(e.target.value)}
-                  className="input-field"
+                  className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-slate-900 placeholder-slate-400 text-sm focus:outline-none focus:ring-2 focus:ring-sky-400 focus:border-transparent transition"
                   placeholder="••••••••••"
                   autoFocus
                 />
               </div>
-              <button type="submit" className="btn-primary w-full">
+              <button
+                type="submit"
+                className="w-full bg-sky-500 hover:bg-sky-600 active:bg-sky-700 text-white font-semibold text-sm py-2.5 rounded-xl transition flex items-center justify-center gap-2"
+              >
+                <ShieldCheck className="w-4 h-4" />
                 Voir la carte
               </button>
             </form>
           </div>
 
-          <p className="text-center text-slate-400 text-xs mt-6">
-            <AlertTriangle className="inline h-4 w-4 align-text-bottom mr-1" />
-            Carte bancaire sécurisée
-          </p>
+          {/* Footer */}
+          <div className="px-6 py-3 bg-slate-50 border-t border-slate-100 flex items-center justify-center gap-1.5">
+            <ShieldCheck className="w-3.5 h-3.5 text-slate-400 shrink-0" />
+            <span className="text-slate-400 text-xs">Consultation sécurisée · Lecture seule</span>
+          </div>
         </div>
       </div>
     )
@@ -146,82 +168,75 @@ export default function ShareView() {
   ]
 
   return (
-    <div className="min-h-screen flex flex-col items-center px-4 pb-16 relative overflow-hidden" style={{ background: 'linear-gradient(160deg,#060d1f 0%,#0d1a3a 45%,#091428 100%)' }}>
+    <div className="min-h-screen bg-slate-100 flex flex-col items-center px-4 pb-16">
 
-      {/* Lueurs d'ambiance */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-64 bg-sky-600/10 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute top-32 left-1/4 w-56 h-56 bg-blue-700/8 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute top-32 right-1/4 w-56 h-56 bg-sky-500/8 rounded-full blur-3xl pointer-events-none" />
-
-      {/* ── SECTION HERO ─────────────────────────────── */}
-      <div className="relative z-10 w-full max-w-lg text-center pt-12 md:pt-16 pb-8">
-
-        {/* Badge vérifié */}
-        <div className="inline-flex items-center gap-2 bg-sky-500/10 border border-sky-400/25 rounded-full px-5 py-2 mb-6">
-          <span className="w-2 h-2 rounded-full bg-sky-400 animate-pulse shrink-0" />
-          <ShieldCheck className="w-3.5 h-3.5 text-sky-400" />
-          <span className="text-sky-300 text-xs font-semibold tracking-widest uppercase">Carte vérifiée & sécurisée</span>
+      {/* ── HERO ─────────────────────────────────────── */}
+      <div className="w-full bg-white border-b border-slate-200 shadow-sm">
+        <div className="max-w-lg mx-auto text-center px-4 pt-10 pb-8">
+          <div className="inline-flex items-center gap-2 bg-emerald-50 border border-emerald-200 rounded-full px-4 py-1.5 mb-5">
+            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shrink-0" />
+            <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
+            <span className="text-emerald-700 text-xs font-semibold tracking-wide">Carte vérifiée & sécurisée</span>
+          </div>
+          <h1 className="text-2xl md:text-3xl font-extrabold text-slate-900 tracking-tight mb-1.5">
+            Carte Bancaire
+          </h1>
+          <p className="text-slate-500 text-sm">Partagée en toute confidentialité</p>
         </div>
-
-        <h1 className="text-3xl md:text-4xl font-extrabold text-white tracking-tight mb-2">
-          Carte Bancaire
-        </h1>
-        <p className="text-slate-400 text-sm">Partagée en toute confidentialité</p>
       </div>
 
-      {/* ── CARTE 3D ──────────────────────────────────── */}
-      <div className="relative z-10 w-full max-w-md flex justify-center mb-4">
-        {/* Halo derrière la carte */}
-        <div className="absolute inset-x-8 bottom-0 h-16 bg-sky-500/20 blur-2xl rounded-full pointer-events-none" />
-        <div className="relative">
+      {/* ── CARTE 3D ─────────────────────────────────── */}
+      <div className="w-full bg-gradient-to-b from-white to-slate-100 border-b border-slate-200 shadow-sm">
+        <div className="max-w-lg mx-auto flex flex-col items-center px-4 pt-8 pb-8">
           <Card3D card={card} size="md" />
+          <p className="text-slate-400 text-xs mt-3">Cliquer pour retourner</p>
         </div>
       </div>
 
-      <p className="relative z-10 text-slate-600 text-xs mb-10">Cliquer pour retourner</p>
+      {/* ── CONTENU ──────────────────────────────────── */}
+      <div className="w-full max-w-md mt-6 space-y-4 px-0">
 
-      {/* ── SOLDE (optionnel) ─────────────────────────── */}
-      {card.display_amount && (
-        <div className="relative z-10 mb-8 inline-flex items-center gap-4 bg-white/5 border border-emerald-400/20 rounded-2xl px-7 py-4 backdrop-blur-sm">
-          <div className="w-11 h-11 rounded-2xl bg-emerald-500/15 border border-emerald-400/20 flex items-center justify-center shrink-0">
-            <Wallet className="w-5 h-5 text-emerald-400" />
+        {/* Solde si présent */}
+        {card.display_amount && (
+          <div className="bg-white border border-slate-200 rounded-2xl px-5 py-4 flex items-center gap-4 shadow-sm">
+            <div className="w-11 h-11 rounded-2xl bg-emerald-100 flex items-center justify-center shrink-0">
+              <Wallet className="w-5 h-5 text-emerald-600" />
+            </div>
+            <div>
+              <p className="text-slate-400 text-[10px] font-bold uppercase tracking-widest">Solde affiché</p>
+              <p className="text-slate-900 font-extrabold text-xl leading-tight">
+                {Number(card.display_amount).toLocaleString('fr-FR')}
+                <span className="text-emerald-600 text-sm font-semibold ml-1.5">FCFA</span>
+              </p>
+            </div>
           </div>
-          <div>
-            <p className="text-emerald-400/70 text-[10px] font-bold uppercase tracking-widest">Solde affiché</p>
-            <p className="text-white font-extrabold text-2xl leading-tight">
-              {Number(card.display_amount).toLocaleString('fr-FR')}
-              <span className="text-emerald-400 text-base font-semibold ml-2">FCFA</span>
-            </p>
-          </div>
-        </div>
-      )}
+        )}
 
-      {/* ── PANNEAU INFORMATIONS ─────────────────────── */}
-      <div className="relative z-10 w-full max-w-md">
-        <div className="rounded-3xl overflow-hidden border border-white/10 shadow-2xl" style={{ background: 'rgba(15,23,48,0.85)', backdropFilter: 'blur(24px)' }}>
+        {/* Panneau informations */}
+        <div className="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm">
 
           {/* En-tête */}
-          <div className="flex items-center justify-between px-6 pt-6 pb-5 border-b border-white/[0.07]">
+          <div className="flex items-center justify-between px-5 py-4 border-b border-slate-100 bg-slate-50">
             <div>
-              <p className="text-slate-500 text-[10px] font-bold uppercase tracking-[0.18em] mb-1">Détails</p>
-              <h2 className="text-white font-bold text-base">Informations de la carte</h2>
+              <p className="text-slate-400 text-[10px] font-bold uppercase tracking-widest mb-0.5">Récapitulatif</p>
+              <h2 className="text-slate-900 font-bold text-sm">Informations de la carte</h2>
             </div>
-            <div className="w-10 h-10 rounded-2xl bg-sky-500/15 border border-sky-400/20 flex items-center justify-center">
-              <BadgeCheck className="w-5 h-5 text-sky-400" />
+            <div className="w-9 h-9 rounded-xl bg-slate-100 border border-slate-200 flex items-center justify-center">
+              <BadgeCheck className="w-4.5 h-4.5 text-slate-500" style={{ width: 18, height: 18 }} />
             </div>
           </div>
 
           {/* Lignes */}
-          <div className="px-4 py-3 space-y-1">
+          <div className="divide-y divide-slate-100">
             {rows.map(({ label, value, Icon, mono, color }) => (
-              <div key={label} className="flex items-center justify-between px-3 py-3.5 rounded-2xl hover:bg-white/[0.04] transition-colors">
-                <div className="flex items-center gap-3.5 shrink-0">
-                  <div className={`w-9 h-9 rounded-xl flex items-center justify-center shrink-0 ${color}`}>
+              <div key={label} className="flex items-center justify-between px-5 py-3.5 hover:bg-slate-50 transition-colors">
+                <div className="flex items-center gap-3 shrink-0">
+                  <div className={`w-8 h-8 rounded-xl flex items-center justify-center shrink-0 ${color}`}>
                     <Icon className="w-4 h-4" />
                   </div>
-                  <span className="text-slate-400 text-sm font-medium">{label}</span>
+                  <span className="text-slate-500 text-sm">{label}</span>
                 </div>
-                <span className={`text-white font-bold text-sm ml-3 whitespace-nowrap ${mono ? 'font-mono tracking-wider' : ''}`}>
+                <span className={`text-slate-900 font-bold text-sm ml-3 whitespace-nowrap ${mono ? 'font-mono tracking-wider' : ''}`}>
                   {value}
                 </span>
               </div>
@@ -229,14 +244,13 @@ export default function ShareView() {
           </div>
 
           {/* Pied */}
-          <div className="mx-4 mb-4 mt-1 flex items-center gap-2 bg-white/[0.03] border border-white/[0.06] rounded-2xl px-4 py-3">
-            <ShieldCheck className="w-3.5 h-3.5 text-slate-500 shrink-0" />
-            <span className="text-slate-500 text-xs">Consultation sécurisée · Lecture seule</span>
+          <div className="flex items-center gap-2 px-5 py-3 bg-slate-50 border-t border-slate-100">
+            <ShieldCheck className="w-3.5 h-3.5 text-slate-400 shrink-0" />
+            <span className="text-slate-400 text-xs">Consultation sécurisée · Lecture seule</span>
           </div>
-
         </div>
-      </div>
 
+      </div>
     </div>
   )
 }
