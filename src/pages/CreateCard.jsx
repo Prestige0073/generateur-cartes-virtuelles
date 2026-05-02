@@ -65,7 +65,8 @@ export default function CreateCard() {
     if (!template) { navigate('/templates'); return }
 
     async function verifyPayment() {
-      if (!paymentId) { navigate('/templates'); return }
+      // Mode test : pas de paymentId → accès direct sans paiement
+      if (!paymentId) { setChecking(false); return }
 
       const { data, error: err } = await supabase
         .from('payments')
