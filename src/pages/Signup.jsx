@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
-import { Mail, CheckCircle2, Eye, EyeOff } from 'lucide-react'
+import { Mail, CheckCircle2, Eye, EyeOff, UserPlus, KeyRound, ArrowRight } from 'lucide-react'
 
 function parseSignupError(err) {
   if (!err) return null
@@ -78,7 +78,7 @@ export default function Signup() {
             to="/login"
             className="inline-flex items-center justify-center gap-2 bg-sky-500 hover:bg-sky-400 text-white font-semibold px-6 py-3 rounded-xl transition text-sm"
           >
-            Aller à la connexion
+            Aller à la connexion <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
       </div>
@@ -89,7 +89,7 @@ export default function Signup() {
     <div className="min-h-screen flex items-center justify-center px-4 py-12">
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
-          <Mail className="mx-auto h-10 w-10 text-sky-400" />
+          <UserPlus className="mx-auto h-10 w-10 text-sky-600" />
           <h1 className="text-2xl font-bold mt-3">Créer un compte</h1>
           <p className="text-slate-500 text-sm mt-1">Rejoins CardGen gratuitement</p>
         </div>
@@ -104,26 +104,30 @@ export default function Signup() {
 
             <div>
               <label className="block text-sm font-medium text-slate-600 mb-1.5">Email</label>
-              <input
-                type="email"
-                required
-                value={email}
-                onChange={e => setEmail(e.target.value)}
-                className="input-field"
-                placeholder="toi@exemple.com"
-                autoComplete="email"
-              />
+              <div className="relative">
+                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
+                <input
+                  type="email"
+                  required
+                  value={email}
+                  onChange={e => setEmail(e.target.value)}
+                  className="input-field pl-10"
+                  placeholder="toi@exemple.com"
+                  autoComplete="email"
+                />
+              </div>
             </div>
 
             <div>
               <label className="block text-sm font-medium text-slate-600 mb-1.5">Mot de passe</label>
               <div className="relative">
+                <KeyRound className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
                 <input
                   type={showPassword ? 'text' : 'password'}
                   required
                   value={password}
                   onChange={e => setPassword(e.target.value)}
-                  className="input-field pr-10"
+                  className="input-field pl-10 pr-10"
                   placeholder="Au moins 8 caractères"
                   autoComplete="new-password"
                 />
@@ -146,12 +150,13 @@ export default function Signup() {
             <div>
               <label className="block text-sm font-medium text-slate-600 mb-1.5">Confirmer le mot de passe</label>
               <div className="relative">
+                <KeyRound className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
                 <input
                   type={showConfirm ? 'text' : 'password'}
                   required
                   value={confirm}
                   onChange={e => setConfirm(e.target.value)}
-                  className="input-field pr-10"
+                  className="input-field pl-10 pr-10"
                   placeholder="••••••••"
                   autoComplete="new-password"
                 />
@@ -169,8 +174,8 @@ export default function Signup() {
               )}
             </div>
 
-            <button type="submit" className="btn-primary" disabled={loading}>
-              {loading ? 'Création du compte...' : "S'inscrire"}
+            <button type="submit" className="btn-primary inline-flex items-center justify-center gap-2" disabled={loading}>
+              {loading ? "Création du compte..." : <><UserPlus className="w-4 h-4" /> S'inscrire</>}
             </button>
           </form>
         </div>

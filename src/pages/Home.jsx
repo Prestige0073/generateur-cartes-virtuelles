@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import Card3D from '../components/Card3D'
-import { AlertTriangle, Check, CreditCard, Link2, ShieldCheck, X } from 'lucide-react'
+import { Info, Check, CreditCard, Link2, ShieldCheck, X, ArrowRight, Layers, Zap, Crown } from 'lucide-react'
 import { TIERS } from '../data/templates'
 
 const DEMO_CARD = {
@@ -51,7 +51,7 @@ export default function Home() {
           <div className="flex flex-col items-center text-center md:grid md:grid-cols-2 md:gap-12 md:items-center md:text-left">
             <div>
               <div className="inline-flex items-center gap-2 bg-white border border-slate-200 rounded-full px-4 py-1.5 mb-5">
-                <span className="w-2 h-2 bg-sky-400 rounded-full animate-pulse" />
+                <CreditCard className="w-4 h-4 text-sky-500" />
                 <span className="text-slate-600 text-xs md:text-sm font-medium">Carte bancaire professionnelle</span>
               </div>
               <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold leading-tight mb-5">
@@ -67,12 +67,12 @@ export default function Home() {
               </p>
               <div className="flex flex-col sm:flex-row gap-3 justify-center md:justify-start">
                 {user ? (
-                  <Link to="/dashboard" className="bg-sky-500 hover:bg-sky-400 active:bg-sky-600 text-white font-semibold px-8 py-3.5 rounded-xl transition text-sm text-center">
-                    Mon dashboard
+                  <Link to="/dashboard" className="inline-flex items-center justify-center gap-2 bg-sky-500 hover:bg-sky-400 active:bg-sky-600 text-white font-semibold px-8 py-3.5 rounded-xl transition text-sm text-center">
+                    Mon dashboard <ArrowRight className="w-4 h-4" />
                   </Link>
                 ) : (
-                  <Link to="/signup" className="bg-sky-500 hover:bg-sky-400 active:bg-sky-600 text-white font-semibold px-8 py-3.5 rounded-xl transition text-sm text-center">
-                    Créer mon compte
+                  <Link to="/signup" className="inline-flex items-center justify-center gap-2 bg-sky-500 hover:bg-sky-400 active:bg-sky-600 text-white font-semibold px-8 py-3.5 rounded-xl transition text-sm text-center">
+                    Créer mon compte <ArrowRight className="w-4 h-4" />
                   </Link>
                 )}
                 <Link to="/templates" className="bg-slate-100 hover:bg-slate-200 text-slate-800 font-semibold px-8 py-3.5 rounded-xl transition text-sm border border-slate-300 text-center">
@@ -137,6 +137,11 @@ export default function Home() {
                     </div>
                   )}
 
+                  <div className={`w-10 h-10 rounded-xl flex items-center justify-center mb-3 ${
+                    key === 'vip' ? 'bg-amber-50' : key === 'premium' ? 'bg-sky-50' : 'bg-slate-100'
+                  }`}>
+                    {key === 'vip' ? <Crown className={`w-5 h-5 text-amber-600`} /> : key === 'premium' ? <Zap className={`w-5 h-5 text-sky-600`} /> : <Layers className={`w-5 h-5 text-slate-600`} />}
+                  </div>
                   <div className={`text-xs font-bold uppercase tracking-[0.2em] mb-3 ${
                     key === 'vip' ? 'text-amber-600' : key === 'premium' ? 'text-sky-600' : 'text-slate-700'
                   }`}>
@@ -157,7 +162,7 @@ export default function Home() {
                     ))}
                     {tier.locked.map(f => (
                       <li key={f} className="flex items-start gap-2 text-sm text-slate-600">
-                        <X className="w-4 h-4 mt-0.5 shrink-0" />
+                        <X className="w-4 h-4 mt-0.5 shrink-0 text-slate-400" />
                         <span>{f}</span>
                       </li>
                     ))}
@@ -189,8 +194,8 @@ export default function Home() {
               <p className="text-slate-500 text-sm md:text-base mb-8">
                 Choisis un design et personnalise ta carte en quelques clics.
               </p>
-              <Link to="/templates" className="inline-block bg-sky-500 hover:bg-sky-400 active:bg-sky-600 text-white font-semibold px-8 md:px-10 py-4 rounded-xl transition">
-                Voir le catalogue
+              <Link to="/templates" className="inline-flex items-center gap-2 bg-sky-500 hover:bg-sky-400 active:bg-sky-600 text-white font-semibold px-8 md:px-10 py-4 rounded-xl transition">
+                Voir le catalogue <ArrowRight className="w-4 h-4" />
               </Link>
             </>
           ) : (
@@ -199,8 +204,8 @@ export default function Home() {
               <p className="text-slate-500 text-sm md:text-base mb-8">
                 Inscris-toi gratuitement et choisis ton design en quelques clics.
               </p>
-              <Link to="/signup" className="inline-block bg-sky-500 hover:bg-sky-400 active:bg-sky-600 text-white font-semibold px-8 md:px-10 py-4 rounded-xl transition">
-                Commencer maintenant
+              <Link to="/signup" className="inline-flex items-center gap-2 bg-sky-500 hover:bg-sky-400 active:bg-sky-600 text-white font-semibold px-8 md:px-10 py-4 rounded-xl transition">
+                Commencer maintenant <ArrowRight className="w-4 h-4" />
               </Link>
             </>
           )}
@@ -210,7 +215,7 @@ export default function Home() {
       <footer className="border-t border-slate-200 py-8">
         <div className="max-w-6xl mx-auto px-4 text-center">
           <p className="text-slate-600 text-xs leading-relaxed">
-            <AlertTriangle className="inline h-4 w-4 align-text-bottom mr-1" />
+            <Info className="inline h-4 w-4 align-text-bottom mr-1" />
             Cartes bancaires professionnelles au design réaliste.
           </p>
           <p className="text-slate-700 text-xs mt-2">© 2026 CardGen</p>

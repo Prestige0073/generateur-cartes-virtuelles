@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { TEMPLATES, TIERS } from '../data/templates'
 import Card3D from '../components/Card3D'
-import { Check, ChevronRight } from 'lucide-react'
+import { Check, ChevronRight, Layers, Zap, Crown } from 'lucide-react'
 
 const PREVIEW_CARD = (template) => ({
   tier: template.tier,
@@ -211,9 +211,16 @@ export default function Templates() {
                                   'border-slate-200 bg-white'
             }`}>
               <div className="flex items-center justify-between mb-3">
-                <span className={`text-xs font-bold uppercase tracking-[0.18em] ${
-                  key === 'vip' ? 'text-amber-600' : key === 'premium' ? 'text-sky-600' : 'text-slate-700'
-                }`}>{tier.label}</span>
+                <div className="flex items-center gap-2">
+                  <span className={`w-7 h-7 rounded-lg flex items-center justify-center ${
+                    key === 'vip' ? 'bg-amber-100' : key === 'premium' ? 'bg-sky-100' : 'bg-slate-100'
+                  }`}>
+                    {key === 'vip' ? <Crown className="w-3.5 h-3.5 text-amber-600" /> : key === 'premium' ? <Zap className="w-3.5 h-3.5 text-sky-600" /> : <Layers className="w-3.5 h-3.5 text-slate-600" />}
+                  </span>
+                  <span className={`text-xs font-bold uppercase tracking-[0.18em] ${
+                    key === 'vip' ? 'text-amber-600' : key === 'premium' ? 'text-sky-600' : 'text-slate-700'
+                  }`}>{tier.label}</span>
+                </div>
                 <span className="text-sm font-bold text-slate-800">{tier.price.toLocaleString('fr-FR')} F</span>
               </div>
               <ul className="space-y-1.5">

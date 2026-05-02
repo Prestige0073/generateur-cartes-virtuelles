@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
-import { Lock, Loader2, Eye, EyeOff } from 'lucide-react'
+import { Lock, Loader2, Eye, EyeOff, KeyRound, ShieldCheck } from 'lucide-react'
 
 function parseResetError(err) {
   if (!err) return null
@@ -88,12 +88,13 @@ export default function ResetPassword() {
             <div>
               <label className="block text-sm font-medium text-slate-700 mb-1.5">Nouveau mot de passe</label>
               <div className="relative">
+                <KeyRound className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
                 <input
                   type={showPassword ? 'text' : 'password'}
                   required
                   value={password}
                   onChange={e => setPassword(e.target.value)}
-                  className="input-field pr-10"
+                  className="input-field pl-10 pr-10"
                   placeholder="Au moins 8 caractères"
                   autoFocus
                   autoComplete="new-password"
@@ -116,12 +117,13 @@ export default function ResetPassword() {
             <div>
               <label className="block text-sm font-medium text-slate-700 mb-1.5">Confirmer</label>
               <div className="relative">
+                <KeyRound className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
                 <input
                   type={showConfirm ? 'text' : 'password'}
                   required
                   value={confirm}
                   onChange={e => setConfirm(e.target.value)}
-                  className="input-field pr-10"
+                  className="input-field pl-10 pr-10"
                   placeholder="••••••••"
                   autoComplete="new-password"
                 />
@@ -138,8 +140,8 @@ export default function ResetPassword() {
                 <p className="text-red-600 text-xs mt-1">Les mots de passe ne correspondent pas</p>
               )}
             </div>
-            <button type="submit" className="btn-primary" disabled={loading}>
-              {loading ? 'Mise à jour...' : 'Changer le mot de passe'}
+            <button type="submit" className="btn-primary inline-flex items-center justify-center gap-2" disabled={loading}>
+              {loading ? 'Mise à jour...' : <><ShieldCheck className="w-4 h-4" /> Changer le mot de passe</>}
             </button>
           </form>
         </div>

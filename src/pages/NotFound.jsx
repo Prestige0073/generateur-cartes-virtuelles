@@ -1,4 +1,4 @@
-import { Search } from 'lucide-react'
+import { Search, Home, ArrowLeft } from 'lucide-react'
 
 export default function NotFound() {
   return (
@@ -12,6 +12,11 @@ export default function NotFound() {
           Le lien demandé n'existe pas ou n'est plus valide.
           Aucune information supplémentaire ne sera affichée.
         </p>
+        <div className="mt-6 flex flex-col sm:flex-row gap-3 justify-center">
+          <a href="/" className="inline-flex items-center justify-center gap-2 bg-sky-500 hover:bg-sky-400 text-white font-semibold px-5 py-2.5 rounded-xl transition text-sm">
+            <Home className="w-4 h-4" /> Accueil
+          </a>
+        </div>
       </div>
     </div>
   )

@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
-import { LogIn, Eye, EyeOff } from 'lucide-react'
+import { LogIn, Eye, EyeOff, Mail, KeyRound, ArrowRight } from 'lucide-react'
 
 function parseLoginError(err) {
   if (!err) return null
@@ -56,7 +56,7 @@ export default function Login() {
     <div className="min-h-screen flex items-center justify-center px-4 py-12">
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
-          <LogIn className="mx-auto h-10 w-10 text-sky-400" />
+          <LogIn className="mx-auto h-10 w-10 text-sky-600" />
           <h1 className="text-2xl font-bold mt-3">Connexion</h1>
           <p className="text-slate-500 text-sm mt-1">Accède à tes cartes bancaires</p>
         </div>
@@ -76,26 +76,30 @@ export default function Login() {
 
             <div>
               <label className="block text-sm font-medium text-slate-600 mb-1.5">Email</label>
-              <input
-                type="email"
-                required
-                value={email}
-                onChange={e => setEmail(e.target.value)}
-                className="input-field"
-                placeholder="toi@exemple.com"
-                autoComplete="email"
-              />
+              <div className="relative">
+                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
+                <input
+                  type="email"
+                  required
+                  value={email}
+                  onChange={e => setEmail(e.target.value)}
+                  className="input-field pl-10"
+                  placeholder="toi@exemple.com"
+                  autoComplete="email"
+                />
+              </div>
             </div>
 
             <div>
               <label className="block text-sm font-medium text-slate-600 mb-1.5">Mot de passe</label>
               <div className="relative">
+                <KeyRound className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
                 <input
                   type={showPassword ? 'text' : 'password'}
                   required
                   value={password}
                   onChange={e => setPassword(e.target.value)}
-                  className="input-field pr-10"
+                  className="input-field pl-10 pr-10"
                   placeholder="••••••••"
                   autoComplete="current-password"
                 />
@@ -116,8 +120,8 @@ export default function Login() {
               </Link>
             </div>
 
-            <button type="submit" className="btn-primary" disabled={loading}>
-              {loading ? 'Connexion...' : 'Se connecter'}
+            <button type="submit" className="btn-primary inline-flex items-center justify-center gap-2" disabled={loading}>
+              {loading ? 'Connexion...' : <><LogIn className="w-4 h-4" /> Se connecter</>}
             </button>
           </form>
         </div>

@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
-import { Mail, CheckCircle2, ArrowLeft } from 'lucide-react'
+import { Mail, CheckCircle2, ArrowLeft, ArrowRight } from 'lucide-react'
 
 function parseForgotError(err) {
   if (!err) return null
@@ -81,19 +81,22 @@ export default function ForgotPassword() {
 
             <div>
               <label className="block text-sm font-medium text-slate-700 mb-1.5">Email</label>
-              <input
-                type="email"
-                required
-                value={email}
-                onChange={e => setEmail(e.target.value)}
-                className="input-field"
-                placeholder="toi@exemple.com"
-                autoComplete="email"
-              />
+              <div className="relative">
+                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
+                <input
+                  type="email"
+                  required
+                  value={email}
+                  onChange={e => setEmail(e.target.value)}
+                  className="input-field pl-10"
+                  placeholder="toi@exemple.com"
+                  autoComplete="email"
+                />
+              </div>
             </div>
 
-            <button type="submit" className="btn-primary" disabled={loading}>
-              {loading ? 'Envoi...' : 'Envoyer le lien'}
+            <button type="submit" className="btn-primary inline-flex items-center justify-center gap-2" disabled={loading}>
+              {loading ? 'Envoi...' : <><Mail className="w-4 h-4" /> Envoyer le lien</>}
             </button>
           </form>
         </div>
