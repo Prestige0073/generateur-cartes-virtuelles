@@ -90,7 +90,7 @@ export default function ResetPassword() {
             <div>
               <label className="block text-sm font-medium text-slate-700 mb-1.5">Nouveau mot de passe</label>
               <div className="relative">
-                <KeyRound className="absolute left-5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
+                <KeyRound className="absolute left-6 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
                 <input
                   type={showPassword ? 'text' : 'password'}
                   required
@@ -98,7 +98,7 @@ export default function ResetPassword() {
                   onChange={e => setPassword(e.target.value)}
                   onFocus={() => setPasswordFocused(true)}
                   onBlur={() => setPasswordFocused(false)}
-                  className="input-field pl-14 pr-14"
+                  className="input-field pl-16 pr-16"
                   placeholder={passwordFocused || password ? '' : 'Au moins 8 caractères'}
                   autoFocus
                   autoComplete="new-password"
@@ -121,7 +121,7 @@ export default function ResetPassword() {
             <div>
               <label className="block text-sm font-medium text-slate-700 mb-1.5">Confirmer</label>
               <div className="relative">
-                <KeyRound className="absolute left-5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
+                <KeyRound className="absolute left-6 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
                 <input
                   type={showConfirm ? 'text' : 'password'}
                   required
@@ -129,7 +129,7 @@ export default function ResetPassword() {
                   onChange={e => setConfirm(e.target.value)}
                   onFocus={() => setConfirmFocused(true)}
                   onBlur={() => setConfirmFocused(false)}
-                  className="input-field pl-14 pr-14"
+                  className="input-field pl-16 pr-16"
                   placeholder={confirmFocused || confirm ? '' : '••••••••'}
                   autoComplete="new-password"
                 />

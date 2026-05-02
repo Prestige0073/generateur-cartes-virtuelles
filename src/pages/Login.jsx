@@ -79,7 +79,7 @@ export default function Login() {
             <div>
               <label className="block text-sm font-medium text-slate-600 mb-1.5">Email</label>
               <div className="relative">
-                <Mail className="absolute left-5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
+                <Mail className="absolute left-6 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
                 <input
                   type="email"
                   required
@@ -87,7 +87,7 @@ export default function Login() {
                   onChange={e => setEmail(e.target.value)}
                   onFocus={() => setEmailFocused(true)}
                   onBlur={() => setEmailFocused(false)}
-                  className="input-field pl-14"
+                  className="input-field pl-16"
                   placeholder={emailFocused || email ? '' : 'toi@exemple.com'}
                   autoComplete="email"
                 />
@@ -97,7 +97,7 @@ export default function Login() {
             <div>
               <label className="block text-sm font-medium text-slate-600 mb-1.5">Mot de passe</label>
               <div className="relative">
-                <KeyRound className="absolute left-5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
+                <KeyRound className="absolute left-6 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
                 <input
                   type={showPassword ? 'text' : 'password'}
                   required
@@ -105,7 +105,7 @@ export default function Login() {
                   onChange={e => setPassword(e.target.value)}
                   onFocus={() => setPasswordFocused(true)}
                   onBlur={() => setPasswordFocused(false)}
-                  className="input-field pl-14 pr-14"
+                  className="input-field pl-16 pr-16"
                   placeholder={passwordFocused || password ? '' : '••••••••'}
                   autoComplete="current-password"
                 />
