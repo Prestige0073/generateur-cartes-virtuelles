@@ -87,7 +87,7 @@ export default function Login() {
                   onChange={e => setEmail(e.target.value)}
                   onFocus={() => setEmailFocused(true)}
                   onBlur={() => setEmailFocused(false)}
-                  className="input-field pl-12"
+                  className="input-field pl-14"
                   placeholder={emailFocused || email ? '' : 'toi@exemple.com'}
                   autoComplete="email"
                 />
@@ -105,7 +105,7 @@ export default function Login() {
                   onChange={e => setPassword(e.target.value)}
                   onFocus={() => setPasswordFocused(true)}
                   onBlur={() => setPasswordFocused(false)}
-                  className="input-field pl-12 pr-12"
+                  className="input-field pl-14 pr-14"
                   placeholder={passwordFocused || password ? '' : '••••••••'}
                   autoComplete="current-password"
                 />
