@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
-import { Lock, Loader2, Eye, EyeOff, KeyRound, ShieldCheck } from 'lucide-react'
+import { Lock, Loader2, Eye, EyeOff, ShieldCheck } from 'lucide-react'
 
 function parseResetError(err) {
   if (!err) return null
@@ -90,7 +90,6 @@ export default function ResetPassword() {
             <div>
               <label className="block text-sm font-medium text-slate-700 mb-1.5">Nouveau mot de passe</label>
               <div className="relative">
-                <KeyRound className="absolute left-6 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
                 <input
                   type={showPassword ? 'text' : 'password'}
                   required
@@ -98,7 +97,7 @@ export default function ResetPassword() {
                   onChange={e => setPassword(e.target.value)}
                   onFocus={() => setPasswordFocused(true)}
                   onBlur={() => setPasswordFocused(false)}
-                  className="input-field pl-16 pr-16"
+                  className="input-field pr-14"
                   placeholder={passwordFocused || password ? '' : 'Au moins 8 caractères'}
                   autoFocus
                   autoComplete="new-password"
@@ -121,7 +120,6 @@ export default function ResetPassword() {
             <div>
               <label className="block text-sm font-medium text-slate-700 mb-1.5">Confirmer</label>
               <div className="relative">
-                <KeyRound className="absolute left-6 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
                 <input
                   type={showConfirm ? 'text' : 'password'}
                   required
@@ -129,7 +127,7 @@ export default function ResetPassword() {
                   onChange={e => setConfirm(e.target.value)}
                   onFocus={() => setConfirmFocused(true)}
                   onBlur={() => setConfirmFocused(false)}
-                  className="input-field pl-16 pr-16"
+                  className="input-field pr-14"
                   placeholder={confirmFocused || confirm ? '' : '••••••••'}
                   autoComplete="new-password"
                 />

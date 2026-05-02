@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
-import { Mail, CheckCircle2, Eye, EyeOff, UserPlus, KeyRound, ArrowRight } from 'lucide-react'
+import { Mail, CheckCircle2, Eye, EyeOff, UserPlus, ArrowRight } from 'lucide-react'
 
 function parseSignupError(err) {
   if (!err) return null
@@ -108,7 +108,7 @@ export default function Signup() {
             <div>
               <label className="block text-sm font-medium text-slate-600 mb-1.5">Email</label>
               <div className="relative">
-                <Mail className="absolute left-6 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
+
                 <input
                   type="email"
                   required
@@ -126,7 +126,6 @@ export default function Signup() {
             <div>
               <label className="block text-sm font-medium text-slate-600 mb-1.5">Mot de passe</label>
               <div className="relative">
-                <KeyRound className="absolute left-6 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
                 <input
                   type={showPassword ? 'text' : 'password'}
                   required
@@ -134,7 +133,7 @@ export default function Signup() {
                   onChange={e => setPassword(e.target.value)}
                   onFocus={() => setPasswordFocused(true)}
                   onBlur={() => setPasswordFocused(false)}
-                  className="input-field pl-16 pr-16"
+                  className="input-field pr-14"
                   placeholder={passwordFocused || password ? '' : 'Au moins 8 caractères'}
                   autoComplete="new-password"
                 />
@@ -157,7 +156,6 @@ export default function Signup() {
             <div>
               <label className="block text-sm font-medium text-slate-600 mb-1.5">Confirmer le mot de passe</label>
               <div className="relative">
-                <KeyRound className="absolute left-6 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
                 <input
                   type={showConfirm ? 'text' : 'password'}
                   required
@@ -165,7 +163,7 @@ export default function Signup() {
                   onChange={e => setConfirm(e.target.value)}
                   onFocus={() => setConfirmFocused(true)}
                   onBlur={() => setConfirmFocused(false)}
-                  className="input-field pl-16 pr-16"
+                  className="input-field pr-14"
                   placeholder={confirmFocused || confirm ? '' : '••••••••'}
                   autoComplete="new-password"
                 />
