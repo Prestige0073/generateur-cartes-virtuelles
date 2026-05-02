@@ -59,15 +59,21 @@ export default function Dashboard() {
 
   async function fetchData() {
     setLoading(true)
-    const [{ data: cardsData }, { data: paymentsData }] = await Promise.all([
-      supabase.from('cards').select('*, share_links(id, slug, expires_at)')
-        .eq('user_id', user.id).order('created_at', { ascending: false }),
-      supabase.from('payments').select('*')
-        .eq('user_id', user.id).order('created_at', { ascending: false }),
-    ])
-    setCards(cardsData || [])
-    setPayments(paymentsData || [])
-    setLoading(false)
+    try {
+      const [{ data: cardsData }, { data: paymentsData }] = await Promise.all([
+        supabase.from('cards').select('*, share_links(id, slug, expires_at)')
+          .eq('user_id', user.id).order('created_at', { ascending: false }),
+        supabase.from('payments').select('*')
+          .eq('user_id', user.id).order('created_at', { ascending: false }),
+      ])
+      setCards(cardsData || [])
+      setPayments(paymentsData || [])
+    } catch {
+      setCards([])
+      setPayments([])
+    } finally {
+      setLoading(false)
+    }
   }
 
   function getActiveLink(card) {

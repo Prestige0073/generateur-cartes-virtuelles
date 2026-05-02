@@ -49,10 +49,12 @@ export default function ShareView() {
 
     const hash = await sha256(password)
     if (hash !== shareLink.password_hash) {
-      const newAttempts = attempts + 1
-      setAttempts(newAttempts)
-      if (newAttempts >= 5) setStatus('locked')
-      else setError(`Mot de passe incorrect. ${5 - newAttempts} tentative${5 - newAttempts > 1 ? 's' : ''} restante${5 - newAttempts > 1 ? 's' : ''}.`)
+      setAttempts(prev => {
+        const next = prev + 1
+        if (next >= 5) setStatus('locked')
+        else setError(`Mot de passe incorrect. ${5 - next} tentative${5 - next > 1 ? 's' : ''} restante${5 - next > 1 ? 's' : ''}.`)
+        return next
+      })
       return
     }
 
