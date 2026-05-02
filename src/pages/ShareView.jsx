@@ -138,31 +138,34 @@ export default function ShareView() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-950 via-[#0d1526] to-slate-950 flex flex-col items-center px-4 py-10 md:py-16">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-sky-50 flex flex-col items-center px-4 py-10 md:py-16">
 
       {/* Badge vérifié */}
-      <div className="mb-7 text-center">
-        <div className="inline-flex items-center gap-2 bg-sky-500/10 border border-sky-500/20 rounded-full px-4 py-1.5 mb-5">
-          <ShieldCheck className="w-3.5 h-3.5 text-sky-400" />
-          <span className="text-sky-300 text-xs font-semibold tracking-wide">Carte vérifiée & sécurisée</span>
+      <div className="mb-8 text-center">
+        <div className="inline-flex items-center gap-2 bg-sky-50 border border-sky-200 rounded-full px-4 py-1.5 mb-5 shadow-sm">
+          <ShieldCheck className="w-3.5 h-3.5 text-sky-600" />
+          <span className="text-sky-700 text-xs font-semibold tracking-wide">Carte vérifiée & sécurisée</span>
         </div>
-        <h1 className="text-2xl md:text-3xl font-bold text-white tracking-tight">Carte Bancaire</h1>
+        <h1 className="text-2xl md:text-3xl font-bold text-slate-900 tracking-tight">Carte Bancaire</h1>
+        <p className="text-slate-500 text-sm mt-1.5">Partagée en toute sécurité</p>
       </div>
 
       {/* Carte 3D */}
-      <div className="w-full max-w-md flex justify-center mb-8 drop-shadow-2xl">
+      <div className="w-full max-w-md flex justify-center mb-10 drop-shadow-xl">
         <Card3D card={card} size="md" />
       </div>
 
       {/* Solde si présent */}
       {card.display_amount && (
-        <div className="mb-8 inline-flex items-center gap-3 bg-emerald-950/50 border border-emerald-700/30 rounded-2xl px-6 py-3.5">
-          <Wallet className="w-5 h-5 text-emerald-400 shrink-0" />
+        <div className="mb-8 inline-flex items-center gap-3 bg-emerald-50 border border-emerald-200 rounded-2xl px-6 py-3.5 shadow-sm">
+          <div className="w-9 h-9 rounded-xl bg-emerald-100 flex items-center justify-center shrink-0">
+            <Wallet className="w-5 h-5 text-emerald-600" />
+          </div>
           <div>
-            <p className="text-emerald-400/70 text-[10px] font-semibold uppercase tracking-widest">Solde affiché</p>
-            <p className="text-white font-bold text-xl leading-tight">
+            <p className="text-emerald-600 text-[10px] font-bold uppercase tracking-widest">Solde affiché</p>
+            <p className="text-slate-900 font-bold text-xl leading-tight">
               {Number(card.display_amount).toLocaleString('fr-FR')}
-              <span className="text-emerald-400 text-sm font-medium ml-1.5">FCFA</span>
+              <span className="text-emerald-600 text-sm font-semibold ml-1.5">FCFA</span>
             </p>
           </div>
         </div>
@@ -170,44 +173,44 @@ export default function ShareView() {
 
       {/* Panneau informations */}
       <div className="w-full max-w-lg">
-        <div className="rounded-2xl overflow-hidden border border-white/[0.07] bg-white/[0.03] backdrop-blur-sm">
+        <div className="bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-lg shadow-slate-100">
 
           {/* En-tête panneau */}
-          <div className="flex items-center gap-3 px-6 py-4 border-b border-white/[0.06] bg-white/[0.02]">
-            <div className="w-8 h-8 rounded-lg bg-sky-500/15 border border-sky-500/20 flex items-center justify-center">
-              <CreditCard className="w-4 h-4 text-sky-400" />
+          <div className="flex items-center gap-3 px-6 py-4 border-b border-slate-100 bg-slate-50">
+            <div className="w-8 h-8 rounded-lg bg-sky-100 flex items-center justify-center">
+              <CreditCard className="w-4 h-4 text-sky-600" />
             </div>
-            <span className="text-white font-semibold text-sm tracking-wide">Informations de la carte</span>
+            <span className="text-slate-800 font-semibold text-sm tracking-wide">Informations de la carte</span>
           </div>
 
           {/* Lignes */}
-          <div className="divide-y divide-white/[0.05]">
+          <div className="divide-y divide-slate-100">
             {[
-              { label: 'Titulaire',   value: card.cardholder_name,                                       Icon: User,       mono: false },
-              { label: 'Numéro',      value: card.card_number.replace(/(\d{4})(?=\d)/g, '$1 '),          Icon: CreditCard, mono: true  },
-              { label: 'Expiration',  value: card.expiry_date,                                            Icon: Calendar,   mono: true  },
-              { label: 'Réseau',      value: card.network_type === 'visa' ? 'Visa' : 'Mastercard',        Icon: CreditCard, mono: false },
-              { label: 'Langue',      value: card.language === 'fr' ? 'Français' : 'Anglais',             Icon: Globe,      mono: false },
+              { label: 'Titulaire',  value: card.cardholder_name,                                  Icon: User,       mono: false },
+              { label: 'Numéro',     value: card.card_number.replace(/(\d{4})(?=\d)/g, '$1 '),     Icon: CreditCard, mono: true  },
+              { label: 'Expiration', value: card.expiry_date,                                       Icon: Calendar,   mono: true  },
+              { label: 'Réseau',     value: card.network_type === 'visa' ? 'Visa' : 'Mastercard',   Icon: CreditCard, mono: false },
+              { label: 'Langue',     value: card.language === 'fr' ? 'Français' : 'Anglais',        Icon: Globe,      mono: false },
             ].map(({ label, value, Icon, mono }) => (
-              <div key={label} className="flex items-center justify-between px-6 py-4 hover:bg-white/[0.02] transition-colors">
+              <div key={label} className="flex items-center justify-between px-6 py-4 hover:bg-slate-50 transition-colors">
                 <div className="flex items-center gap-3 shrink-0">
-                  <Icon className="w-4 h-4 text-slate-500" />
-                  <span className="text-slate-400 text-sm">{label}</span>
+                  <div className="w-8 h-8 rounded-lg bg-slate-100 flex items-center justify-center">
+                    <Icon className="w-4 h-4 text-slate-500" />
+                  </div>
+                  <span className="text-slate-500 text-sm font-medium">{label}</span>
                 </div>
-                <span className={`text-white font-semibold text-sm ml-4 ${mono ? 'font-mono tracking-widest' : ''} whitespace-nowrap`}>
+                <span className={`text-slate-900 font-bold text-sm ml-4 whitespace-nowrap ${mono ? 'font-mono tracking-widest' : ''}`}>
                   {value}
                 </span>
               </div>
             ))}
           </div>
-        </div>
-      </div>
 
-      {/* Footer */}
-      <div className="mt-10 text-center">
-        <div className="inline-flex items-center gap-2 text-slate-600 text-xs">
-          <ShieldCheck className="w-3.5 h-3.5" />
-          <span>Carte décorative · CardGen</span>
+          {/* Pied panneau */}
+          <div className="px-6 py-3.5 bg-slate-50 border-t border-slate-100 flex items-center gap-2">
+            <ShieldCheck className="w-3.5 h-3.5 text-slate-400" />
+            <span className="text-slate-400 text-xs">Consultation sécurisée — lecture seule</span>
+          </div>
         </div>
       </div>
 
