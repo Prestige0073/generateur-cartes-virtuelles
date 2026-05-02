@@ -20,6 +20,7 @@ function parseForgotError(err) {
 export default function ForgotPassword() {
   const { resetPassword } = useAuth()
   const [email, setEmail] = useState('')
+  const [emailFocused, setEmailFocused] = useState(false)
   const [sent, setSent] = useState(false)
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
@@ -88,8 +89,10 @@ export default function ForgotPassword() {
                   required
                   value={email}
                   onChange={e => setEmail(e.target.value)}
+                  onFocus={() => setEmailFocused(true)}
+                  onBlur={() => setEmailFocused(false)}
                   className="input-field pl-12"
-                  placeholder="toi@exemple.com"
+                  placeholder={emailFocused || email ? '' : 'toi@exemple.com'}
                   autoComplete="email"
                 />
               </div>

@@ -30,6 +30,8 @@ export default function Login() {
   const successMessage = location.state?.message
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [emailFocused, setEmailFocused] = useState(false)
+  const [passwordFocused, setPasswordFocused] = useState(false)
   const [showPassword, setShowPassword] = useState(false)
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
@@ -83,8 +85,10 @@ export default function Login() {
                   required
                   value={email}
                   onChange={e => setEmail(e.target.value)}
+                  onFocus={() => setEmailFocused(true)}
+                  onBlur={() => setEmailFocused(false)}
                   className="input-field pl-12"
-                  placeholder="toi@exemple.com"
+                  placeholder={emailFocused || email ? '' : 'toi@exemple.com'}
                   autoComplete="email"
                 />
               </div>
@@ -99,8 +103,10 @@ export default function Login() {
                   required
                   value={password}
                   onChange={e => setPassword(e.target.value)}
+                  onFocus={() => setPasswordFocused(true)}
+                  onBlur={() => setPasswordFocused(false)}
                   className="input-field pl-12 pr-12"
-                  placeholder="••••••••"
+                  placeholder={passwordFocused || password ? '' : '••••••••'}
                   autoComplete="current-password"
                 />
                 <button

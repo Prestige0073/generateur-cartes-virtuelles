@@ -36,6 +36,9 @@ export default function Signup() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [confirm, setConfirm] = useState('')
+  const [emailFocused, setEmailFocused] = useState(false)
+  const [passwordFocused, setPasswordFocused] = useState(false)
+  const [confirmFocused, setConfirmFocused] = useState(false)
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirm, setShowConfirm] = useState(false)
   const [error, setError] = useState('')
@@ -111,8 +114,10 @@ export default function Signup() {
                   required
                   value={email}
                   onChange={e => setEmail(e.target.value)}
+                  onFocus={() => setEmailFocused(true)}
+                  onBlur={() => setEmailFocused(false)}
                   className="input-field pl-12"
-                  placeholder="toi@exemple.com"
+                  placeholder={emailFocused || email ? '' : 'toi@exemple.com'}
                   autoComplete="email"
                 />
               </div>
@@ -127,8 +132,10 @@ export default function Signup() {
                   required
                   value={password}
                   onChange={e => setPassword(e.target.value)}
+                  onFocus={() => setPasswordFocused(true)}
+                  onBlur={() => setPasswordFocused(false)}
                   className="input-field pl-12 pr-12"
-                  placeholder="Au moins 8 caractères"
+                  placeholder={passwordFocused || password ? '' : 'Au moins 8 caractères'}
                   autoComplete="new-password"
                 />
                 <button
@@ -156,8 +163,10 @@ export default function Signup() {
                   required
                   value={confirm}
                   onChange={e => setConfirm(e.target.value)}
+                  onFocus={() => setConfirmFocused(true)}
+                  onBlur={() => setConfirmFocused(false)}
                   className="input-field pl-12 pr-12"
-                  placeholder="••••••••"
+                  placeholder={confirmFocused || confirm ? '' : '••••••••'}
                   autoComplete="new-password"
                 />
                 <button

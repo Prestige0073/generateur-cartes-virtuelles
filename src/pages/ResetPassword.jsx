@@ -23,6 +23,8 @@ export default function ResetPassword() {
   const navigate = useNavigate()
   const [password, setPassword] = useState('')
   const [confirm, setConfirm] = useState('')
+  const [passwordFocused, setPasswordFocused] = useState(false)
+  const [confirmFocused, setConfirmFocused] = useState(false)
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirm, setShowConfirm] = useState(false)
   const [error, setError] = useState('')
@@ -94,8 +96,10 @@ export default function ResetPassword() {
                   required
                   value={password}
                   onChange={e => setPassword(e.target.value)}
+                  onFocus={() => setPasswordFocused(true)}
+                  onBlur={() => setPasswordFocused(false)}
                   className="input-field pl-12 pr-12"
-                  placeholder="Au moins 8 caractères"
+                  placeholder={passwordFocused || password ? '' : 'Au moins 8 caractères'}
                   autoFocus
                   autoComplete="new-password"
                 />
@@ -123,8 +127,10 @@ export default function ResetPassword() {
                   required
                   value={confirm}
                   onChange={e => setConfirm(e.target.value)}
+                  onFocus={() => setConfirmFocused(true)}
+                  onBlur={() => setConfirmFocused(false)}
                   className="input-field pl-12 pr-12"
-                  placeholder="••••••••"
+                  placeholder={confirmFocused || confirm ? '' : '••••••••'}
                   autoComplete="new-password"
                 />
                 <button
