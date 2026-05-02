@@ -25,7 +25,7 @@ function GuestRoute({ children }) {
 }
 
 function PageLoader() {
-  return <div className="min-h-screen bg-slate-900" />
+  return <div className="min-h-screen bg-slate-50" />
 }
 
 export default function App() {
@@ -38,7 +38,7 @@ export default function App() {
 
   if (isShareHost) {
     return (
-      <div className="min-h-screen bg-slate-950 text-white">
+      <div className="min-h-screen bg-slate-100">
         <Suspense fallback={<PageLoader />}>
           <Routes>
             <Route path="/share/:slug" element={<ShareView />} />
@@ -50,7 +50,7 @@ export default function App() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-900 text-white">
+    <div className="min-h-screen bg-slate-50 text-slate-900">
       <Navbar />
       <Suspense fallback={<PageLoader />}>
         <Routes>
