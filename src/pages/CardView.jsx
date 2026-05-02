@@ -97,7 +97,7 @@ export default function CardView() {
 
     setShareLink(data)
     setGeneratedPassword(rawPassword)
-    setPwVisible(true)
+    setPwVisible(false)
   }
 
   function copyText(text, copyId) {
