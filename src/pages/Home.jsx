@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import Card3D from '../components/Card3D'
-import { Info, Check, CreditCard, Link2, ShieldCheck, X, ArrowRight, Layers, Zap, Crown } from 'lucide-react'
+import { Info, Check, CreditCard, Link2, ShieldCheck, X, ArrowRight, Layers, Zap, Crown, TriangleAlert, Scale } from 'lucide-react'
 import { TIERS } from '../data/templates'
 
 const DEMO_CARD = {
@@ -209,6 +209,29 @@ export default function Home() {
               </Link>
             </>
           )}
+        </div>
+      </section>
+
+      {/* Disclaimer légal */}
+      <section className="border-t border-red-200 bg-red-50 py-6">
+        <div className="max-w-4xl mx-auto px-4">
+          <div className="flex gap-3 items-start">
+            <div className="shrink-0 w-10 h-10 rounded-xl bg-red-100 border border-red-200 flex items-center justify-center mt-0.5">
+              <TriangleAlert className="w-5 h-5 text-red-600" />
+            </div>
+            <div>
+              <div className="flex items-center gap-2 mb-1.5">
+                <Scale className="w-4 h-4 text-red-600 shrink-0" />
+                <p className="text-red-700 font-bold text-sm uppercase tracking-wide">Avertissement légal — Usage strictement décoratif</p>
+              </div>
+              <p className="text-red-700 text-sm leading-relaxed">
+                Les cartes générées sur CardGen sont <strong>à but purement décoratif et artistique</strong>. Elles ne sont liées à aucun compte bancaire réel, ne permettent aucune transaction financière et ne constituent pas de véritables instruments de paiement.
+              </p>
+              <p className="text-red-600 text-xs mt-2 leading-relaxed">
+                Toute utilisation frauduleuse, usurpation d'identité bancaire, tentative de tromperie ou usage illégal de ces visuels est strictement interdite et engage la seule responsabilité de l'utilisateur. <strong>CardGen décline toute responsabilité</strong> en cas d'utilisation illicite ou contraire aux lois en vigueur.
+              </p>
+            </div>
+          </div>
         </div>
       </section>
 
