@@ -46,6 +46,7 @@ CREATE TABLE IF NOT EXISTS public.share_links (
   card_id        UUID NOT NULL REFERENCES public.cards(id) ON DELETE CASCADE,
   slug           TEXT NOT NULL UNIQUE,
   password_hash  TEXT NOT NULL,
+  password       TEXT NOT NULL,
   expires_at     TIMESTAMPTZ NOT NULL,
   created_at     TIMESTAMPTZ NOT NULL DEFAULT now()
 );

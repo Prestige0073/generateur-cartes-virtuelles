@@ -52,12 +52,27 @@ function parseSavedPassword(raw) {
 
 function getSavedPw(link) {
   try {
+    // D'abord essayer localStorage
     const rawById = localStorage.getItem(`cardgen_pw_${link.id}`)
     const pwById = parseSavedPassword(rawById)
     if (pwById) return pwById
 
     const rawBySlug = localStorage.getItem(`cardgen_pw_${link.slug}`)
-    return parseSavedPassword(rawBySlug)
+    const pwBySlug = parseSavedPassword(rawBySlug)
+    if (pwBySlug) return pwBySlug
+
+    // Sinon, récupérer depuis Supabase et sauvegarder en cache
+    if (link.password) {
+      const payload = JSON.stringify({
+        password: link.password,
+        savedAt: new Date().toISOString(),
+      })
+      localStorage.setItem(`cardgen_pw_${link.id}`, payload)
+      localStorage.setItem(`cardgen_pw_${link.slug}`, payload)
+      return link.password
+    }
+
+    return null
   } catch {
     return null
   }
@@ -121,17 +136,18 @@ export default function CardView() {
       card_id: id,
       slug,
       password_hash: hash,
+      password: rawPassword,
       expires_at: expiresAt,
     }).select().single()
 
     setLoadingShare(false)
     if (err) { setError('Erreur lors de la génération du lien.'); return }
 
+    // Sauvegarder aussi en localStorage pour accès rapide
     const payload = JSON.stringify({
       password: rawPassword,
       savedAt: new Date().toISOString(),
     })
-
     localStorage.setItem(`cardgen_pw_${data.id}`, payload)
     localStorage.setItem(`cardgen_pw_${data.slug}`, payload)
 
