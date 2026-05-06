@@ -101,7 +101,7 @@ export default function CardView() {
 
       if (link) {
         setShareLink(link)
-        const saved = getSavedPw(link.id)
+        const saved = getSavedPw(link)
         if (saved) setGeneratedPassword(saved)
       }
     }

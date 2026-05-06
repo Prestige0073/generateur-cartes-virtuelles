@@ -109,9 +109,9 @@ export default function Dashboard() {
     setTimeout(() => setCopiedId(null), 2200)
   }
 
-  function copyLinkAndPassword(slug, linkId, copyId) {
-    const url = `${SHARE_BASE}/share/${slug}`
-    const pw  = getSavedPw(linkId)
+  function copyLinkAndPassword(link, copyId) {
+    const url = `${SHARE_BASE}/share/${link.slug}`
+    const pw  = getSavedPw(link)
     copyText(pw ? `Lien : ${url}\nMot de passe : ${pw}` : url, copyId)
   }
 
@@ -256,7 +256,7 @@ export default function Dashboard() {
               const daysLeft   = activeLink
                 ? Math.max(0, Math.ceil((new Date(activeLink.expires_at) - Date.now()) / 86_400_000))
                 : 0
-              const savedPw    = activeLink ? getSavedPw(activeLink.id) : null
+              const savedPw    = activeLink ? getSavedPw(activeLink) : null
               const pwVisible  = activeLink && visiblePw[activeLink.id]
 
               return (
@@ -360,7 +360,7 @@ export default function Dashboard() {
                                 </button>
                               </div>
                               <button
-                                onClick={() => copyLinkAndPassword(activeLink.slug, activeLink.id, `both-${card.id}`)}
+                                onClick={() => copyLinkAndPassword(activeLink, `both-${card.id}`)}
                                 className="w-full text-xs text-sky-600 hover:text-sky-700 font-medium transition py-1.5 flex items-center justify-center gap-1.5"
                               >
                                 <ClipboardCopy className="w-3 h-3" />
