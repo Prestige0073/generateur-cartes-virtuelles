@@ -91,7 +91,7 @@ export default function Payment() {
     try {
       window.LeekPay.checkout({
         amount: tierInfo.price,
-        currency: 'XOF',
+        currency: 'EUR',
         apiKey: LEEKPAY_PUBLIC_KEY,
         onSuccess: async (transaction) => {
           setStep('processing')

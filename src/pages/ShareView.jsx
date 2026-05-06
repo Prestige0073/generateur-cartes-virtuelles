@@ -203,7 +203,7 @@ export default function ShareView() {
     { label: 'Numéro',     value: card.card_number.replace(/(\d{4})(?=\d)/g, '$1 '),   Icon: CreditCard, mono: true,  color: 'bg-sky-100 text-sky-600'        },
     { label: 'Expiration', value: card.expiry_date,                                     Icon: Calendar,   mono: true,  color: 'bg-amber-100 text-amber-600'    },
     { label: 'Réseau',     value: card.network_type === 'visa' ? 'Visa' : 'Mastercard', Icon: CreditCard, mono: false, color: 'bg-emerald-100 text-emerald-600' },
-    { label: 'Langue',     value: card.language === 'fr' ? 'Français' : 'Anglais',     Icon: Globe,      mono: false, color: 'bg-indigo-100 text-indigo-600'  },
+    { label: 'Langue',     value: { 'fr': 'Français', 'en': 'English', 'es': 'Español', 'de': 'Deutsch', 'it': 'Italiano', 'pt': 'Português', 'nl': 'Nederlands', 'no': 'Norsk', 'sv': 'Svenska', 'pl': 'Polski' }[card.language] || card.language, Icon: Globe, mono: false, color: 'bg-indigo-100 text-indigo-600'  },
   ]
 
   return (
@@ -271,7 +271,10 @@ export default function ShareView() {
               <p className="text-slate-400 text-[10px] font-bold uppercase tracking-widest">Solde affiché</p>
               <p className="text-slate-900 font-extrabold text-xl leading-tight">
                 {Number(card.display_amount).toLocaleString('fr-FR')}
-                <span className="text-emerald-600 text-sm font-semibold ml-1.5">FCFA</span>
+                <span className="text-emerald-600 text-sm font-semibold ml-1.5">{(() => {
+                  const currencyMap = { 'EUR': '€', 'USD': '$', 'GBP': '£', 'CHF': 'CHF', 'CAD': 'C$', 'AUD': 'A$', 'NZD': 'NZ$', 'NOK': 'kr', 'SEK': 'kr', 'DKK': 'kr', 'MXN': '$', 'BRL': 'R$', 'JPY': '¥', 'CNY': '¥' }
+                  return currencyMap[card.currency] || card.currency || '€'
+                })()}</span>
               </p>
             </div>
           </div>

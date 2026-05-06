@@ -18,6 +18,7 @@ CREATE TABLE IF NOT EXISTS public.cards (
   cvv             TEXT NOT NULL,
   network_type    TEXT NOT NULL CHECK (network_type IN ('visa', 'mastercard')),
   language        TEXT NOT NULL DEFAULT 'fr',
+  currency        TEXT NOT NULL DEFAULT 'XOF',
   display_amount  DECIMAL(15, 2),
   bank_name       TEXT,
   style_variant   TEXT CHECK (style_variant IN ('standard', 'metal', 'luxe')),

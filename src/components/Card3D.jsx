@@ -175,6 +175,14 @@ function Pattern({ uid, type, color, width, height }) {
 const LABELS = {
   fr: { holder: 'TITULAIRE', validThru: "VALIDE JUSQU'AU" },
   en: { holder: 'CARD HOLDER', validThru: 'VALID THRU' },
+  es: { holder: 'TITULAR', validThru: 'VÁLIDO HASTA' },
+  de: { holder: 'KARTENINHABER', validThru: 'GÜLTIG BIS' },
+  it: { holder: 'TITOLARE', validThru: 'VALIDO FINO A' },
+  pt: { holder: 'TITULAR', validThru: 'VÁLIDO ATÉ' },
+  nl: { holder: 'KAARTHOUDER', validThru: 'GELDIG TOT' },
+  no: { holder: 'INNEHAVER', validThru: 'GYLDIG INNTIL' },
+  sv: { holder: 'KORTINNEHAVARE', validThru: 'GILTIGT TILL' },
+  pl: { holder: 'POSIADACZ KARTY', validThru: 'WAŻNA DO' },
 }
 
 // Effet gravure métal pour les textes clairs
@@ -499,7 +507,10 @@ export default function Card3D({ card, interactive = true, size = 'md' }) {
                     fontFamily:'"Share Tech Mono", "Courier Prime", "Courier New", monospace',
                     textShadow: engraveEffect,
                   }}>
-                    {Number(card.display_amount).toLocaleString('fr-FR')} FCFA
+                    {Number(card.display_amount).toLocaleString('fr-FR')} {(() => {
+                const currencyMap = { 'EUR': '€', 'USD': '$', 'GBP': '£', 'CHF': 'CHF', 'CAD': 'C$', 'AUD': 'A$', 'NZD': 'NZ$', 'NOK': 'kr', 'SEK': 'kr', 'DKK': 'kr', 'MXN': '$', 'BRL': 'R$', 'JPY': '¥', 'CNY': '¥' }
+                return currencyMap[card.currency] || card.currency || '€'
+              })()}
                   </span>
                 </div>
               )}

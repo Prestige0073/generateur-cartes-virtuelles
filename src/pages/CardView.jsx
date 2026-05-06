@@ -193,11 +193,11 @@ export default function CardView() {
               { label: 'Numéro',     value: card.card_number.replace(/(\d{4})(?=\d)/g, '$1 ') },
               { label: 'Expiration', value: card.expiry_date },
               { label: 'Réseau',     value: card.network_type === 'visa' ? 'Visa' : 'Mastercard' },
-              { label: 'Langue',     value: card.language === 'fr' ? 'Français' : 'Anglais' },
+              { label: 'Langue',     value: { 'fr': 'Français', 'en': 'English', 'es': 'Español', 'de': 'Deutsch', 'it': 'Italiano', 'pt': 'Português', 'nl': 'Nederlands', 'no': 'Norsk', 'sv': 'Svenska', 'pl': 'Polski' }[card.language] || card.language },
               ...(card.bank_name ? [{ label: 'Banque', value: card.bank_name }] : []),
               ...(card.style_variant ? [{ label: 'Style', value: card.style_variant === 'metal' ? 'Métal' : card.style_variant === 'luxe' ? 'Luxe' : 'Standard' }] : []),
               ...(card.font_variant ? [{ label: 'Police', value: card.font_variant === 'modern' ? 'Moderne' : card.font_variant === 'rounded' ? 'Arrondi' : 'Classique' }] : []),
-              ...(card.display_amount ? [{ label: 'Solde', value: `${Number(card.display_amount).toLocaleString('fr-FR')} FCFA` }] : []),
+              ...(card.display_amount ? [{ label: 'Solde', value: `${Number(card.display_amount).toLocaleString('fr-FR')} ${{ 'EUR': '€', 'USD': '$', 'GBP': '£', 'CHF': 'CHF', 'CAD': 'C$', 'AUD': 'A$', 'NZD': 'NZ$', 'NOK': 'kr', 'SEK': 'kr', 'DKK': 'kr', 'MXN': '$', 'BRL': 'R$', 'JPY': '¥', 'CNY': '¥' }[card.currency] || card.currency || '€'}` }] : []),
               { label: 'Créée le',   value: new Date(card.created_at).toLocaleDateString('fr-FR') },
             ].map(row => (
               <div key={row.label} className="flex justify-between items-center text-sm gap-3">

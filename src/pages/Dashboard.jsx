@@ -295,7 +295,10 @@ export default function Dashboard() {
                     {card.display_amount && (
                       <div className="flex justify-between items-center text-xs border-t border-slate-200 pt-3">
                         <span className="text-slate-500">Solde affiché</span>
-                        <span className="font-semibold text-slate-700">{Number(card.display_amount).toLocaleString('fr-FR')} FCFA</span>
+                        <span className="font-semibold text-slate-700">{Number(card.display_amount).toLocaleString('fr-FR')} {(() => {
+                          const currencyMap = { 'EUR': '€', 'USD': '$', 'GBP': '£', 'CHF': 'CHF', 'CAD': 'C$', 'AUD': 'A$', 'NZD': 'NZ$', 'NOK': 'kr', 'SEK': 'kr', 'DKK': 'kr', 'MXN': '$', 'BRL': 'R$', 'JPY': '¥', 'CNY': '¥' }
+                          return currencyMap[card.currency] || card.currency || '€'
+                        })()}</span>
                       </div>
                     )}
 

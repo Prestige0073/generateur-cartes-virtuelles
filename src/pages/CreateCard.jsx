@@ -19,6 +19,23 @@ const FONT_OPTIONS = [
   { id: 'rounded', label: 'Arrondi' },
 ]
 
+const CURRENCY_OPTIONS = [
+  { id: 'EUR', label: 'EUR - Euro', symbol: '€' },
+  { id: 'USD', label: 'USD - Dollar Américain', symbol: '$' },
+  { id: 'GBP', label: 'GBP - Livre Sterling', symbol: '£' },
+  { id: 'CHF', label: 'CHF - Franc Suisse', symbol: 'CHF' },
+  { id: 'CAD', label: 'CAD - Dollar Canadien', symbol: 'C$' },
+  { id: 'AUD', label: 'AUD - Dollar Australien', symbol: 'A$' },
+  { id: 'NZD', label: 'NZD - Dollar Néo-Zélandais', symbol: 'NZ$' },
+  { id: 'NOK', label: 'NOK - Couronne Norvégienne', symbol: 'kr' },
+  { id: 'SEK', label: 'SEK - Couronne Suédoise', symbol: 'kr' },
+  { id: 'DKK', label: 'DKK - Couronne Danoise', symbol: 'kr' },
+  { id: 'MXN', label: 'MXN - Peso Mexicain', symbol: '$' },
+  { id: 'BRL', label: 'BRL - Real Brésilien', symbol: 'R$' },
+  { id: 'JPY', label: 'JPY - Yen Japonais', symbol: '¥' },
+  { id: 'CNY', label: 'CNY - Yuan Chinois', symbol: '¥' },
+]
+
 function sanitizeName(str) {
   return str
     .replace(/<[^>]*>/g, '')
@@ -55,6 +72,7 @@ export default function CreateCard() {
     bank_name: '',
     style_variant: 'standard',
     font_variant: 'classic',
+    currency: 'EUR',
   })
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
@@ -150,6 +168,7 @@ export default function CreateCard() {
       cvv: form.cvv,
       network_type: template.network,
       language: form.language,
+      currency: form.currency,
       display_amount: canDisplayAmount && form.display_amount ? parseFloat(form.display_amount) : null,
       bank_name: canCustomBankName && form.bank_name ? form.bank_name.toUpperCase() : null,
       style_variant: canPickStyle ? form.style_variant : null,
@@ -326,23 +345,43 @@ export default function CreateCard() {
             )}
 
             <div>
-              <label className="block text-sm font-medium text-slate-600 mb-2">Langue de la carte</label>
-              <div className="flex gap-3">
-                {[{ id: 'fr', label: 'FR — Français' }, { id: 'en', label: 'EN — English' }].map(l => (
-                  <button
-                    key={l.id}
-                    type="button"
-                    onClick={() => set('language', l.id)}
-                    className={`flex-1 py-2.5 rounded-xl border text-sm font-medium transition ${
-                      form.language === l.id
-                        ? 'border-sky-400 bg-sky-50 text-sky-700'
-                        : 'border-slate-200 bg-white text-slate-500 hover:border-slate-300'
-                    }`}
-                  >
-                    {l.label}
-                  </button>
+              <label htmlFor="language" className="block text-sm font-medium text-slate-600 mb-1.5">Langue de la carte</label>
+              <select
+                id="language"
+                value={form.language}
+                onChange={e => set('language', e.target.value)}
+                className="input-field"
+              >
+                <optgroup label="Principales">
+                  <option value="fr">FR — Français</option>
+                  <option value="en">EN — English</option>
+                  <option value="es">ES — Español</option>
+                  <option value="de">DE — Deutsch</option>
+                </optgroup>
+                <optgroup label="Européennes">
+                  <option value="it">IT — Italiano</option>
+                  <option value="pt">PT — Português</option>
+                  <option value="nl">NL — Nederlands</option>
+                  <option value="no">NO — Norsk</option>
+                  <option value="sv">SV — Svenska</option>
+                  <option value="pl">PL — Polski</option>
+                </optgroup>
+              </select>
+            </div>
+
+            <div>
+              <label htmlFor="currency" className="block text-sm font-medium text-slate-600 mb-1.5">Devise pour le solde</label>
+              <select
+                id="currency"
+                value={form.currency}
+                onChange={e => set('currency', e.target.value)}
+                className="input-field"
+              >
+                {CURRENCY_OPTIONS.map(opt => (
+                  <option key={opt.id} value={opt.id}>{opt.label}</option>
                 ))}
-              </div>
+              </select>
+              <p className="text-slate-600 text-xs mt-1">Affichée avec le solde esthétique au verso.</p>
             </div>
 
             {canPickStyle && (
