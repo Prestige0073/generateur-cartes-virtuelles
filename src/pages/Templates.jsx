@@ -53,7 +53,8 @@ export default function Templates() {
   const filtered = filter === 'all' ? TEMPLATES : TEMPLATES.filter(t => t.tier === filter)
 
   function handleChoose(template) {
-    navigate(`/payment/${template.tier}?templateId=${template.id}`)
+    // Bypass payment for testing — comment out this line to re-enable payment
+    navigate(`/create-card?templateId=${template.id}`)
   }
 
   const activeTier = filter !== 'all' ? TIERS[filter] : null
