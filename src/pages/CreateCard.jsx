@@ -307,7 +307,7 @@ export default function CreateCard() {
                     placeholder="250 000"
                     min={0}
                   />
-                  <span className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-500 text-sm">FCFA</span>
+                  <span className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-500 text-sm">{CURRENCY_OPTIONS.find(opt => opt.id === form.currency)?.id || 'EUR'}</span>
                 </div>
                 <p className="text-slate-600 text-xs mt-1">Affiché au verso de la carte, purement décoratif.</p>
               </div>
