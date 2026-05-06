@@ -14,7 +14,7 @@ export const TIERS = {
     ],
     locked: [
       'Réseau Mastercard',
-      'Solde esthétique décoratif',
+      'Solde',
       'Lien longue durée',
       'Designs Premium & VIP',
     ],
@@ -31,7 +31,7 @@ export const TIERS = {
     features: [
       '6 designs exclusifs',
       'Visa & Mastercard',
-      'Solde esthétique décoratif',
+      'Solde',
       'Lien de partage 30 jours',
       'Personnalisation complète',
     ],
@@ -53,7 +53,7 @@ export const TIERS = {
     features: [
       '6 designs ultra-exclusifs',
       'Visa & Mastercard',
-      'Solde esthétique décoratif',
+      'Solde',
       'Lien de partage 60 jours',
       'Badge VIP gravé sur la carte',
       'Nom de banque personnalisé',

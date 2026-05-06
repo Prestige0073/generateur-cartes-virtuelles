@@ -314,7 +314,7 @@ export default function CreateCard() {
             ) : (
               <div className="bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 flex items-center gap-3">
                 <div className="flex-1">
-                  <p className="text-slate-500 text-sm font-medium">Solde esthétique</p>
+                  <p className="text-slate-500 text-sm font-medium">Solde</p>
                   <p className="text-slate-500 text-xs mt-0.5">Disponible à partir du niveau <span className="text-sky-500 font-medium">Premium</span></p>
                 </div>
                 <span className="text-xs font-bold px-2 py-1 rounded-full bg-slate-200 text-slate-500">Basique</span>
@@ -381,7 +381,7 @@ export default function CreateCard() {
                   <option key={opt.id} value={opt.id}>{opt.label}</option>
                 ))}
               </select>
-              <p className="text-slate-600 text-xs mt-1">Affichée avec le solde esthétique au verso.</p>
+              <p className="text-slate-600 text-xs mt-1">Affichée avec le solde au verso.</p>
             </div>
 
             {canPickStyle && (
